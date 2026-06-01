@@ -1133,7 +1133,20 @@
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
+<!-- MODAL GERENCIAR TEMPLATES DE CHECKLIST -->
+<div class="modal-overlay" id="modal-templates">
+  <div class="modal" style="max-width:520px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="font-size:16px;font-weight:700;">📦 Gerenciar Templates de Checklist</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="tpl-list" style="max-height:300px;overflow-y:auto;margin-bottom:16px;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()">Fechar</button>
+      <button class="btn btn-brand btn-sm" onclick="createNewTemplate()"><i class="fa-solid fa-plus"></i> Novo Template</button>
+    </div>
+  </div>
+</div>
 <script>
 // =============================================
 // ESTADO GLOBAL
@@ -1476,13 +1489,7 @@ ${b.formatos.includes('Reels') ? `<tr><td>Duração do vídeo</td><td>${b.video_
 // =============================================
 // KANBAN
 // =============================================
-const COL_META = {
-  aguardando: {icon:'fa-clock', color:'#6b7280', label:'Aguardando'},
-  em_producao: {icon:'fa-paintbrush', color:'#1E6091', label:'Em Produção'},
-  revisao: {icon:'fa-eye', color:'#B8860B', label:'Revisão'},
-  aprovado: {icon:'fa-circle-check', color:'#2A7A4B', label:'Aprovado'},
-  entregue: {icon:'fa-box', color:'#7c3aed', label:'Entregue'}
-};
+
 function slaInfo(prazo) {
   const diff = Math.ceil((new Date(prazo) - new Date()) / 864e5);
   if (prazo === 'Não informado' || isNaN(diff)) return {cls:'sla-ok', text:'—'};
@@ -1912,20 +1919,7 @@ function showToast(msg, type='') {
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), 3000);
 }
-<!-- MODAL GERENCIAR TEMPLATES DE CHECKLIST -->
-<div class="modal-overlay" id="modal-templates">
-  <div class="modal" style="max-width:520px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <h3 style="font-size:16px;font-weight:700;">📦 Gerenciar Templates de Checklist</h3>
-      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="tpl-list" style="max-height:300px;overflow-y:auto;margin-bottom:16px;"></div>
-    <div style="display:flex;gap:8px;justify-content:flex-end;">
-      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()">Fechar</button>
-      <button class="btn btn-brand btn-sm" onclick="createNewTemplate()"><i class="fa-solid fa-plus"></i> Novo Template</button>
-    </div>
-  </div>
-</div>
+
 // =============================================
 // SEED DATA (demo)
 // =============================================
