@@ -633,6 +633,13 @@
     .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .detail-panel { width: 100%; }
   }
+  /* === CHECKLIST & ANÁLISE === */
+.checklist-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--paper-3); }
+.checklist-item input[type="checkbox"] { width:18px; height:18px; accent-color: var(--brand); cursor:pointer; }
+.checklist-item span { flex:1; font-size:13px; transition:all 0.2s; }
+.checklist-item.done span { text-decoration: line-through; color: var(--ink-soft); }
+.analysis-card { background: linear-gradient(135deg, var(--paper-2) 0%, #f5f0e8 100%); margin-bottom:20px; border-color:#c4b89a; }
+.tpl-tag { font-size:11px; background:var(--paper-3); padding:2px 6px; border-radius:4px; color:var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -1137,20 +1144,23 @@ let pendingUrgency = false;
 let chartInstances = {};
 
 const STATUS_LABELS = {
+  analise: 'Análise',
   aguardando: 'Aguardando',
   em_producao: 'Em Produção',
   revisao: 'Revisão',
   aprovado: 'Aprovado',
   entregue: 'Entregue'
 };
-const STATUS_COLS = ['aguardando','em_producao','revisao','aprovado','entregue'];
-const STATUS_COLORS = {
-  aguardando: '#6b7280',
-  em_producao: '#1E6091',
-  revisao: '#B8860B',
-  aprovado: '#2A7A4B',
-  entregue: '#7c3aed'
+const STATUS_COLS = ['analise','aguardando','em_producao','revisao','aprovado','entregue'];
+const COL_META = {
+  analise: {icon:'fa-magnifying-glass-chart', color:'#8B5CF6', label:'Análise'},
+  aguardando: {icon:'fa-clock', color:'#6b7280', label:'Aguardando'},
+  em_producao: {icon:'fa-paintbrush', color:'#1E6091', label:'Em Produção'},
+  revisao: {icon:'fa-eye', color:'#B8860B', label:'Revisão'},
+  aprovado: {icon:'fa-circle-check', color:'#2A7A4B', label:'Aprovado'},
+  entregue: {icon:'fa-box', color:'#7c3aed', label:'Entregue'}
 };
+  let checklistTemplates = []; // Global para templates
 
 // =============================================
 // PERSISTÊNCIA
@@ -1573,6 +1583,8 @@ function updateStatusFromPanel() {
   showToast('Status atualizado');
 }
 function renderDetailBody(b) {
+  const isAnalise = b.status === 'analise';
+  
   const verHtml = (b.versions && b.versions.length) ? b.versions.map((v,i) => `
     <div class="timeline-item">
       <div class="timeline-dot ${v.status}"><i class="fa-solid ${v.status==='approved'?'fa-check':v.status==='revision'?'fa-rotate-left':'fa-clock'}"></i></div>
@@ -1586,12 +1598,12 @@ function renderDetailBody(b) {
           </div>
           ${v.note ? `<p style="font-size:12px;color:var(--ink-soft);margin-bottom:8px;">${v.note}</p>` : ''}
           ${v.preview ? `<img src="${v.preview}" class="preview-img">` : `
-            <div style="background:var(--paper-3);border:2px dashed var(--line);border-radius:8px;padding:20px;text-align:center;margin:8px 0;">
-              <label style="cursor:pointer;color:var(--brand);font-size:13px;font-weight:500;">
-                <i class="fa-solid fa-image"></i> Adicionar prévia
-                <input type="file" accept="image/*" style="display:none;" onchange="uploadPreview(event,'${b.id}','${v.id}')">
-              </label>
-            </div>`}
+          <div style="background:var(--paper-3);border:2px dashed var(--line);border-radius:8px;padding:20px;text-align:center;margin:8px 0;">
+            <label style="cursor:pointer;color:var(--brand);font-size:13px;font-weight:500;">
+              <i class="fa-solid fa-image"></i> Adicionar prévia
+              <input type="file" accept="image/*" style="display:none;" onchange="uploadPreview(event,'${b.id}','${v.id}')">
+            </label>
+          </div>`}
           <div style="margin-top:10px;">
             <p style="font-size:11px;font-weight:600;color:var(--ink-soft);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Comentários</p>
             ${(v.comments||[]).map(c => `
@@ -1603,8 +1615,7 @@ function renderDetailBody(b) {
                 </div>
               </div>`).join('')}
             <div style="display:flex;gap:8px;margin-top:8px;">
-              <input type="text" id="cmt-input-${v.id}" placeholder="Adicionar comentário…" style="flex:1;font-size:13px;"
-                onkeydown="if(event.key==='Enter') addComment('${b.id}','${v.id}')">
+              <input type="text" id="cmt-input-${v.id}" placeholder="Adicionar comentário…" style="flex:1;font-size:13px;" onkeydown="if(event.key==='Enter') addComment('${b.id}','${v.id}')">
               <button class="btn btn-ghost btn-sm" onclick="addComment('${b.id}','${v.id}')"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
           </div>
@@ -1617,7 +1628,31 @@ function renderDetailBody(b) {
       </div>
     </div>`).join('') : `<p style="font-size:13px;color:var(--ink-soft);text-align:center;padding:20px 0;"><i class="fa-regular fa-folder-open" style="font-size:24px;display:block;margin-bottom:8px;"></i>Nenhuma versão ainda</p>`;
 
+  const checklistHtml = (b.checklist && b.checklist.length) ? b.checklist.map(i => `
+    <div class="checklist-item ${i.done?'done':''}">
+      <input type="checkbox" ${i.done?'checked':''} onchange="toggleChecklistItem('${b.id}','${i.id}')">
+      <span>${i.text}</span>
+      <button class="btn btn-ghost btn-sm" style="padding:2px 6px;" onclick="deleteChecklistItem('${b.id}','${i.id}')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  `).join('') : '<p style="font-size:12px;color:var(--ink-soft);text-align:center;padding:12px;">Nenhum item no checklist</p>';
+
+  const analysisHtml = isAnalise ? `
+    <div class="card analysis-card">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-magnifying-glass" style="color:#8B5CF6;"></i> Fase de Análise (Gestor)</h3>
+      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm" onclick="exportWord(db.find(x=>x.id==='${b.id}'))"><i class="fa-solid fa-file-word"></i> Baixar Briefing</button>
+        ${b.analise_attachment ? `<button class="btn btn-ghost btn-sm" onclick="downloadAnaliseDoc('${b.id}')"><i class="fa-solid fa-paperclip"></i> ${b.analise_attachment.name}</button>` : ''}
+        <label class="btn btn-ghost btn-sm" style="cursor:pointer;"><i class="fa-solid fa-upload"></i> Anexar Doc. Alterações
+          <input type="file" style="display:none;" onchange="uploadAnaliseDoc(event,'${b.id}')">
+        </label>
+      </div>
+      <textarea placeholder="Notas de análise / alterações solicitadas ao designer..." style="min-height:60px;margin-bottom:10px;" onchange="saveAnaliseNotes(event,'${b.id}')">${b.analise_notes||''}</textarea>
+      <button class="btn btn-brand btn-sm" style="width:100%;background:#8B5CF6;" onclick="approveAnalysis('${b.id}')"><i class="fa-solid fa-check-to-slot"></i> Aprovar Análise & Delegar</button>
+    </div>
+  ` : '';
+
   document.getElementById('dp-body').innerHTML = `
+    ${analysisHtml}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
       <div style="background:var(--paper-2);border-radius:8px;padding:10px;">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink-soft);margin-bottom:2px;">Prazo</div>
@@ -1628,10 +1663,24 @@ function renderDetailBody(b) {
         <div style="font-size:12px;font-weight:500;">${b.formatos && b.formatos.length>40 ? b.formatos.substring(0,40)+'…' : b.formatos}</div>
       </div>
     </div>
-
     <div style="margin-bottom:16px;">
       <p style="font-size:11px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Objetivo</p>
       <p style="font-size:13px;background:var(--paper-2);border-radius:8px;padding:10px;">${b.objetivo}</p>
+    </div>
+
+    <div style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
+      <p style="font-size:13px;font-weight:700;"><i class="fa-solid fa-list-check" style="color:var(--brand);margin-right:6px;"></i>Checklist de Produção</p>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-ghost btn-sm" onclick="openTemplateManager()"><i class="fa-solid fa-book"></i> Templates</button>
+        <button class="btn btn-ghost btn-sm" onclick="saveChecklistAsTemplate('${b.id}')"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:20px;">
+      ${checklistHtml}
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <input type="text" id="new-checklist-item" placeholder="Adicionar tarefa ou material..." style="flex:1;font-size:13px;" onkeydown="if(event.key==='Enter') addChecklistItem('${b.id}')">
+        <button class="btn btn-brand btn-sm" onclick="addChecklistItem('${b.id}')"><i class="fa-solid fa-plus"></i></button>
+      </div>
     </div>
 
     <div style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;">
@@ -1642,7 +1691,8 @@ function renderDetailBody(b) {
     <div style="margin-top:16px;border-top:1px solid var(--line);padding-top:14px;display:flex;gap:8px;">
       <button class="btn btn-ghost btn-sm" onclick="exportWord(db.find(x=>x.id==='${b.id}'))"><i class="fa-solid fa-file-word"></i> Baixar .doc</button>
       <button class="btn btn-danger btn-sm" onclick="deleteBriefing('${b.id}')"><i class="fa-solid fa-trash"></i> Excluir</button>
-    </div>`;
+    </div>
+  `;
 }
 
 function addVersion(bid) {
@@ -1862,7 +1912,20 @@ function showToast(msg, type='') {
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), 3000);
 }
-
+<!-- MODAL GERENCIAR TEMPLATES DE CHECKLIST -->
+<div class="modal-overlay" id="modal-templates">
+  <div class="modal" style="max-width:520px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <h3 style="font-size:16px;font-weight:700;">📦 Gerenciar Templates de Checklist</h3>
+      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="tpl-list" style="max-height:300px;overflow-y:auto;margin-bottom:16px;"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost btn-sm" onclick="closeTemplateManager()">Fechar</button>
+      <button class="btn btn-brand btn-sm" onclick="createNewTemplate()"><i class="fa-solid fa-plus"></i> Novo Template</button>
+    </div>
+  </div>
+</div>
 // =============================================
 // SEED DATA (demo)
 // =============================================
@@ -1915,11 +1978,120 @@ function seedDemoData() {
       ref_obs: 'Gosto de layouts clean com muito espaço em branco',
       prioridade: ['Normal','Alta','Crítica'][Math.floor(Math.random()*3)],
       obs: 'Entregar em alta resolução para impressão também.',
+      checklist: [],
+analise_attachment: null,
+analise_notes: '',
       versions: Math.random()>0.5 ? [{id:'v1',created_at:createdDate.toISOString(),preview:null,status:['pending','approved','revision'][Math.floor(Math.random()*3)],note:'Primeira versão',comments:[{author:'Solicitante',text:'Muito bom! Apenas ajustar a cor do CTA.',date:new Date().toISOString()}]}] : []
     };
     db.push(b);
   }
   saveDB();
+}
+// === PERSISTÊNCIA DE TEMPLATES ===
+function saveTemplates(arr) { localStorage.setItem('checklist_templates', JSON.stringify(arr)); }
+function loadTemplates() { 
+  try { return JSON.parse(localStorage.getItem('checklist_templates')) || []; } 
+  catch(e) { return []; } 
+}
+
+// === FASE DE ANÁLISE ===
+function uploadAnaliseDoc(e, bid) {
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const b = db.find(x=>x.id===bid);
+    if(b) { 
+      b.analise_attachment = {name: file.name, data: ev.target.result}; 
+      b.updated_at = new Date().toISOString(); saveDB(); 
+      showToast('📎 Documento de análise anexado');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+function saveAnaliseNotes(e, bid) {
+  const b = db.find(x=>x.id===bid);
+  if(b) { b.analise_notes = e.target.value; b.updated_at = new Date().toISOString(); saveDB(); }
+}
+function approveAnalysis(bid) {
+  const b = db.find(x=>x.id===bid);
+  if(!b || b.status !== 'analise') return;
+  b.status = 'aguardando';
+  b.updated_at = new Date().toISOString();
+  saveDB();
+  openDetail(bid); // Atualiza painel
+  if(document.getElementById('view-kanban').classList.contains('active')) renderKanban();
+  showToast('✅ Análise aprovada! Briefing delegado para produção.');
+}
+function downloadAnaliseDoc(bid) {
+  const b = db.find(x=>x.id===bid);
+  if(!b || !b.analise_attachment) return showToast('Nenhum documento anexado', 'error');
+  const a = document.createElement('a');
+  a.href = b.analise_attachment.data; a.download = b.analise_attachment.name; a.click();
+}
+
+// === CHECKLIST CRUD & TEMPLATES ===
+function addChecklistItem(bid) {
+  const inp = document.getElementById('new-checklist-item');
+  const text = inp.value.trim(); if(!text) return;
+  const b = db.find(x=>x.id===bid); if(!b) return;
+  if(!b.checklist) b.checklist = [];
+  b.checklist.push({id: uuidv4(), text, done: false});
+  b.updated_at = new Date().toISOString(); saveDB();
+  inp.value = ''; renderDetailBody(b);
+}
+function toggleChecklistItem(bid, itemId) {
+  const b = db.find(x=>x.id===bid); if(!b) return;
+  const item = b.checklist.find(i=>i.id===itemId);
+  if(item) { item.done = !item.done; b.updated_at = new Date().toISOString(); saveDB(); renderDetailBody(b); }
+}
+function deleteChecklistItem(bid, itemId) {
+  const b = db.find(x=>x.id===bid); if(!b) return;
+  b.checklist = (b.checklist||[]).filter(i=>i.id!==itemId);
+  b.updated_at = new Date().toISOString(); saveDB(); renderDetailBody(b);
+}
+function saveChecklistAsTemplate(bid) {
+  const b = db.find(x=>x.id===bid); if(!b) return;
+  const name = prompt('Nome do template (ex: Postagem Instagram, E-mail Mkt...):'); 
+  if(!name) return;
+  checklistTemplates.push({id: uuidv4(), name, items: (b.checklist||[]).map(i=>({text:i.text, done:false}))});
+  saveTemplates(checklistTemplates);
+  showToast('💾 Template salvo com sucesso!');
+}
+function loadTemplateToChecklist(bid, tplId) {
+  const tpl = checklistTemplates.find(t=>t.id===tplId); if(!tpl) return;
+  const b = db.find(x=>x.id===bid); if(!b) return;
+  b.checklist = tpl.items.map(i=>({...i, id: uuidv4(), done: false}));
+  b.updated_at = new Date().toISOString(); saveDB(); renderDetailBody(b);
+  showToast('📥 Template aplicado ao checklist!');
+}
+function openTemplateManager() { 
+  checklistTemplates = loadTemplates(); 
+  document.getElementById('modal-templates').classList.add('open'); 
+  renderTemplateList(); 
+}
+function closeTemplateManager() { document.getElementById('modal-templates').classList.remove('open'); }
+function renderTemplateList() {
+  const cont = document.getElementById('tpl-list');
+  if(!checklistTemplates.length) { cont.innerHTML = '<p style="color:var(--ink-soft);text-align:center;padding:16px;">Nenhum template salvo. Crie um a partir de um projeto existente.</p>'; return; }
+  cont.innerHTML = checklistTemplates.map(t => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;border-bottom:1px solid var(--line);">
+      <div><b style="font-size:13px;">${t.name}</b> <span class="tpl-tag">${t.items.length} itens</span></div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-ghost btn-sm" onclick="loadTemplateToChecklist('${currentDetailId}','${t.id}')"><i class="fa-solid fa-download"></i> Usar</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteTemplate('${t.id}')"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>
+  `).join('');
+}
+function deleteTemplate(id) {
+  checklistTemplates = checklistTemplates.filter(t=>t.id!==id);
+  saveTemplates(checklistTemplates); renderTemplateList();
+}
+function createNewTemplate() {
+  const name = prompt('Nome do novo template vazio:');
+  if(!name) return;
+  checklistTemplates.push({id: uuidv4(), name, items: []});
+  saveTemplates(checklistTemplates); renderTemplateList();
 }
 
 // =============================================
@@ -1934,6 +2106,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // set today as default
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('f_data_solic').value = today;
+  checklistTemplates = loadTemplates(); // Carrega templates na inicialização
 });
 </script>
 </body>
