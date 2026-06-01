@@ -640,6 +640,34 @@
 .checklist-item.done span { text-decoration: line-through; color: var(--ink-soft); }
 .analysis-card { background: linear-gradient(135deg, var(--paper-2) 0%, #f5f0e8 100%); margin-bottom:20px; border-color:#c4b89a; }
 .tpl-tag { font-size:11px; background:var(--paper-3); padding:2px 6px; border-radius:4px; color:var(--ink-soft); }
+  /* === CRONOGRAMA & HEATMAP === */
+.calendar-header { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; background:var(--line); border-radius:12px 12px 0 0; overflow:hidden; margin-bottom:1px; }
+.calendar-header div { background:var(--paper-2); padding:10px; text-align:center; font-size:12px; font-weight:600; color:var(--ink-soft); }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; background:var(--line); border-radius:0 0 12px 12px; min-height:500px; }
+.cal-day { background:#fff; min-height:110px; padding:8px; position:relative; transition:all 0.2s; cursor:default; display:flex; flex-direction:column; }
+.cal-day:hover { background:var(--paper-2); }
+.cal-day.drag-over { background:rgba(232,90,42,0.12); border:2px dashed var(--brand); transform:scale(1.02); z-index:10; border-radius:8px; }
+.cal-day.other-month { opacity:0.4; background:var(--paper-3); }
+.cal-day-num { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:6px; position:relative; z-index:2; }
+.cal-day.other-month .cal-day-num { color:var(--line); }
+/* Heatmap Intensity Scale */
+.heat-1 { background:linear-gradient(180deg, #FDF4FF 0%, #fff 100%); }
+.heat-2 { background:linear-gradient(180deg, #F3E8FF 0%, #fff 100%); }
+.heat-3 { background:linear-gradient(180deg, #E9D5FF 0%, #fff 100%); }
+.heat-4 { background:linear-gradient(180deg, #FCE7F3 0%, #fff 100%); }
+.heat-5 { background:linear-gradient(180deg, #FBCFE8 0%, #fff 100%); }
+.heat-6 { background:linear-gradient(180deg, #F9A8D4 0%, #fff 100%); }
+.heat-7 { background:linear-gradient(180deg, #F472B6 0%, #fff 100%); }
+/* Calendar Briefing Item */
+.cal-item {
+  font-size:11px; padding:5px 7px; border-radius:5px; margin-bottom:3px; cursor:grab;
+  background:var(--paper-2); border-left:3px solid var(--brand); color:var(--ink-soft);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:all 0.15s; position:relative; z-index:2;
+}
+.cal-item:hover { background:var(--paper-3); transform:translateX(3px); box-shadow:0 2px 4px rgba(0,0,0,0.05); }
+.cal-item.dragging { opacity:0.3; cursor:grabbing; transform:rotate(2deg); }
+.cal-item.urgent { border-left-color:var(--red); background:#FEF2F2; color:var(--red); font-weight:600; }
+  
 </style>
 </head>
 <body>
@@ -670,6 +698,9 @@
         <i class="fa-solid fa-list"></i>
         <span>Todos Briefings</span>
       </button>
+      <button class="nav-btn" onclick="navigate('cronograma')" id="nav-cronograma">
+  <i class="fa-solid fa-calendar-days"></i> <span>Cronograma</span>
+</button>
     </div>
 
     <!-- Form nav dinâmica -->
@@ -1110,7 +1141,27 @@
         <div id="lista-briefings"></div>
       </div>
     </div>
-
+<!-- ==================== VIEW: CRONOGRAMA ==================== -->
+<div id="view-cronograma" class="view">
+  <div class="card" style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="btn btn-ghost btn-sm" onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <h2 id="cal-month-year" style="font-size:18px;font-weight:700;min-width:180px;text-align:center;"></h2>
+      <button class="btn btn-ghost btn-sm" onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <label class="field-label" style="margin:0;cursor:pointer;display:flex;align-items:center;gap:6px;background:var(--paper-2);padding:6px 10px;border-radius:8px;">
+        <input type="checkbox" id="heatmap-toggle" onchange="renderCalendar()" checked style="width:16px;height:16px;accent-color:var(--brand);">
+        <span style="font-size:12px;font-weight:500;">🔥 Heatmap Ativo</span>
+      </label>
+      <button class="btn btn-ghost btn-sm" onclick="goToToday()"><i class="fa-solid fa-calendar-check"></i> Hoje</button>
+    </div>
+  </div>
+  <div class="calendar-header">
+    <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+  </div>
+  <div id="calendar-grid" class="calendar-grid"></div>
+</div>
   </div><!-- /main -->
 </div><!-- /app -->
 
@@ -1235,7 +1286,7 @@ function navigate(view) {
   document.getElementById('view-'+view).classList.add('active');
   document.getElementById('nav-'+view).classList.add('active');
 
-  const titles = {form:'Novo Briefing', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico', lista:'Todos os Briefings'};
+  const titles = {form:'Novo Briefing', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico', lista:'Todos os Briefings', cronograma:'Cronograma de Entregas'};
   document.getElementById('topbar-title').textContent = titles[view];
 
   // Form nav
@@ -1948,7 +1999,87 @@ function renderLista() {
     </div>`;
   }).join('');
 }
+// =============================================
+// CRONOGRAMA (CALENDÁRIO + HEATMAP + DND)
+// =============================================
+let calDate = new Date();
+let dragCalId = null;
 
+function changeMonth(delta) {
+  // Evita bug de pulo de mês ao usar dias 29/30/31
+  calDate = new Date(calDate.getFullYear(), calDate.getMonth() + delta, 1);
+  renderCalendar();
+}
+function goToToday() { calDate = new Date(); renderCalendar(); }
+
+function renderCalendar() {
+  const grid = document.getElementById('calendar-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  const useHeat = document.getElementById('heatmap-toggle')?.checked ?? true;
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  
+  document.getElementById('cal-month-year').textContent = calDate.toLocaleDateString('pt-BR', {month:'long', year:'numeric'}).replace(/^\w/, c=>c.toUpperCase());
+
+  // Contagem para Heatmap
+  const dayCounts = {};
+  db.forEach(b => { if(b.prazo && b.prazo !== 'Não informado') dayCounts[b.prazo] = (dayCounts[b.prazo]||0) + 1; });
+
+  const firstDay = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const prevMonthDays = new Date(y, m, 0).getDate();
+
+  // Preencher dias do mês anterior
+  for(let i=firstDay-1; i>=0; i--) grid.appendChild(buildCalCell(prevMonthDays-i, m-1, y, true, dayCounts, useHeat));
+  // Dias do mês atual
+  for(let d=1; d<=daysInMonth; d++) grid.appendChild(buildCalCell(d, m, y, false, dayCounts, useHeat));
+  // Completar grade (6 linhas = 42 células)
+  const needed = 42 - grid.children.length;
+  for(let d=1; d<=needed; d++) grid.appendChild(buildCalCell(d, m+1, y, true, dayCounts, useHeat));
+}
+
+function buildCalCell(day, m, y, isOther, counts, useHeat) {
+  const dateStr = new Date(y, m, day).toISOString().split('T')[0];
+  const cell = document.createElement('div');
+  cell.className = 'cal-day' + (isOther ? ' other-month' : '');
+  cell.innerHTML = `<div class="cal-day-num">${day}</div>`;
+
+  // Aplica Heatmap se ativo
+  if(useHeat && !isOther && counts[dateStr]) {
+    const lvl = Math.min(counts[dateStr], 7);
+    cell.classList.add(`heat-${lvl}`);
+  }
+
+  // Drop Zone Handlers
+  cell.ondragover = e => { e.preventDefault(); cell.classList.add('drag-over'); e.dataTransfer.dropEffect='move'; };
+  cell.ondragleave = () => cell.classList.remove('drag-over');
+  cell.ondrop = e => {
+    e.preventDefault(); cell.classList.remove('drag-over');
+    if(!dragCalId) return;
+    const b = db.find(x=>x.id===dragCalId);
+    if(b && b.prazo !== dateStr) {
+      b.prazo = dateStr; b.updated_at = new Date().toISOString(); saveDB();
+      renderCalendar();
+      showToast(`📅 Prazo remarcado para ${dateStr.split('-').reverse().join('/')}`);
+    }
+    dragCalId = null;
+  };
+
+  // Renderizar cards
+  if(!isOther) {
+    db.filter(b => b.prazo === dateStr).forEach(b => {
+      const el = document.createElement('div');
+      el.className = 'cal-item' + (b.urgencia ? ' urgent' : '');
+      el.textContent = (b.urgencia ? '⚡ ' : '') + b.nome;
+      el.draggable = true;
+      el.ondragstart = e => { dragCalId = b.id; el.classList.add('dragging'); e.dataTransfer.setData('text/plain', b.id); };
+      el.ondragend = () => { el.classList.remove('dragging'); dragCalId = null; };
+      el.onclick = e => { e.stopPropagation(); openDetail(b.id); };
+      cell.appendChild(el);
+    });
+  }
+  return cell;
+}
 // =============================================
 // EXPORT CSV
 // =============================================
@@ -2179,6 +2310,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setupFormNav();
   setupFormValidation();
   setupVideoConditional();
+    // Garante que o calendário renderize se a view estiver ativa no reload
+  if(document.getElementById('view-cronograma').classList.contains('active')) renderCalendar();
   // set today as default
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('f_data_solic').value = today;
