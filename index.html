@@ -1341,7 +1341,7 @@ function createBriefing(urgente) {
   const now = new Date().toISOString();
   const briefing = {
     id: uuidv4(),
-    status: 'aguardando',
+    status: 'analise',
     urgencia: urgente,
     assigned_to: getVal('f_designer') === 'Não informado' ? '' : document.getElementById('f_designer').value,
     created_at: now,
@@ -1643,21 +1643,26 @@ function renderDetailBody(b) {
     </div>
   `).join('') : '<p style="font-size:12px;color:var(--ink-soft);text-align:center;padding:12px;">Nenhum item no checklist</p>';
 
-  const analysisHtml = isAnalise ? `
-    <div class="card analysis-card">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-magnifying-glass" style="color:#8B5CF6;"></i> Fase de Análise (Gestor)</h3>
-      <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-        <button class="btn btn-ghost btn-sm" onclick="exportWord(db.find(x=>x.id==='${b.id}'))"><i class="fa-solid fa-file-word"></i> Baixar Briefing</button>
-        ${b.analise_attachment ? `<button class="btn btn-ghost btn-sm" onclick="downloadAnaliseDoc('${b.id}')"><i class="fa-solid fa-paperclip"></i> ${b.analise_attachment.name}</button>` : ''}
-        <label class="btn btn-ghost btn-sm" style="cursor:pointer;"><i class="fa-solid fa-upload"></i> Anexar Doc. Alterações
-          <input type="file" style="display:none;" onchange="uploadAnaliseDoc(event,'${b.id}')">
-        </label>
-      </div>
-      <textarea placeholder="Notas de análise / alterações solicitadas ao designer..." style="min-height:60px;margin-bottom:10px;" onchange="saveAnaliseNotes(event,'${b.id}')">${b.analise_notes||''}</textarea>
-      <button class="btn btn-brand btn-sm" style="width:100%;background:#8B5CF6;" onclick="approveAnalysis('${b.id}')"><i class="fa-solid fa-check-to-slot"></i> Aprovar Análise & Delegar</button>
-    </div>
-  ` : '';
+  const currentDesigner = b.assigned_to || '';
+const designerOpts = ['', 'Designer A', 'Designer B', 'Designer C', 'Freelancer'].map(d => 
+  `<option value="${d}" ${d===currentDesigner?'selected':''}>${d || 'Selecione um designer…'}</option>`
+).join('');
 
+const analysisHtml = isAnalise ? `
+  <div class="card analysis-card">
+    <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-magnifying-glass" style="color:#8B5CF6;"></i> Fase de Análise (Gestor)</h3>
+    <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="exportWord(db.find(x=>x.id==='${b.id}'))"><i class="fa-solid fa-file-word"></i> Baixar Briefing</button>
+      ${b.analise_attachment ? `<button class="btn btn-ghost btn-sm" onclick="downloadAnaliseDoc('${b.id}')"><i class="fa-solid fa-paperclip"></i> ${b.analise_attachment.name}</button>` : ''}
+      <label class="btn btn-ghost btn-sm" style="cursor:pointer;"><i class="fa-solid fa-upload"></i> Anexar Doc. Alterações
+        <input type="file" style="display:none;" onchange="uploadAnaliseDoc(event,'${b.id}')">
+      </label>
+    </div>
+    <label class="field-label">Designar para:</label>
+    <select id="analise-designer-select" style="width:100%;margin-bottom:12px;">${designerOpts}</select>
+    <button class="btn btn-brand btn-sm" style="width:100%;background:#8B5CF6;" onclick="approveAnalysis('${b.id}')"><i class="fa-solid fa-check-to-slot"></i> Aprovar Análise & Delegar</button>
+  </div>
+` : '';
   document.getElementById('dp-body').innerHTML = `
     ${analysisHtml}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
@@ -2009,12 +2014,21 @@ function saveAnaliseNotes(e, bid) {
 function approveAnalysis(bid) {
   const b = db.find(x=>x.id===bid);
   if(!b || b.status !== 'analise') return;
+  
+  const sel = document.getElementById('analise-designer-select');
+  if(!sel || !sel.value) {
+    showToast('⚠️ Selecione um designer antes de delegar.', 'error');
+    return;
+  }
+  
+  b.assigned_to = sel.value;
   b.status = 'aguardando';
   b.updated_at = new Date().toISOString();
   saveDB();
-  openDetail(bid); // Atualiza painel
+  
+  openDetail(bid);
   if(document.getElementById('view-kanban').classList.contains('active')) renderKanban();
-  showToast('✅ Análise aprovada! Briefing delegado para produção.');
+  showToast('✅ Análise aprovada! Briefing delegado para ' + b.assigned_to);
 }
 function downloadAnaliseDoc(bid) {
   const b = db.find(x=>x.id===bid);
