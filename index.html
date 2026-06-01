@@ -1043,9 +1043,41 @@
     </div>
 
     <!-- ==================== VIEW: KANBAN ==================== -->
-    <div id="view-kanban" class="view">
-      <div class="kanban-board" id="kanban-board"></div>
+<div id="view-kanban" class="view">
+  <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
+    <div style="flex:1;min-width:200px;">
+      <label class="field-label">Buscar (ID ou Solicitante)</label>
+      <input type="text" id="kanban-search" placeholder="Digite para filtrar..." oninput="applyKanbanFilters()">
     </div>
+    <div style="min-width:140px;">
+      <label class="field-label">Setor</label>
+      <select id="kanban-filter-setor" onchange="applyKanbanFilters()">
+        <option value="">Todos</option>
+        <option>Comercial</option><option>Marketing</option><option>RH</option>
+        <option>Financeiro</option><option>Operações</option><option>Diretoria</option>
+        <option>TI</option><option>Outro</option>
+      </select>
+    </div>
+    <div style="min-width:140px;">
+      <label class="field-label">Urgência</label>
+      <select id="kanban-filter-urgencia" onchange="applyKanbanFilters()">
+        <option value="">Todas</option>
+        <option value="true">Urgente</option>
+        <option value="false">Normal</option>
+      </select>
+    </div>
+    <div style="min-width:150px;">
+      <label class="field-label">Designer</label>
+      <select id="kanban-filter-designer" onchange="applyKanbanFilters()">
+        <option value="">Todos</option>
+        <option>Designer A</option><option>Designer B</option>
+        <option>Designer C</option><option>Freelancer</option>
+        <option value="none">Sem designer</option>
+      </select>
+    </div>
+  </div>
+  <div class="kanban-board" id="kanban-board"></div>
+</div>
 
     <!-- ==================== VIEW: DASHBOARD ==================== -->
     <div id="view-dashboard" class="view">
@@ -1342,6 +1374,7 @@ function createBriefing(urgente) {
   const briefing = {
     id: uuidv4(),
     status: 'analise',
+    archived: false,
     urgencia: urgente,
     assigned_to: getVal('f_designer') === 'Não informado' ? '' : document.getElementById('f_designer').value,
     created_at: now,
@@ -1497,21 +1530,39 @@ function slaInfo(prazo) {
   if (diff <= 2) return {cls:'sla-warn', text:`${diff}d restante${diff!==1?'s':''}`};
   return {cls:'sla-ok', text:`${diff}d restantes`};
 }
+  // === FILTROS DO KANBAN ===
+function getKanbanFilters() {
+  return {
+    search: (document.getElementById('kanban-search')?.value || '').toLowerCase(),
+    setor: document.getElementById('kanban-filter-setor')?.value || '',
+    urgencia: document.getElementById('kanban-filter-urgencia')?.value || '',
+    designer: document.getElementById('kanban-filter-designer')?.value || ''
+  };
+}
+function applyKanbanFilters() { renderKanban(); }
 function renderKanban() {
   const board = document.getElementById('kanban-board');
   board.innerHTML = '';
+  const f = getKanbanFilters();
+
   STATUS_COLS.forEach(status => {
     const meta = COL_META[status];
-    const cards = db.filter(b => b.status === status);
+    // Filtra por status, exclui arquivados e aplica filtros da barra
+    let cards = db.filter(b => b.status === status && !b.archived);
+    
+    if (f.search) cards = cards.filter(b => b.id.toLowerCase().includes(f.search) || b.nome.toLowerCase().includes(f.search));
+    if (f.setor) cards = cards.filter(b => b.setor === f.setor);
+    if (f.urgencia !== '') cards = cards.filter(b => b.urgencia === (f.urgencia === 'true'));
+    if (f.designer) {
+      cards = cards.filter(b => f.designer === 'none' ? (!b.assigned_to || b.assigned_to.trim() === '') : b.assigned_to === f.designer);
+    }
+
     const col = document.createElement('div');
     col.className = 'kanban-col';
     col.innerHTML = `
       <div class="kanban-col-header">
-        <div class="kanban-col-title">
-          <i class="fa-solid ${meta.icon}" style="color:${meta.color};font-size:12px;"></i>
-          ${meta.label}
-        </div>
-        <div class="col-count" id="cnt-${status}">${cards.length}</div>
+        <div class="kanban-col-title"><i class="fa-solid ${meta.icon}" style="color:${meta.color};font-size:12px;"></i> ${meta.label}</div>
+        <div class="col-count">${cards.length}</div>
       </div>
       <div class="kanban-cards" id="kcol-${status}" ondragover="onDragOver(event,'${status}')" ondrop="onDrop(event,'${status}')" ondragleave="onDragLeave(event)">
         ${cards.map(b => renderKanbanCard(b)).join('')}
@@ -1519,11 +1570,22 @@ function renderKanban() {
     board.appendChild(col);
   });
 }
+  
+function archiveBriefing(id) {
+  const b = db.find(x => x.id === id);
+  if (!b || b.status !== 'entregue') return;
+  b.archived = true;
+  b.updated_at = new Date().toISOString();
+  saveDB();
+  renderKanban();
+  showToast('📦 Projeto arquivado. Disponível em "Todos os Briefings".');
+}
+  
 function renderKanbanCard(b) {
   const sla = slaInfo(b.prazo);
+  const isEntregue = b.status === 'entregue';
   return `<div class="briefing-card" draggable="true"
-    ondragstart="onDragStart(event,'${b.id}')"
-    ondragend="onDragEnd(event)"
+    ondragstart="onDragStart(event,'${b.id}')" ondragend="onDragEnd(event)"
     onclick="openDetail('${b.id}')">
     ${b.urgencia ? '<div class="urgencia-flag" style="margin-bottom:6px;">⚡ URGENTE</div>' : ''}
     <div class="card-name">${b.nome}</div>
@@ -1532,7 +1594,8 @@ function renderKanbanCard(b) {
       <span class="sla-badge ${sla.cls}">${sla.text}</span>
       ${b.assigned_to ? `<span class="assigned-chip">${b.assigned_to}</span>` : ''}
     </div>
-    ${b.versions && b.versions.length ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:8px;"><i class="fa-regular fa-clock"></i> v${b.versions.length} versão${b.versions.length!==1?'s':''}</div>` : ''}
+    ${b.versions?.length ? `<div style="font-size:11px;color:var(--ink-soft);margin-top:8px;"><i class="fa-regular fa-clock"></i> v${b.versions.length} versão${b.versions.length!==1?'s':''}</div>` : ''}
+    ${isEntregue ? `<button class="btn btn-ghost btn-sm" style="width:100%;margin-top:10px;font-size:11px;" onclick="event.stopPropagation(); archiveBriefing('${b.id}')"><i class="fa-solid fa-box-archive"></i> Arquivar</button>` : ''}
   </div>`;
 }
 let dragId = null;
@@ -1871,7 +1934,10 @@ function renderLista() {
     return `<div class="briefing-row" onclick="openDetail('${b.id}')">
       <div style="width:10px;height:10px;border-radius:50%;background:${statusMeta.color};flex-shrink:0;"></div>
       <div style="flex:1;min-width:0;">
-        <div style="font-weight:600;font-size:13px;">${b.urgencia?'⚡ ':''}${b.nome}</div>
+        <div style="font-weight:600;font-size:13px;">
+  ${b.archived ? '<span style="background:var(--paper-3);color:var(--ink-soft);padding:2px 6px;border-radius:4px;font-size:10px;margin-right:6px;">📦 ARQUIVADO</span>' : ''}
+  ${b.urgencia?'⚡ ':''}${b.nome}
+</div>
         <div style="font-size:12px;color:var(--ink-soft);">${b.setor} · ${b.tipo_solicitacao}</div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
@@ -1980,6 +2046,7 @@ function seedDemoData() {
       checklist: [],
 analise_attachment: null,
 analise_notes: '',
+      archived: false,
       versions: Math.random()>0.5 ? [{id:'v1',created_at:createdDate.toISOString(),preview:null,status:['pending','approved','revision'][Math.floor(Math.random()*3)],note:'Primeira versão',comments:[{author:'Solicitante',text:'Muito bom! Apenas ajustar a cor do CTA.',date:new Date().toISOString()}]}] : []
     };
     db.push(b);
@@ -2107,6 +2174,7 @@ function createNewTemplate() {
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
   loadDB();
+  db.forEach(b => { if (typeof b.archived === 'undefined') b.archived = false; });
   seedDemoData();
   setupFormNav();
   setupFormValidation();
