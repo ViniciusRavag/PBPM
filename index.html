@@ -710,6 +710,10 @@
         <i class="fa-solid fa-pen-to-square"></i>
         <span>Novo Briefing</span>
       </button>
+      <button class="nav-btn" onclick="navigate('agencia')" id="nav-agencia">
+  <i class="fa-solid fa-briefcase"></i>
+  <span>Briefing Agência</span>
+</button>
       <button class="nav-btn" onclick="navigate('kanban')" id="nav-kanban">
         <i class="fa-solid fa-table-columns"></i>
         <span>Quadro Kanban</span>
@@ -751,7 +755,6 @@
       <form id="briefing-form" novalidate>
 
         <!-- SEC 1 -->
-        <div class="form-section" id="sec1" data-sec="1">
           <div class="section-header">
             <div class="section-num">1</div>
             <div><div class="section-title">Identificação da Solicitação</div><div class="section-sub">Dados do solicitante e projeto</div></div>
@@ -1096,7 +1099,56 @@
 
       </form>
     </div>
-
+<!-- ==================== VIEW: BRIEFING AGÊNCIA ==================== -->
+<div id="view-agencia" class="view">
+  <div class="card" style="max-width: 650px; margin: 0 auto;">
+    <div class="section-header">
+      <div class="section-num" style="background: #7e22ce;">🚀</div>
+      <div>
+        <div class="section-title">Registro de Demanda - Agência</div>
+        <div class="section-sub">Preenchido pela coordenadora para demandas externas</div>
+      </div>
+    </div>
+    <form id="agencia-form" onsubmit="event.preventDefault(); submitAgenciaBriefing();">
+      <div class="grid-2 mb-4">
+        <div>
+          <label class="field-label">Nome da Agência / Cliente *</label>
+          <input type="text" id="ag_nome" required placeholder="Ex: Agência XYZ / Cliente ABC">
+        </div>
+        <div>
+          <label class="field-label">Prazo de Entrega *</label>
+          <input type="date" id="ag_prazo" required>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="field-label">Contato Principal na Agência *</label>
+        <input type="text" id="ag_contato" required placeholder="Nome, e-mail e telefone">
+      </div>
+      <div class="mb-4">
+        <label class="field-label">Tipo de Demanda *</label>
+        <select id="ag_tipo" required>
+          <option value="">Selecione...</option>
+          <option>Campanha Completa</option>
+          <option>Peças Avulsas</option>
+          <option>Adaptação de Material</option>
+          <option>Material Institucional</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="field-label">Link do Arquivo / Briefing (Drive, WeTransfer, etc.) *</label>
+        <input type="text" id="ag_arquivo" required placeholder="https://...">
+      </div>
+      <div class="mb-4">
+        <label class="field-label">Observações Gerais / Formatos Esperados</label>
+        <textarea id="ag_obs" rows="3" placeholder="Ex: Precisa de feed, story e banner. Seguir manual da marca anexado."></textarea>
+      </div>
+      <button type="submit" class="btn btn-brand" style="width: 100%; background: #7e22ce;">
+        <i class="fa-solid fa-upload"></i> Registrar Demanda da Agência
+      </button>
+    </form>
+  </div>
+</div>
     <!-- ==================== VIEW: KANBAN ==================== -->
 <div id="view-kanban" class="view">
   <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
@@ -1104,6 +1156,14 @@
       <label class="field-label">Buscar (ID ou Solicitante)</label>
       <input type="text" id="kanban-search" placeholder="Digite para filtrar..." oninput="applyKanbanFilters()">
     </div>
+    <div style="min-width:140px;">
+  <label class="field-label">Origem</label>
+  <select id="kanban-filter-origem" onchange="applyKanbanFilters()">
+    <option value="">Todas</option>
+    <option>Institucional</option>
+    <option>Agência</option>
+  </select>
+</div>
     <div style="min-width:140px;">
       <label class="field-label">Setor</label>
       <select id="kanban-filter-setor" onchange="applyKanbanFilters()">
@@ -1141,6 +1201,7 @@
         <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Demandas por Setor</div><canvas id="chart-setor"></canvas></div>
         <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Carga por Designer</div><canvas id="chart-carga"></canvas></div>
         <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Volume (últimos 7 dias)</div><canvas id="chart-timeline"></canvas></div>
+        <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Demanda por Origem</div><canvas id="chart-origem"></canvas></div>
       </div>
       <div class="card" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;">
         <span style="font-size:13px;color:var(--ink-soft);">Exportar dados para análise externa</span>
@@ -1152,6 +1213,11 @@
     <div id="view-lista" class="view">
       <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
         <input type="text" id="search-input" placeholder="Buscar por nome, setor, tipo…" style="flex:1;min-width:200px;" oninput="renderLista()">
+        <select id="filter-origem" onchange="renderLista()" style="min-width:150px;">
+  <option value="">Todas as origens</option>
+  <option>Institucional</option>
+  <option>Agência</option>
+</select>
         <select id="filter-status" onchange="renderLista()" style="min-width:150px;">
           <option value="">Todos os status</option>
           <option value="aguardando">Aguardando</option>
@@ -1310,7 +1376,7 @@ function navigate(view) {
   document.getElementById('view-'+view).classList.add('active');
   document.getElementById('nav-'+view).classList.add('active');
 
-  const titles = {form:'Novo Briefing', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico', lista:'Todos os Briefings', cronograma:'Cronograma de Entregas'};
+  const titles = {form:'Novo Briefing', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico', lista:'Todos os Briefings', cronograma:'Cronograma de Entregas',agencia: 'Briefing Agência'};
   document.getElementById('topbar-title').textContent = titles[view];
 
   // Form nav
@@ -1451,6 +1517,7 @@ function createBriefing(urgente) {
     status: 'analise',
     archived: false,
     urgencia: urgente,
+    origem: 'Institucional',
     assigned_to: getVal('f_designer') === 'Não informado' ? '' : document.getElementById('f_designer').value,
     created_at: now,
     updated_at: now,
@@ -1506,6 +1573,58 @@ function createBriefing(urgente) {
     btn.style.background = '';
     btn.disabled = true;
   }, 3000);
+}
+  function submitAgenciaBriefing() {
+  const now = new Date().toISOString();
+  const briefing = {
+    id: uuidv4(),
+    status: 'analise', // Começa na análise do gestor interno
+    archived: false,
+    urgencia: false, // Pode ser ajustado futuramente com um checkbox se necessário
+    origem: 'Agência', // <-- GARANTIDO AUTOMATICAMENTE AQUI
+    assigned_to: '',
+    created_at: now,
+    updated_at: now,
+    nome: document.getElementById('ag_nome').value.trim(),
+    email: document.getElementById('ag_contato').value.trim(), // Reutilizando campo para contato
+    setor: 'Agência Externa', // Setor fixo para facilitar filtros
+    data_solicitacao: now.split('T')[0],
+    prazo: document.getElementById('ag_prazo').value,
+    tipo_solicitacao: document.getElementById('ag_tipo').value,
+    objetivo: 'Briefing enviado via upload pela coordenadora da agência.',
+    resultado: 'Conforme especificado no arquivo anexado',
+    publico: 'Não informado',
+    faixa_etaria: 'Não informado',
+    publico_obs: '',
+    tom: 'Não informado',
+    headline: '',
+    textos_obg: '',
+    cta: '',
+    url: '',
+    formatos: 'Conforme briefing anexado',
+    video_duracao: '',
+    video_roteiro: '',
+    estilo: '',
+    cores: '',
+    tipografia: '',
+    restricoes: '',
+    restricoes_obs: '',
+    materiais: 'Arquivo anexado pela agência',
+    mat_link: document.getElementById('ag_arquivo').value.trim(),
+    referencias: '',
+    ref_obs: '',
+    prioridade: 'Normal',
+    obs: document.getElementById('ag_obs').value.trim(),
+    versions: []
+  };
+  
+  db.push(briefing);
+  saveDB();
+  showToast('✓ Briefing da Agência registrado com sucesso!', 'success');
+  document.getElementById('agencia-form').reset();
+  
+  // Opcional: Redirecionar para o Kanban após o sucesso
+  // navigate('kanban');
 }
 
 // =============================================
@@ -1611,7 +1730,8 @@ function getKanbanFilters() {
     search: (document.getElementById('kanban-search')?.value || '').toLowerCase(),
     setor: document.getElementById('kanban-filter-setor')?.value || '',
     urgencia: document.getElementById('kanban-filter-urgencia')?.value || '',
-    designer: document.getElementById('kanban-filter-designer')?.value || ''
+    designer: document.getElementById('kanban-filter-designer')?.value || '',
+    origem: document.getElementById('kanban-filter-origem')?.value || '' // <-- ADICIONE
   };
 }
 function applyKanbanFilters() { renderKanban(); }
@@ -1631,6 +1751,7 @@ function renderKanban() {
     if (f.designer) {
       cards = cards.filter(b => f.designer === 'none' ? (!b.assigned_to || b.assigned_to.trim() === '') : b.assigned_to === f.designer);
     }
+    if (f.origem) cards = cards.filter(b => (b.origem || 'Institucional') === f.origem);
 
     const col = document.createElement('div');
     col.className = 'kanban-col';
@@ -1659,10 +1780,16 @@ function archiveBriefing(id) {
 function renderKanbanCard(b) {
   const sla = slaInfo(b.prazo);
   const isEntregue = b.status === 'entregue';
-  return `<div class="briefing-card" draggable="true"
-    ondragstart="onDragStart(event,'${b.id}')" ondragend="onDragEnd(event)"
-    onclick="openDetail('${b.id}')">
-    ${b.urgencia ? '<div class="urgencia-flag" style="margin-bottom:6px;">⚡ URGENTE</div>' : ''}
+  const origem = b.origem || 'Institucional'; // Fallback para dados antigos
+  const corOrigem = origem === 'Agência' ? '#f3e8ff' : '#e0f2fe'; // Roxo claro vs Azul claro
+  const textoOrigem = origem === 'Agência' ? '#7e22ce' : '#0369a1';
+
+  return `<div class="briefing-card" draggable="true" ... >
+    <!-- BADGE DE ORIGEM ADICIONADO AQUI -->
+    <div style="display:flex; gap:6px; margin-bottom:6px;">
+      ${b.urgencia ? '<div class="urgencia-flag">⚡ URGENTE</div>' : ''}
+      <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:${corOrigem}; color:${textoOrigem}; font-weight:600;">${origem}</span>
+    </div>
     <div class="card-name">${b.nome}</div>
     <div class="card-setor">${b.setor} · ${b.tipo_solicitacao}</div>
     <div class="card-meta">
@@ -1985,6 +2112,32 @@ function renderDashboard() {
     },
     options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}
   });
+  
+  // Chart Origem
+const origemCounts = { 'Institucional': 0, 'Agência': 0 };
+db.forEach(b => { 
+  const orig = b.origem || 'Institucional'; 
+  if(origemCounts[orig] !== undefined) origemCounts[orig]++; 
+});
+
+const ctxOrigem = document.getElementById('chart-origem'); // Certifique-se de adicionar este canvas no HTML do dashboard
+if (ctxOrigem) {
+  chartInstances.origem = new Chart(ctxOrigem.getContext('2d'), {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(origemCounts),
+      datasets: [{
+        data: Object.values(origemCounts),
+        backgroundColor: ['#0369a1', '#7e22ce'], // Azul para Institucional, Roxo para Agência
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12 } } },
+      cutout: '65%'
+    }
+  });
 }
 
 // =============================================
@@ -1993,26 +2146,27 @@ function renderDashboard() {
 function renderLista() {
   const q = (document.getElementById('search-input').value||'').toLowerCase();
   const st = document.getElementById('filter-status').value;
+  const orig = document.getElementById('filter-origem').value; // <-- ADICIONE
+  
   const filtered = db.filter(b => {
     const txt = (b.nome+b.setor+b.tipo_solicitacao+b.email).toLowerCase();
-    return (!q || txt.includes(q)) && (!st || b.status===st);
+    const matchOrigem = !orig || (b.origem || 'Institucional') === orig; // <-- ADICIONE
+    return (!q || txt.includes(q)) && (!st || b.status===st) && matchOrigem; // <-- ATUALIZE
   }).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  
+  // ... dentro do map que gera o HTML da lista, adicione o badge:
+  const origem = b.origem || 'Institucional';
+  const corOrigem = origem === 'Agência' ? '#f3e8ff' : '#e0f2fe';
+  const textoOrigem = origem === 'Agência' ? '#7e22ce' : '#0369a1';
 
-  const cont = document.getElementById('lista-briefings');
-  if (!filtered.length) {
-    cont.innerHTML = '<p style="text-align:center;padding:32px;color:var(--ink-soft);">Nenhum briefing encontrado</p>';
-    return;
-  }
-  cont.innerHTML = filtered.map(b => {
-    const sla = slaInfo(b.prazo);
-    const statusMeta = COL_META[b.status]||{color:'#888',label:b.status};
-    return `<div class="briefing-row" onclick="openDetail('${b.id}')">
-      <div style="width:10px;height:10px;border-radius:50%;background:${statusMeta.color};flex-shrink:0;"></div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-weight:600;font-size:13px;">
-  ${b.archived ? '<span style="background:var(--paper-3);color:var(--ink-soft);padding:2px 6px;border-radius:4px;font-size:10px;margin-right:6px;">📦 ARQUIVADO</span>' : ''}
-  ${b.urgencia?'⚡ ':''}${b.nome}
-</div>
+  return `<div class="briefing-row" onclick="openDetail('${b.id}')">
+    <div style="width:10px;height:10px;border-radius:50%;background:${statusMeta.color};flex-shrink:0;"></div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:600;font-size:13px; display:flex; align-items:center; gap:8px;">
+        <span style="font-size:10px; padding:2px 6px; border-radius:4px; background:${corOrigem}; color:${textoOrigem}; font-weight:600;">${origem}</span>
+        ${b.archived ? '<span style="background:var(--paper-3);color:var(--ink-soft);padding:2px 6px;border-radius:4px;font-size:10px;">📦 ARQUIVADO</span>' : ''}
+        ${b.urgencia?'⚡ ':''}${b.nome}
+      </div>
         <div style="font-size:12px;color:var(--ink-soft);">${b.setor} · ${b.tipo_solicitacao}</div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
@@ -2204,6 +2358,32 @@ analise_notes: '',
       archived: false,
       versions: Math.random()>0.5 ? [{id:'v1',created_at:createdDate.toISOString(),preview:null,status:['pending','approved','revision'][Math.floor(Math.random()*3)],note:'Primeira versão',comments:[{author:'Solicitante',text:'Muito bom! Apenas ajustar a cor do CTA.',date:new Date().toISOString()}]}] : []
     };
+    // Adicionar 2 demandas de agência para teste
+for (let i = 0; i < 2; i++) {
+  const prazoDate = new Date();
+  prazoDate.setDate(prazoDate.getDate() + 10 + i);
+  db.push({
+    id: uuidv4(),
+    status: 'aguardando',
+    archived: false,
+    urgencia: i === 0,
+    origem: 'Agência', // <-- DIFERENCIAL
+    assigned_to: 'Designer B',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    nome: `Agência Criativa ${i+1} - Cliente X`,
+    email: 'contato@agenciacriativa.com.br',
+    setor: 'Agência Externa',
+    data_solicitacao: new Date().toISOString().split('T')[0],
+    prazo: prazoDate.toISOString().split('T')[0],
+    tipo_solicitacao: 'Campanha Completa',
+    objetivo: 'Briefing externo via upload',
+    formatos: 'Feed, Story, Banner',
+    mat_link: 'https://wetransfer.com/exemplo',
+    obs: 'Urgente na aprovação do conceito.',
+    versions: []
+  });
+}
     db.push(b);
   }
   saveDB();
