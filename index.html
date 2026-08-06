@@ -29,6 +29,7 @@
   --yellow: #B8860B;
   --red: #C0392B;
   --blue: #1E6091;
+  --agencia: #7e22ce;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -39,9 +40,7 @@ body {
   line-height: 1.6;
 }
 h1,h2,h3,h4,h5 { font-family: 'Lato', sans-serif; }
-/* LAYOUT */
 #app { display: flex; min-height: 100vh; }
-/* SIDEBAR */
 #sidebar {
   width: 220px; min-width: 220px;
   background: var(--ink); color: var(--paper);
@@ -64,7 +63,6 @@ h1,h2,h3,h4,h5 { font-family: 'Lato', sans-serif; }
 .nav-btn:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
 .nav-btn.active { background: var(--brand); color: #fff; font-weight: 500; }
 .nav-btn i { width: 16px; text-align: center; font-size: 13px; }
-/* FORM NAV */
 .form-nav-item {
   display: flex; align-items: center; gap: 8px; padding: 7px 12px;
   border-radius: 6px; cursor: pointer; font-size: 12px; color: rgba(255,255,255,0.45);
@@ -72,7 +70,6 @@ h1,h2,h3,h4,h5 { font-family: 'Lato', sans-serif; }
 }
 .form-nav-item.active { color: var(--brand); border-right-color: var(--brand); background: rgba(232,90,42,0.1); font-weight: 600; }
 .form-nav-item:hover { color: rgba(255,255,255,0.8); }
-/* MAIN */
 #main { flex: 1; overflow-x: hidden; overflow-y: auto; }
 .topbar {
   background: var(--paper); border-bottom: 1px solid var(--line);
@@ -83,10 +80,8 @@ h1,h2,h3,h4,h5 { font-family: 'Lato', sans-serif; }
 .topbar-badge { background: var(--brand); color: #fff; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
 .view { display: none; padding: 32px; }
 .view.active { display: block; }
-/* CARDS */
 .card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
 .card-sm { padding: 16px; }
-/* FORMULÁRIO */
 .form-section { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 28px; margin-bottom: 20px; scroll-margin-top: 80px; }
 .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--paper-3); }
 .section-num { background: var(--brand); color: #fff; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; flex-shrink: 0; }
@@ -115,7 +110,6 @@ textarea { resize: vertical; min-height: 90px; }
 .radio-card input { position: absolute; opacity: 0; width: 0; height: 0; }
 .radio-card .card-body { padding: 8px 14px; border: 1.5px solid var(--line); border-radius: 8px; font-size: 13px; color: var(--ink-soft); background: var(--paper); transition: all 0.15s; white-space: nowrap; }
 .radio-card input:checked ~ .card-body { border-color: var(--brand); background: var(--brand-light); color: var(--brand-dark); font-weight: 500; }
-/* BTN */
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; border: none; transition: all 0.15s; }
 .btn-brand { background: var(--brand); color: #fff; }
 .btn-brand:hover { background: var(--brand-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(232,90,42,0.3); }
@@ -129,12 +123,10 @@ textarea { resize: vertical; min-height: 90px; }
 .btn-success:hover { background: #86efac; }
 #video-fields { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.4s ease, opacity 0.3s ease; }
 #video-fields.open { max-height: 300px; opacity: 1; }
-/* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(26,18,8,0.6); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal { background: #fff; border-radius: 16px; padding: 32px; max-width: 480px; width: 90%; transform: scale(0.95); transition: transform 0.2s; border: 1px solid var(--line); max-height: 90vh; overflow-y: auto; }
 .modal-overlay.open .modal { transform: scale(1); }
-/* KANBAN */
 .kanban-board { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; min-height: 60vh; }
 .kanban-col { min-width: 240px; max-width: 240px; background: var(--paper-2); border-radius: 12px; border: 1px solid var(--line); display: flex; flex-direction: column; }
 .kanban-col-header { padding: 14px 16px 10px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
@@ -154,12 +146,10 @@ textarea { resize: vertical; min-height: 90px; }
 .sla-late { background: #fee2e2; color: var(--red); }
 .urgencia-flag { background: #fef3c7; color: #d97706; font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 700; }
 .assigned-chip { font-size: 11px; color: var(--ink-soft); background: var(--paper-2); padding: 2px 8px; border-radius: 20px; }
-/* DETAIL PANEL */
 .detail-panel { position: fixed; top: 0; right: 0; width: 520px; height: 100vh; background: #fff; border-left: 1px solid var(--line); z-index: 100; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s ease; box-shadow: -8px 0 32px rgba(0,0,0,0.1); }
 .detail-panel.open { transform: translateX(0); }
 .detail-header { padding: 20px 24px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; justify-content: space-between; position: sticky; top: 0; background: #fff; z-index: 5; }
 .detail-body { padding: 20px 24px; }
-/* TIMELINE */
 .timeline { position: relative; }
 .timeline-item { display: flex; gap: 14px; margin-bottom: 20px; position: relative; }
 .timeline-item:not(:last-child)::before { content: ''; position: absolute; left: 15px; top: 32px; bottom: -10px; width: 1px; background: var(--line); }
@@ -179,7 +169,6 @@ textarea { resize: vertical; min-height: 90px; }
 .comment-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--brand-light); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
 .comment-bubble { background: var(--paper-2); border-radius: 0 8px 8px 8px; padding: 8px 12px; flex: 1; font-size: 13px; }
 .comment-meta { font-size: 11px; color: var(--ink-soft); margin-bottom: 2px; }
-/* DASHBOARD */
 .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 .kpi-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
 .kpi-value { font-family: 'Lato', sans-serif; font-size: 32px; font-weight: 900; color: var(--ink); line-height: 1; }
@@ -193,7 +182,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
-.toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; z-index: 500; transform: translateY(80px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+.toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; z-index: 500; transform: translateY(80px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 8px; max-width: 420px; }
 .toast.show { transform: translateY(0); opacity: 1; }
 .toast.success { background: var(--green); }
 .toast.error { background: var(--red); }
@@ -210,14 +199,12 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .detail-panel { width: 100%; }
 }
-/* CHECKLIST & ANÁLISE */
 .checklist-item { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--paper-3); }
 .checklist-item input[type="checkbox"] { width:18px; height:18px; accent-color: var(--brand); cursor:pointer; }
 .checklist-item span { flex:1; font-size:13px; transition:all 0.2s; }
 .checklist-item.done span { text-decoration: line-through; color: var(--ink-soft); }
 .analysis-card { background: linear-gradient(135deg, var(--paper-2) 0%, #f5f0e8 100%); margin-bottom:20px; border-color:#c4b89a; }
 .tpl-tag { font-size:11px; background:var(--paper-3); padding:2px 6px; border-radius:4px; color:var(--ink-soft); }
-/* CRONOGRAMA & HEATMAP */
 .calendar-header { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; background:var(--line); border-radius:12px 12px 0 0; overflow:hidden; margin-bottom:1px; }
 .calendar-header div { background:var(--paper-2); padding:10px; text-align:center; font-size:12px; font-weight:600; color:var(--ink-soft); }
 .calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; background:var(--line); border-radius:0 0 12px 12px; min-height:500px; }
@@ -237,13 +224,13 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 .cal-item { font-size: 11px; padding: 5px 7px; border-radius: 5px; margin-bottom: 3px; cursor: grab; background: var(--brand); color: #ffffff; border: 1.5px solid #B0B0B0; border-left: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: all 0.15s; position: relative; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
 .cal-item:hover { background: var(--brand-dark); transform: translateX(3px); }
 .cal-item.urgent { background: #C0392B; border-color: #A93226; }
-/* ======= NOVOS COMPONENTES ======= */
 .notif-badge { position:absolute; top:-5px; right:-5px; background:var(--red); color:#fff; font-size:10px; font-weight:700; min-width:18px; height:18px; border-radius:9px; display:flex; align-items:center; justify-content:center; padding:0 4px; }
 .chip { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px; margin-right:4px; }
 .chip-green { background:#dcfce7; color:var(--green); }
 .chip-red { background:#fee2e2; color:var(--red); }
 .chip-amber { background:#fef3c7; color:#b45309; }
 .chip-blue { background:#e0f2fe; color:#0369a1; }
+.chip-agencia { background:#f3e8ff; color:var(--agencia); }
 .score-circle { width:56px; height:56px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Lato'; font-weight:900; font-size:18px; flex-shrink:0; border:3px solid; line-height:1; }
 .score-q { background:#dcfce7; color:var(--green); border-color:#86efac; }
 .score-c { background:#fef9c3; color:#a16207; border-color:#fde047; }
@@ -272,6 +259,17 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 .audit-item { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--paper-3); }
 .empty-state { text-align:center; padding:40px; color:var(--ink-soft); font-size:13px; }
 .banner-info { border-left:4px solid var(--brand); background:linear-gradient(135deg,#FFF7ED,#fff); border-color:#FDBA8C; }
+.banner-agencia { border-left:4px solid var(--agencia); background:linear-gradient(135deg,#FAF5FF,#fff); border-color:#D8B4FE; }
+.tab-btn { flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 16px; border-radius:10px; border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); font-weight:600; font-size:13px; cursor:pointer; transition:all .15s; font-family:'DM Sans',sans-serif; }
+.tab-btn:hover { border-color:var(--agencia); color:var(--agencia); }
+.tab-btn.active { background:var(--agencia); border-color:var(--agencia); color:#fff; box-shadow:0 4px 12px rgba(126,34,206,.25); }
+/* ===== VALIDAÇÃO VISÍVEL (correção do botão) ===== */
+.field-invalid { border-color: var(--red) !important; background:#fff5f5 !important; }
+.sec-attn { border-color:#FBBF24; box-shadow:0 0 0 3px rgba(251,191,36,.15); }
+.sec-attn .section-num { background:#d97706; }
+.pending-hint { font-size:12px; font-weight:600; margin-top:8px; display:none; align-items:flex-start; gap:6px; line-height:1.5; }
+.pending-hint.err { color:var(--red); display:flex; }
+.pending-hint.ok { color:var(--green); display:flex; }
 </style>
 </head>
 <body>
@@ -280,13 +278,12 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 <nav id="sidebar">
   <div class="sidebar-logo">
     <h1><span class="brand-dot"></span>Marketing<br>ACIF</h1>
-    <span>Marketing & Design v3.0</span>
+    <span>Institucional & Agência v3.2</span>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Entradas</div>
-    <button class="nav-btn active" onclick="navigate('form')" id="nav-form"><i class="fa-solid fa-pen-to-square"></i><span>Novo Briefing</span></button>
-    <button class="nav-btn" onclick="navigate('agencia')" id="nav-agencia"><i class="fa-solid fa-briefcase"></i><span>Briefing Agência</span></button>
-    <button class="nav-btn" onclick="navigate('comercial')" id="nav-comercial"><i class="fa-solid fa-handshake"></i><span>Portal Comercial</span></button>
+    <button class="nav-btn active" onclick="navigate('form')" id="nav-form"><i class="fa-solid fa-landmark"></i><span>Briefing Institucional</span></button>
+    <button class="nav-btn" onclick="navigate('agencia')" id="nav-agencia"><i class="fa-solid fa-store"></i><span>Briefing Agência</span></button>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Gestão</div>
@@ -305,7 +302,6 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     <div class="nav-section-label">Transparência</div>
     <button class="nav-btn" onclick="navigate('guia')" id="nav-guia"><i class="fa-solid fa-book-open"></i><span>Guia do Fluxo</span></button>
   </div>
-  <!-- Form nav dinâmica -->
   <div class="nav-section" id="form-nav-list" style="display:none;">
     <div class="nav-section-label">Seções do Form</div>
   </div>
@@ -314,10 +310,10 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 <!-- MAIN -->
 <div id="main">
   <div class="topbar">
-    <div class="topbar-title" id="topbar-title">Novo Briefing</div>
+    <div class="topbar-title" id="topbar-title">Briefing Institucional</div>
     <div style="display:flex;align-items:center;gap:10px;">
       <span id="topbar-count" class="topbar-badge" style="display:none;"></span>
-      <button class="btn btn-ghost btn-sm" style="position:relative;" onclick="navigate('triagem')" title="Solicitações aguardando triagem">
+      <button class="btn btn-ghost btn-sm" style="position:relative;" onclick="navigate('triagem')" title="Encaminhamentos aguardando triagem">
         <i class="fa-solid fa-bell"></i>
         <span id="triagem-badge" class="notif-badge" style="display:none;"></span>
       </button>
@@ -327,8 +323,16 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     </div>
   </div>
 
-  <!-- ==================== VIEW: FORMULÁRIO ==================== -->
+  <!-- ==================== VIEW: BRIEFING INSTITUCIONAL ==================== -->
   <div id="view-form" class="view active" style="max-width:820px;">
+    <div class="card banner-info" style="margin-bottom:16px;">
+      <p style="font-size:13px;color:var(--ink-soft);">
+        <i class="fa-solid fa-landmark" style="color:var(--brand);"></i>
+        <b>Fluxo Institucional</b> — demandas internas dos setores da ACIF (Empreender, Certificado Digital, Desenvolvimento Empresarial, Presidência e demais áreas).
+        O briefing entra direto na fase de <b>Análise</b>. Para demandas de <b>associados</b>, use o
+        <a href="#" onclick="navigate('agencia');return false;" style="color:var(--brand);font-weight:700;">Briefing Agência</a>.
+      </p>
+    </div>
     <form id="briefing-form" novalidate>
       <div class="form-section" id="sec1" data-sec="1">
         <div class="section-header">
@@ -336,21 +340,26 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
           <div><div class="section-title">Identificação da Solicitação</div><div class="section-sub">Dados do solicitante e projeto</div></div>
         </div>
         <div class="grid-2 mb-4">
-          <div><label class="field-label">Nome completo *</label><input type="text" id="f_nome" placeholder="João Silva" required></div>
-          <div><label class="field-label">E-mail *</label><input type="email" id="f_email" placeholder="joao@empresa.com" required></div>
+          <div><label class="field-label">Nome completo *</label><input type="text" id="f_nome" placeholder="João Silva"></div>
+          <div><label class="field-label">E-mail *</label><input type="text" id="f_email" inputmode="email" placeholder="joao@acif.com.br"></div>
         </div>
         <div class="grid-3">
           <div>
-            <label class="field-label">Setor *</label>
-            <select id="f_setor" required>
+            <label class="field-label">Setor ACIF *</label>
+            <select id="f_setor">
               <option value="">Selecione…</option>
-              <option>Comercial</option><option>Marketing</option><option>RH</option>
-              <option>Financeiro</option><option>Operações</option><option>Diretoria</option>
-              <option>TI</option><option>Outro</option>
+              <option>Empreender</option>
+              <option>Certificado Digital</option>
+              <option>Desenvolvimento Empresarial</option>
+              <option>Presidência</option>
+              <option>Comercial</option>
+              <option>Marketing</option>
+              <option>Administrativo</option>
+              <option>Outro</option>
             </select>
           </div>
-          <div><label class="field-label">Data da solicitação *</label><input type="date" id="f_data_solic" required></div>
-          <div><label class="field-label">Prazo de entrega *</label><input type="date" id="f_prazo" required></div>
+          <div><label class="field-label">Data da solicitação *</label><input type="date" id="f_data_solic"></div>
+          <div><label class="field-label">Prazo de entrega *</label><input type="date" id="f_prazo"></div>
         </div>
       </div>
       <div class="form-section" id="sec2" data-sec="2">
@@ -360,7 +369,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         </div>
         <div class="mb-4">
           <label class="field-label">Tipo de solicitação *</label>
-          <select id="f_tipo" required>
+          <select id="f_tipo">
             <option value="">Selecione…</option>
             <option>Lançamento de produto/serviço</option><option>Campanha promocional</option>
             <option>Evento / Convite</option><option>Conteúdo institucional</option>
@@ -371,7 +380,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         </div>
         <div class="mb-4">
           <label class="field-label">Objetivo da comunicação *</label>
-          <textarea id="f_objetivo" rows="3" placeholder="Ex: Divulgar o lançamento do produto X, aumentar conversões em 20%, informar equipe sobre processo Y…" required></textarea>
+          <textarea id="f_objetivo" rows="3" placeholder="Ex: Divulgar o lançamento do produto X, aumentar conversões em 20%, informar equipe sobre processo Y…"></textarea>
         </div>
         <div>
           <label class="field-label">Resultado esperado</label>
@@ -386,7 +395,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         <div class="grid-2 mb-4">
           <div>
             <label class="field-label">Segmento principal *</label>
-            <select id="f_publico" required>
+            <select id="f_publico">
               <option value="">Selecione…</option>
               <option>Clientes ativos</option><option>Prospects / Leads</option><option>Público geral</option>
               <option>Parceiros / Fornecedores</option><option>Equipe interna</option><option>Investidores</option>
@@ -409,12 +418,12 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
       <div class="form-section" id="sec4" data-sec="4">
         <div class="section-header">
           <div class="section-num">4</div>
-          <div><div class="section-title">Tom & Comunicação</div><div class="section-sub">Como a mensagem deve soar</div></div>
+          <div><div class="section-title">Tom & Comunicação</div><div class="section-sub">Como a mensagem deve soar — selecione uma opção *</div></div>
         </div>
         <div class="mb-4">
           <label class="field-label">Tom de voz *</label>
           <div class="radio-cards">
-            <label class="radio-card"><input type="radio" name="tom" value="Formal e institucional" required><div class="card-body">🎩 Formal</div></label>
+            <label class="radio-card"><input type="radio" name="tom" value="Formal e institucional"><div class="card-body">🎩 Formal</div></label>
             <label class="radio-card"><input type="radio" name="tom" value="Descontraído e próximo"><div class="card-body">😊 Descontraído</div></label>
             <label class="radio-card"><input type="radio" name="tom" value="Técnico e especialista"><div class="card-body">🔬 Técnico</div></label>
             <label class="radio-card"><input type="radio" name="tom" value="Urgente e direto"><div class="card-body">⚡ Urgente</div></label>
@@ -589,11 +598,14 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
           </div>
         </div>
       </div>
-      <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
-        <p style="font-size:13px;color:var(--ink-soft);">
-          <i class="fa-solid fa-circle-info" style="color:var(--brand);"></i>
-          Preencha todos os campos obrigatórios (*) para enviar o briefing.
-        </p>
+      <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:260px;">
+          <p style="font-size:13px;color:var(--ink-soft);">
+            <i class="fa-solid fa-circle-info" style="color:var(--brand);"></i>
+            Preencha todos os campos obrigatórios (*) para enviar o briefing institucional.
+          </p>
+          <div id="form-pending" class="pending-hint"></div>
+        </div>
         <button type="button" id="btn-submit" class="btn btn-brand" onclick="submitBriefing()" disabled>
           <i class="fa-solid fa-paper-plane" id="btn-icon"></i>
           <span id="btn-text">Gerar Briefing</span>
@@ -602,136 +614,158 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     </form>
   </div>
 
-  <!-- ==================== VIEW: BRIEFING AGÊNCIA ==================== -->
+  <!-- ==================== VIEW: BRIEFING AGÊNCIA (2 ABAS) ==================== -->
   <div id="view-agencia" class="view">
-    <div class="card" style="max-width: 650px; margin: 0 auto;">
-      <div class="section-header">
-        <div class="section-num" style="background: #7e22ce;">🚀</div>
-        <div>
-          <div class="section-title">Registro de Demanda - Agência</div>
-          <div class="section-sub">Preenchido pela coordenadora para demandas externas</div>
-        </div>
-      </div>
-      <form id="agencia-form" onsubmit="event.preventDefault(); submitAgenciaBriefing();">
-        <div class="grid-2 mb-4">
-          <div><label class="field-label">Nome da Agência / Cliente *</label><input type="text" id="ag_nome" required placeholder="Ex: Agência XYZ / Cliente ABC"></div>
-          <div><label class="field-label">Prazo de Entrega *</label><input type="date" id="ag_prazo" required></div>
-        </div>
-        <div class="mb-4"><label class="field-label">Contato Principal na Agência *</label><input type="text" id="ag_contato" required placeholder="Nome, e-mail e telefone"></div>
-        <div class="mb-4">
-          <label class="field-label">Tipo de Demanda *</label>
-          <select id="ag_tipo" required>
-            <option value="">Selecione...</option>
-            <option>Campanha Completa</option><option>Peças Avulsas</option><option>Adaptação de Material</option>
-            <option>Material Institucional</option><option>Outro</option>
-          </select>
-        </div>
-        <div class="mb-4"><label class="field-label">Link do Arquivo / Briefing (Drive, WeTransfer, etc.) *</label><input type="text" id="ag_arquivo" required placeholder="https://..."></div>
-        <div class="mb-4"><label class="field-label">Observações Gerais / Formatos Esperados</label><textarea id="ag_obs" rows="3" placeholder="Ex: Precisa de feed, story e banner. Seguir manual da marca anexado."></textarea></div>
-        <button type="submit" class="btn btn-brand" style="width: 100%; background: #7e22ce;"><i class="fa-solid fa-upload"></i> Registrar Demanda da Agência</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ==================== VIEW: PORTAL COMERCIAL ==================== -->
-  <div id="view-comercial" class="view">
     <div style="max-width:780px;margin:0 auto;">
-      <div class="card banner-info" style="margin-bottom:16px;">
-        <h2 style="font-size:16px;font-weight:900;margin-bottom:8px;"><i class="fa-solid fa-door-open" style="color:var(--brand);"></i> Porta de entrada única para o Marketing</h2>
-        <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:4px;">
-          <li><b>Toda solicitação do Comercial passa por triagem</b> — resposta em até 1 dia útil.</li>
-          <li>O <b>score de qualificação</b> (0–100) é calculado automaticamente: <span class="chip chip-green">≥ 60 qualificado</span><span class="chip chip-amber">40–59 condicional</span><span class="chip chip-red">&lt; 40 devolução sugerida</span></li>
-          <li>Solicitações não qualificadas são <b>devolvidas com termo formal e orientações</b> — nada é recusado sem justificativa.</li>
-          <li><b>Não prometa prazos ao cliente</b> sem consultar o SLA do serviço no <a href="#" onclick="navigate('guia');return false;" style="color:var(--brand);font-weight:600;">Guia do Fluxo</a>.</li>
-        </ul>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <button class="tab-btn active" id="tab-coord" onclick="switchAgenciaTab('coord')">
+          <i class="fa-solid fa-bullhorn"></i> Captação da Coordenadora
+        </button>
+        <button class="tab-btn" id="tab-encam" onclick="switchAgenciaTab('encam')">
+          <i class="fa-solid fa-handshake"></i> Encaminhamento Comercial
+        </button>
       </div>
-      <div class="card">
-        <div class="section-header">
-          <div class="section-num" style="background:#1E6091;"><i class="fa-solid fa-handshake" style="font-size:12px;"></i></div>
-          <div>
-            <div class="section-title">Encaminhamento de Cliente para o Marketing</div>
-            <div class="section-sub">Preenchimento obrigatório pela equipe Comercial antes de qualquer promessa de entrega</div>
-          </div>
+
+      <!-- ABA 1: CAPTAÇÃO DA COORDENADORA -->
+      <div id="agencia-pane-coord">
+        <div class="card banner-agencia" style="margin-bottom:16px;">
+          <p style="font-size:13px;color:var(--ink-soft);">
+            <i class="fa-solid fa-store" style="color:var(--agencia);"></i>
+            <b>Fluxo Agência — Captação própria.</b> Registro de demandas de associados captadas diretamente pela coordenadora da Agência.
+            Entram <b>direto na fase de Análise</b>, sem triagem. Para associados encaminhados pelo time Comercial, use a aba
+            <a href="#" onclick="switchAgenciaTab('encam');return false;" style="color:var(--agencia);font-weight:700;">Encaminhamento Comercial</a>.
+          </p>
         </div>
-        <form id="comercial-form" onsubmit="event.preventDefault(); submitComercialBriefing();">
-          <div class="grid-2 mb-4">
+        <div class="card">
+          <div class="section-header">
+            <div class="section-num" style="background:var(--agencia);"><i class="fa-solid fa-bullhorn" style="font-size:12px;"></i></div>
             <div>
-              <label class="field-label">Vendedor responsável *</label>
-              <select id="c_vendedor" required></select>
-            </div>
-            <div><label class="field-label">Cliente (associado) *</label><input type="text" id="c_cliente" required placeholder="Ex: Mercado São José"></div>
-          </div>
-          <div class="grid-2 mb-4">
-            <div><label class="field-label">CNPJ (opcional)</label><input type="text" id="c_cnpj" placeholder="00.000.000/0000-00"></div>
-            <div><label class="field-label">Contato do cliente *</label><input type="text" id="c_contato" required placeholder="Nome e telefone do responsável"></div>
-          </div>
-          <div class="mb-4">
-            <label class="field-label">Plano do associado *</label>
-            <div class="radio-cards">
-              <label class="radio-card"><input type="radio" name="c_plano" value="Essencial" required><div class="card-body">Essencial</div></label>
-              <label class="radio-card"><input type="radio" name="c_plano" value="Padrão"><div class="card-body">Padrão</div></label>
-              <label class="radio-card"><input type="radio" name="c_plano" value="Premium"><div class="card-body">Premium</div></label>
+              <div class="section-title">Registro de Demanda — Agência (Associado)</div>
+              <div class="section-sub">Preenchido pela coordenadora para demandas captadas por ela</div>
             </div>
           </div>
-          <div class="mb-4">
-            <label class="field-label">Serviço solicitado *</label>
-            <select id="c_servico" required>
-              <option value="">Selecione…</option>
-              <option>Assessoria de Marketing</option><option>Gestão de Redes Sociais</option>
-              <option>Campanha Promocional</option><option>Material Institucional</option>
-              <option>Identidade Visual</option><option>Tráfego Pago</option>
-              <option>Evento / Ação</option><option>Outro</option>
-            </select>
-          </div>
-          <div class="grid-2 mb-4">
+          <form id="agencia-form" onsubmit="event.preventDefault(); submitAgenciaBriefing();">
+            <div class="grid-2 mb-4">
+              <div><label class="field-label">Cliente (Associado) *</label><input type="text" id="ag_nome" required placeholder="Ex: Mercado São José"></div>
+              <div><label class="field-label">Prazo de Entrega *</label><input type="date" id="ag_prazo" required></div>
+            </div>
+            <div class="mb-4"><label class="field-label">Contato Principal do Associado *</label><input type="text" id="ag_contato" required placeholder="Nome, e-mail e telefone"></div>
+            <div class="mb-4">
+              <label class="field-label">Tipo de Demanda *</label>
+              <select id="ag_tipo" required>
+                <option value="">Selecione...</option>
+                <option>Campanha Completa</option><option>Peças Avulsas</option><option>Adaptação de Material</option>
+                <option>Material Institucional</option><option>Assessoria de Marketing</option><option>Outro</option>
+              </select>
+            </div>
+            <div class="mb-4"><label class="field-label">Link do Arquivo / Briefing (Drive, WeTransfer, etc.) *</label><input type="text" id="ag_arquivo" required placeholder="https://..."></div>
+            <div class="mb-4"><label class="field-label">Observações Gerais / Formatos Esperados</label><textarea id="ag_obs" rows="3" placeholder="Ex: Precisa de feed, story e banner. Seguir manual da marca anexado."></textarea></div>
+            <button type="submit" class="btn btn-brand" style="width:100%;background:var(--agencia);justify-content:center;">
+              <i class="fa-solid fa-upload"></i> Registrar Demanda da Agência
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- ABA 2: ENCAMINHAMENTO COMERCIAL -->
+      <div id="agencia-pane-encam" style="display:none;">
+        <div class="card banner-agencia" style="margin-bottom:16px;">
+          <h2 style="font-size:16px;font-weight:900;margin-bottom:8px;"><i class="fa-solid fa-door-open" style="color:var(--agencia);"></i> Encaminhamento de associados para a Agência</h2>
+          <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:4px;">
+            <li><b>Todo encaminhamento do Comercial passa por triagem</b> da Agência — resposta em até 1 dia útil.</li>
+            <li>O <b>score de qualificação</b> (0–100) é calculado automaticamente: <span class="chip chip-green">≥ 60 qualificado</span><span class="chip chip-amber">40–59 condicional</span><span class="chip chip-red">&lt; 40 devolução sugerida</span></li>
+            <li>Encaminhamentos não qualificados são <b>devolvidos com termo formal e orientações</b> ao vendedor.</li>
+            <li><b>Não prometa prazos ao associado</b> sem consultar o SLA do serviço no <a href="#" onclick="navigate('guia');return false;" style="color:var(--agencia);font-weight:700;">Guia do Fluxo</a>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="section-header">
+            <div class="section-num" style="background:var(--agencia);"><i class="fa-solid fa-handshake" style="font-size:12px;"></i></div>
             <div>
-              <label class="field-label">Cliente possui orçamento para o serviço? *</label>
+              <div class="section-title">Encaminhamento de Associado para a Agência</div>
+              <div class="section-sub">Preenchimento obrigatório pela equipe Comercial antes de qualquer promessa de entrega</div>
+            </div>
+          </div>
+          <form id="comercial-form" onsubmit="event.preventDefault(); submitComercialBriefing();">
+            <div class="grid-2 mb-4">
+              <div>
+                <label class="field-label">Vendedor responsável *</label>
+                <select id="c_vendedor" required></select>
+              </div>
+              <div><label class="field-label">Cliente (associado) *</label><input type="text" id="c_cliente" required placeholder="Ex: Mercado São José"></div>
+            </div>
+            <div class="grid-2 mb-4">
+              <div><label class="field-label">CNPJ (opcional)</label><input type="text" id="c_cnpj" placeholder="00.000.000/0000-00"></div>
+              <div><label class="field-label">Contato do cliente *</label><input type="text" id="c_contato" required placeholder="Nome e telefone do responsável"></div>
+            </div>
+            <div class="mb-4">
+              <label class="field-label">Plano do associado *</label>
               <div class="radio-cards">
-                <label class="radio-card"><input type="radio" name="c_budget" value="sim" required><div class="card-body">Sim</div></label>
-                <label class="radio-card"><input type="radio" name="c_budget" value="parcial"><div class="card-body">Parcial</div></label>
-                <label class="radio-card"><input type="radio" name="c_budget" value="nao"><div class="card-body">Não</div></label>
+                <label class="radio-card"><input type="radio" name="c_plano" value="Essencial" required><div class="card-body">Essencial</div></label>
+                <label class="radio-card"><input type="radio" name="c_plano" value="Padrão"><div class="card-body">Padrão</div></label>
+                <label class="radio-card"><input type="radio" name="c_plano" value="Premium"><div class="card-body">Premium</div></label>
               </div>
             </div>
-            <div>
-              <label class="field-label">Cliente demonstrou interesse na assessoria? *</label>
-              <div class="radio-cards">
-                <label class="radio-card"><input type="radio" name="c_interesse" value="sim" required><div class="card-body">Sim</div></label>
-                <label class="radio-card"><input type="radio" name="c_interesse" value="talvez"><div class="card-body">Talvez</div></label>
-                <label class="radio-card"><input type="radio" name="c_interesse" value="nao"><div class="card-body">Não</div></label>
+            <div class="mb-4">
+              <label class="field-label">Serviço solicitado *</label>
+              <select id="c_servico" required>
+                <option value="">Selecione…</option>
+                <option>Assessoria de Marketing</option><option>Gestão de Redes Sociais</option>
+                <option>Campanha Promocional</option><option>Material Institucional</option>
+                <option>Identidade Visual</option><option>Tráfego Pago</option>
+                <option>Evento / Ação</option><option>Outro</option>
+              </select>
+            </div>
+            <div class="grid-2 mb-4">
+              <div>
+                <label class="field-label">Cliente possui orçamento para o serviço? *</label>
+                <div class="radio-cards">
+                  <label class="radio-card"><input type="radio" name="c_budget" value="sim" required><div class="card-body">Sim</div></label>
+                  <label class="radio-card"><input type="radio" name="c_budget" value="parcial"><div class="card-body">Parcial</div></label>
+                  <label class="radio-card"><input type="radio" name="c_budget" value="nao"><div class="card-body">Não</div></label>
+                </div>
+              </div>
+              <div>
+                <label class="field-label">Cliente demonstrou interesse na assessoria? *</label>
+                <div class="radio-cards">
+                  <label class="radio-card"><input type="radio" name="c_interesse" value="sim" required><div class="card-body">Sim</div></label>
+                  <label class="radio-card"><input type="radio" name="c_interesse" value="talvez"><div class="card-body">Talvez</div></label>
+                  <label class="radio-card"><input type="radio" name="c_interesse" value="nao"><div class="card-body">Não</div></label>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="grid-2 mb-4">
-            <div>
-              <label class="field-label">Cliente já forneceu materiais / acessos? *</label>
-              <div class="radio-cards">
-                <label class="radio-card"><input type="radio" name="c_materiais" value="sim" required><div class="card-body">Sim</div></label>
-                <label class="radio-card"><input type="radio" name="c_materiais" value="parcial"><div class="card-body">Parcial</div></label>
-                <label class="radio-card"><input type="radio" name="c_materiais" value="nao"><div class="card-body">Não</div></label>
+            <div class="grid-2 mb-4">
+              <div>
+                <label class="field-label">Cliente já forneceu materiais / acessos? *</label>
+                <div class="radio-cards">
+                  <label class="radio-card"><input type="radio" name="c_materiais" value="sim" required><div class="card-body">Sim</div></label>
+                  <label class="radio-card"><input type="radio" name="c_materiais" value="parcial"><div class="card-body">Parcial</div></label>
+                  <label class="radio-card"><input type="radio" name="c_materiais" value="nao"><div class="card-body">Não</div></label>
+                </div>
+              </div>
+              <div>
+                <label class="field-label">Expectativa de prazo do cliente *</label>
+                <div class="radio-cards">
+                  <label class="radio-card"><input type="radio" name="c_expectativa" value="realista" required><div class="card-body">Entende o prazo do marketing</div></label>
+                  <label class="radio-card"><input type="radio" name="c_expectativa" value="imediata"><div class="card-body">Quer entrega imediata</div></label>
+                </div>
               </div>
             </div>
-            <div>
-              <label class="field-label">Expectativa de prazo do cliente *</label>
-              <div class="radio-cards">
-                <label class="radio-card"><input type="radio" name="c_expectativa" value="realista" required><div class="card-body">Entende o prazo do marketing</div></label>
-                <label class="radio-card"><input type="radio" name="c_expectativa" value="imediata"><div class="card-body">Quer entrega imediata</div></label>
+            <div class="grid-2 mb-4">
+              <div><label class="field-label">Prazo desejado *</label><input type="date" id="c_prazo" required></div>
+              <div style="align-self:end;font-size:12px;color:var(--ink-soft);background:var(--paper-2);border-radius:8px;padding:10px;">
+                <i class="fa-solid fa-circle-info" style="color:var(--agencia);"></i> Consulte o SLA de cada serviço no Guia do Fluxo antes de informar o associado.
               </div>
             </div>
-          </div>
-          <div class="grid-2 mb-4">
-            <div><label class="field-label">Prazo desejado *</label><input type="date" id="c_prazo" required></div>
-            <div style="align-self:end;font-size:12px;color:var(--ink-soft);background:var(--paper-2);border-radius:8px;padding:10px;">
-              <i class="fa-solid fa-circle-info" style="color:var(--brand);"></i> Consulte o SLA de cada serviço no Guia do Fluxo antes de informar o cliente.
+            <div class="mb-4">
+              <label class="field-label">Contexto e expectativa do cliente *</label>
+              <textarea id="c_descricao" rows="3" required placeholder="Descreva o que o cliente espera, situação atual do negócio, objetivo da contratação…"></textarea>
             </div>
-          </div>
-          <div class="mb-4">
-            <label class="field-label">Contexto e expectativa do cliente *</label>
-            <textarea id="c_descricao" rows="3" required placeholder="Descreva o que o cliente espera, situação atual do negócio, objetivo da contratação…"></textarea>
-          </div>
-          <button type="submit" class="btn btn-brand" style="width:100%;background:#1E6091;justify-content:center;">
-            <i class="fa-solid fa-paper-plane"></i> Enviar para Triagem do Marketing
-          </button>
-        </form>
+            <button type="submit" class="btn btn-brand" style="width:100%;background:var(--agencia);justify-content:center;">
+              <i class="fa-solid fa-paper-plane"></i> Enviar para Triagem da Agência
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -750,7 +784,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
           <option value="baixo">Não qualificado (&lt;40)</option>
         </select>
       </div>
-      <p style="font-size:12px;color:var(--ink-soft);flex:1;min-width:220px;"><i class="fa-solid fa-circle-info" style="color:var(--brand);"></i> Aprovar envia para a fase de Análise. Devolver gera um termo formal enviado ao vendedor com o motivo e as orientações.</p>
+      <p style="font-size:12px;color:var(--ink-soft);flex:1;min-width:220px;"><i class="fa-solid fa-circle-info" style="color:var(--agencia);"></i> Encaminhamentos do Comercial para a Agência. Aprovar envia para a fase de Análise. Devolver gera um termo formal ao vendedor com motivo e orientações.</p>
     </div>
     <div class="triagem-grid" id="triagem-grid"></div>
     <div class="card" style="margin-top:20px;">
@@ -762,29 +796,35 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   <!-- ==================== VIEW: KANBAN ==================== -->
   <div id="view-kanban" class="view">
     <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:end;">
-      <div style="flex:1;min-width:200px;"><label class="field-label">Buscar (ID, cliente, solicitante ou vendedor)</label><input type="text" id="kanban-search" placeholder="Digite para filtrar..." oninput="applyKanbanFilters()"></div>
-      <div style="min-width:140px;">
-        <label class="field-label">Origem</label>
+      <div style="flex:1;min-width:190px;"><label class="field-label">Buscar (ID, cliente, solicitante ou vendedor)</label><input type="text" id="kanban-search" placeholder="Digite para filtrar..." oninput="applyKanbanFilters()"></div>
+      <div style="min-width:130px;">
+        <label class="field-label">Divisão</label>
         <select id="kanban-filter-origem" onchange="applyKanbanFilters()">
-          <option value="">Todas</option><option>Institucional</option><option>Agência</option><option>Comercial</option>
+          <option value="">Todas</option><option>Institucional</option><option>Agência</option>
         </select>
       </div>
-      <div style="min-width:140px;">
-        <label class="field-label">Setor</label>
+      <div style="min-width:150px;">
+        <label class="field-label">Captação (Agência)</label>
+        <select id="kanban-filter-captacao" onchange="applyKanbanFilters()">
+          <option value="">Todas</option><option value="Coordenadora">Coordenadora</option><option value="Comercial">Encaminhamento Comercial</option>
+        </select>
+      </div>
+      <div style="min-width:160px;">
+        <label class="field-label">Setor / Divisão interna</label>
         <select id="kanban-filter-setor" onchange="applyKanbanFilters()">
           <option value="">Todos</option>
-          <option>Comercial</option><option>Marketing</option><option>RH</option>
-          <option>Financeiro</option><option>Operações</option><option>Diretoria</option>
-          <option>TI</option><option>Outro</option><option>Via Comercial</option>
+          <option>Empreender</option><option>Certificado Digital</option><option>Desenvolvimento Empresarial</option>
+          <option>Presidência</option><option>Comercial</option><option>Marketing</option>
+          <option>Administrativo</option><option>Agência</option><option>Outro</option>
         </select>
       </div>
-      <div style="min-width:140px;">
+      <div style="min-width:120px;">
         <label class="field-label">Urgência</label>
         <select id="kanban-filter-urgencia" onchange="applyKanbanFilters()">
           <option value="">Todas</option><option value="true">Urgente</option><option value="false">Normal</option>
         </select>
       </div>
-      <div style="min-width:150px;">
+      <div style="min-width:140px;">
         <label class="field-label">Designer</label>
         <select id="kanban-filter-designer" onchange="applyKanbanFilters()">
           <option value="">Todos</option>
@@ -803,7 +843,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
       <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Demandas por Setor</div><canvas id="chart-setor"></canvas></div>
       <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Carga por Designer</div><canvas id="chart-carga"></canvas></div>
       <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Volume (últimos 7 dias)</div><canvas id="chart-timeline"></canvas></div>
-      <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Demanda por Origem</div><canvas id="chart-origem"></canvas></div>
+      <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Divisão Institucional × Agência</div><canvas id="chart-origem"></canvas></div>
     </div>
     <div class="card" style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;">
       <span style="font-size:13px;color:var(--ink-soft);">Exportar dados para análise externa</span>
@@ -814,15 +854,16 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   <!-- ==================== VIEW: RESPONSABILIDADE ==================== -->
   <div id="view-responsabilidade" class="view">
     <div class="kpi-grid" id="resp-kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin-bottom:16px;"></div>
+    <div class="card" id="resp-divisao" style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;"></div>
     <div class="charts-grid" style="margin-bottom:16px;">
-      <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Qualidade do funil por vendedor</div><canvas id="chart-dev-vendedor"></canvas></div>
+      <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Encaminhamentos do Comercial por vendedor</div><canvas id="chart-dev-vendedor"></canvas></div>
       <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Tempo médio por etapa (dias)</div><canvas id="chart-tempo-etapas"></canvas></div>
       <div class="card"><div class="section-title" style="margin-bottom:12px;font-size:13px;">Motivos de devolução</div><canvas id="chart-motivos"></canvas></div>
     </div>
     <div class="card" style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
       <div>
         <p style="font-weight:700;font-size:14px;"><i class="fa-solid fa-shield-halved" style="color:var(--brand);"></i> Relatório Escudo do Marketing</p>
-        <p style="font-size:12px;color:var(--ink-soft);max-width:600px;">Documento oficial com todas as entregas, aprovações formais assinadas, SLAs cumpridos, devoluções justificadas e ocorrências registradas. Use como evidência em reuniões de alinhamento entre setores — contra achismos, dados.</p>
+        <p style="font-size:12px;color:var(--ink-soft);max-width:600px;">Documento oficial com todas as entregas, aprovações formais assinadas, SLAs cumpridos, devoluções justificadas e ocorrências registradas — das duas divisões, Institucional e Agência. Contra achismos, dados.</p>
       </div>
       <button class="btn btn-brand" onclick="exportShieldReport()"><i class="fa-solid fa-file-word"></i> Gerar Relatório Escudo</button>
     </div>
@@ -835,8 +876,8 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   <!-- ==================== VIEW: CLIENTES ==================== -->
   <div id="view-clientes" class="view">
     <div class="card" style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
-      <input id="cliente-search" placeholder="Buscar cliente / associado…" style="flex:1;min-width:220px;" oninput="renderClientes()">
-      <span style="font-size:12px;color:var(--ink-soft);"><i class="fa-solid fa-circle-info" style="color:var(--brand);"></i> Clique em um cliente para ver o histórico completo de entregas e registrar ocorrências (elogios, reclamações, sinais de churn).</span>
+      <input id="cliente-search" placeholder="Buscar associado / cliente…" style="flex:1;min-width:220px;" oninput="renderClientes()">
+      <span style="font-size:12px;color:var(--ink-soft);"><i class="fa-solid fa-circle-info" style="color:var(--agencia);"></i> Associados atendidos pela <b>Agência</b> (captação da coordenadora ou encaminhamento do Comercial). Clique para ver o histórico e registrar ocorrências.</span>
     </div>
     <div class="card" style="overflow-x:auto;">
       <table class="tbl" id="clientes-table"></table>
@@ -848,8 +889,8 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     <div class="card" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <input type="text" id="search-input" placeholder="Buscar por nome, cliente, setor, tipo…" style="flex:1;min-width:200px;" oninput="renderLista()">
       <select id="filter-origem" onchange="renderLista()" style="min-width:150px;">
-        <option value="">Todas as origens</option>
-        <option>Institucional</option><option>Agência</option><option>Comercial</option>
+        <option value="">Todas as divisões</option>
+        <option>Institucional</option><option>Agência</option>
       </select>
       <select id="filter-status" onchange="renderLista()" style="min-width:150px;">
         <option value="">Todos os status</option>
@@ -889,63 +930,99 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   <!-- ==================== VIEW: GUIA DO FLUXO ==================== -->
   <div id="view-guia" class="view" style="max-width:1000px;">
     <div class="card banner-info" style="margin-bottom:16px;">
-      <h2 style="font-size:18px;font-weight:900;margin-bottom:6px;"><i class="fa-solid fa-bullseye" style="color:var(--brand);"></i> Como o Marketing funciona — da solicitação à entrega</h2>
-      <p style="font-size:13px;color:var(--ink-soft);">Este guia torna o fluxo de trabalho do setor visível para todos os departamentos. Cada etapa tem responsável, critérios e prazo (SLA). <b>Pedidos fora do fluxo (WhatsApp, corredor, verbais) não são aceitos</b> — a rastreabilidade protege o cliente, o solicitante e a equipe.</p>
+      <h2 style="font-size:18px;font-weight:900;margin-bottom:6px;"><i class="fa-solid fa-bullseye" style="color:var(--brand);"></i> Como o Marketing ACIF funciona — Institucional & Agência</h2>
+      <p style="font-size:13px;color:var(--ink-soft);">O setor de Marketing & Design é formado por <b>duas divisões criativas</b>: a <b>Institucional</b>, que atende os setores internos da ACIF, e a <b>Agência</b>, uma agência interna focada nos associados. Cada etapa do fluxo tem responsável, critérios e prazo (SLA). <b>Pedidos fora do fluxo (WhatsApp, corredor, verbais) não são aceitos</b> — a rastreabilidade protege o solicitante, o cliente e a equipe.</p>
     </div>
+
+    <div class="grid-2" style="margin-bottom:16px;">
+      <div class="card" style="border-top:4px solid var(--blue);">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-landmark" style="color:var(--blue);"></i> Divisão Institucional</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;">Demandas dos setores internos da ACIF: <b>Empreender, Certificado Digital, Desenvolvimento Empresarial, Presidência</b> e demais áreas (Comercial, raramente, para demandas internas próprias).</p>
+        <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:5px;">
+          <li>Entrada: painel <b>Briefing Institucional</b>;</li>
+          <li>Entra <b>direto na Análise</b> — sem triagem;</li>
+          <li>Prazos validados no envio (mínimo de 5 dias úteis, salvo urgência justificada);</li>
+          <li>Comunicação interna, eventos, materiais dos programas e da presidência.</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:4px solid var(--agencia);">
+        <h3 style="font-size:15px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-store" style="color:var(--agencia);"></i> Divisão Agência</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;">Agência interna que atende os <b>associados da ACIF</b>. Duas portas de entrada dentro do painel <b>Briefing Agência</b>:</p>
+        <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:5px;">
+          <li><b>Captação da Coordenadora:</b> demanda captada por ela — entra direto na Análise;</li>
+          <li><b>Encaminhamento Comercial:</b> vendedor encaminha o associado — passa pela <b>triagem de qualificação</b> (score 0–100) antes de entrar na Análise;</li>
+          <li>Devoluções sempre acompanhadas de termo formal com motivo e orientações.</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="guia-steps">
-      <div class="guia-step"><div class="guia-step-num">1</div><h4>Triagem & Qualificação</h4><span class="sla-badge sla-ok">1 dia útil</span><p>Toda solicitação do Comercial passa pelo Portal e é avaliada por critérios objetivos. Sem aderência, é devolvida com termo formal e orientações.</p></div>
-      <div class="guia-step"><div class="guia-step-num">2</div><h4>Análise & Planejamento</h4><span class="sla-badge sla-ok">2 dias úteis</span><p>Leitura do briefing, validação de materiais disponíveis e designação do designer responsável.</p></div>
-      <div class="guia-step"><div class="guia-step-num">3</div><h4>Produção</h4><span class="sla-badge sla-warn">3 a 5 dias úteis</span><p>Criação das peças conforme catálogo de serviços. O andamento é visível no Kanban e no Cronograma.</p></div>
-      <div class="guia-step"><div class="guia-step-num">4</div><h4>Revisão & Ajustes</h4><span class="sla-badge sla-warn">2 dias úteis / rodada</span><p>Até 2 rodadas de ajustes incluídas. A partir da 3ª, a demanda é registrada como retrabalho.</p></div>
-      <div class="guia-step"><div class="guia-step-num">5</div><h4>Aprovação Formal</h4><span class="sla-badge sla-ok">1 dia útil</span><p>O solicitante (ou cliente) assina a aprovação da peça. Após a assinatura, alterações são tratadas como nova demanda.</p></div>
-      <div class="guia-step"><div class="guia-step-num">6</div><h4>Entrega & Avaliação</h4><span class="sla-badge sla-ok">mesmo dia</span><p>Entrega final e registro da avaliação de satisfação — a nota alimenta os indicadores do setor.</p></div>
+      <div class="guia-step"><div class="guia-step-num">1</div><h4>Triagem & Qualificação</h4><span class="sla-badge sla-ok">1 dia útil</span><p><b>Exclusiva para encaminhamentos do Comercial (Agência).</b> Critérios objetivos: plano, orçamento, interesse, materiais e expectativa de prazo.</p></div>
+      <div class="guia-step"><div class="guia-step-num">2</div><h4>Análise & Planejamento</h4><span class="sla-badge sla-ok">2 dias úteis</span><p>Leitura do briefing, validação de materiais e designação do designer responsável. Vale para as duas divisões.</p></div>
+      <div class="guia-step"><div class="guia-step-num">3</div><h4>Produção</h4><span class="sla-badge sla-warn">3 a 5 dias úteis</span><p>Criação das peças conforme catálogo. Andamento visível no Kanban e no Cronograma.</p></div>
+      <div class="guia-step"><div class="guia-step-num">4</div><h4>Revisão & Ajustes</h4><span class="sla-badge sla-warn">2 dias úteis / rodada</span><p>Até 2 rodadas de ajustes incluídas. A partir da 3ª, registra-se retrabalho.</p></div>
+      <div class="guia-step"><div class="guia-step-num">5</div><h4>Aprovação Formal</h4><span class="sla-badge sla-ok">1 dia útil</span><p>O solicitante (ou associado) assina a aprovação. Após a assinatura, alterações são nova demanda.</p></div>
+      <div class="guia-step"><div class="guia-step-num">6</div><h4>Entrega & Avaliação</h4><span class="sla-badge sla-ok">mesmo dia</span><p>Entrega final e registro da avaliação de satisfação — alimenta os indicadores do setor.</p></div>
     </div>
+
     <div class="card" style="margin-bottom:16px;">
       <div class="section-title" style="margin-bottom:12px;">📦 Catálogo de Serviços & Elegibilidade</div>
       <div style="overflow-x:auto;">
         <table class="tbl">
-          <thead><tr><th>Serviço</th><th>Quem pode solicitar</th><th>O que o cliente precisa fornecer</th><th>SLA</th></tr></thead>
+          <thead><tr><th>Serviço</th><th>Divisão / Quem pode solicitar</th><th>O que precisa ser fornecido</th><th>SLA</th></tr></thead>
           <tbody>
-            <tr style="cursor:default;"><td><b>Gestão de Redes Sociais</b></td><td>Associados Padrão e Premium</td><td>Fotos do negócio, acessos do perfil, marca aprovada</td><td><span class="sla-badge sla-ok">5 dias úteis</span></td></tr>
-            <tr style="cursor:default;"><td><b>Campanha Promocional</b></td><td>Todos os planos (mídia paga sob orçamento do cliente)</td><td>Oferta definida, vigência, textos obrigatórios</td><td><span class="sla-badge sla-warn">7 dias úteis</span></td></tr>
-            <tr style="cursor:default;"><td><b>Material Institucional</b></td><td>Todos os associados + setores internos</td><td>Conteúdo aprovado, logotipo em vetor</td><td><span class="sla-badge sla-ok">6 dias úteis</span></td></tr>
-            <tr style="cursor:default;"><td><b>Identidade Visual</b></td><td>Plano Premium ou assessoria contratada</td><td>Entrevista + briefing completo respondido</td><td><span class="sla-badge sla-warn">10 dias úteis</span></td></tr>
-            <tr style="cursor:default;"><td><b>Tráfego Pago</b></td><td>Cliente com verba própria de mídia (mín. R$ 500/mês)</td><td>Acesso à plataforma de anúncios, formas de pagamento</td><td><span class="sla-badge sla-ok">5 dias úteis</span></td></tr>
-            <tr style="cursor:default;"><td><b>Assessoria de Marketing</b></td><td>Planos Padrão e Premium</td><td>Participação ativa do cliente, reunião mensal</td><td><span class="sla-badge sla-ok">contínuo</span></td></tr>
+            <tr style="cursor:default;"><td><b>Gestão de Redes Sociais</b></td><td><span class="chip chip-agencia">Agência</span> Associados Padrão e Premium</td><td>Fotos do negócio, acessos do perfil, marca aprovada</td><td><span class="sla-badge sla-ok">5 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Campanha Promocional</b></td><td><span class="chip chip-agencia">Agência</span> Associados (mídia paga com verba do cliente)</td><td>Oferta definida, vigência, textos obrigatórios</td><td><span class="sla-badge sla-warn">7 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Identidade Visual</b></td><td><span class="chip chip-agencia">Agência</span> Plano Premium ou assessoria contratada</td><td>Entrevista + briefing completo respondido</td><td><span class="sla-badge sla-warn">10 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Tráfego Pago</b></td><td><span class="chip chip-agencia">Agência</span> Cliente com verba própria (mín. R$ 500/mês)</td><td>Acesso à plataforma de anúncios, formas de pagamento</td><td><span class="sla-badge sla-ok">5 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Assessoria de Marketing</b></td><td><span class="chip chip-agencia">Agência</span> Planos Padrão e Premium</td><td>Participação ativa do cliente, reunião mensal</td><td><span class="sla-badge sla-ok">contínuo</span></td></tr>
+            <tr style="cursor:default;"><td><b>Material Institucional ACIF</b></td><td><span class="chip chip-blue">Institucional</span> Setores internos</td><td>Conteúdo aprovado pelo gestor do setor, logotipo em vetor</td><td><span class="sla-badge sla-ok">6 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Eventos & Convites</b></td><td><span class="chip chip-blue">Institucional</span> Empreender, Desenvolvimento, Presidência</td><td>Data, local, programação e textos de apoio</td><td><span class="sla-badge sla-warn">8 dias úteis</span></td></tr>
+            <tr style="cursor:default;"><td><b>Comunicação Interna</b></td><td><span class="chip chip-blue">Institucional</span> Todos os setores</td><td>Mensagem validada com a gestão</td><td><span class="sla-badge sla-ok">3 dias úteis</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;" class="grid-acordo">
+
+    <div class="grid-3" style="margin-bottom:16px;">
       <div class="card" style="border-top:4px solid var(--green);">
         <h3 style="font-size:14px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-pen-ruler" style="color:var(--green);"></i> O Marketing se compromete a</h3>
         <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:6px;">
-          <li>Cumprir os SLAs publicados para solicitações aprovadas na triagem;</li>
-          <li>Registrar todas as entregas, versões e aprovações formais assinadas;</li>
-          <li>Responder triagens em até 1 dia útil, com devolução orientada quando necessário;</li>
-          <li>Manter Kanban, Cronograma e indicadores visíveis para todos os setores;</li>
-          <li>Nunca prometer entrega sem triagem e análise de capacidade.</li>
+          <li>Cumprir os SLAs publicados para demandas aprovadas;</li>
+          <li>Registrar todas as entregas, versões e aprovações assinadas (Institucional e Agência);</li>
+          <li>Responder triagens de encaminhamentos em até 1 dia útil;</li>
+          <li>Manter Kanban, Cronograma e indicadores visíveis para toda a ACIF.</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:4px solid var(--agencia);">
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-handshake" style="color:var(--agencia);"></i> O Comercial se compromete a</h3>
+        <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:6px;">
+          <li>Encaminhar associados somente pela aba <b>Encaminhamento Comercial</b> do Briefing Agência;</li>
+          <li>Filtrar e qualificar o associado antes do encaminhamento;</li>
+          <li>Alinhar expectativas realistas de prazo antes de prometer;</li>
+          <li>Assumir o relacionamento pós-venda (renovações, retenção, contrato);</li>
+          <li>Registrar reclamações como ocorrência no painel de Clientes.</li>
         </ul>
       </div>
       <div class="card" style="border-top:4px solid var(--blue);">
-        <h3 style="font-size:14px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-handshake" style="color:var(--blue);"></i> O Comercial e demais setores se comprometem a</h3>
+        <h3 style="font-size:14px;font-weight:800;margin-bottom:10px;"><i class="fa-solid fa-building" style="color:var(--blue);"></i> Os setores internos se comprometem a</h3>
         <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:6px;">
-          <li>Encaminhar clientes somente após a qualificação no Portal Comercial;</li>
-          <li>Alinhar expectativas realistas de prazo com o cliente antes de prometer;</li>
-          <li>Assumir o relacionamento pós-venda (renovações, retenção, reclamações de contrato);</li>
-          <li>Não prometer datas sem consultar o catálogo e o SLA publicados;</li>
-          <li>Registrar reclamações como ocorrência no painel de Clientes, com fato e contexto.</li>
+          <li>Usar o <b>Briefing Institucional</b> para toda demanda interna;</li>
+          <li>Respeitar o prazo mínimo de 5 dias úteis;</li>
+          <li>Fornecer conteúdo validado pela gestão do setor;</li>
+          <li>Aprovar formalmente as peças recebidas.</li>
         </ul>
       </div>
     </div>
+
     <div class="card">
       <div class="section-title" style="margin-bottom:12px;">❓ Perguntas Frequentes</div>
-      <details class="faq-item"><summary>Por que minha solicitação foi devolvida?</summary><div class="faq-body">A triagem avalia critérios objetivos: plano do cliente, orçamento, interesse real na assessoria, materiais disponíveis e expectativa de prazo. Solicitações com score abaixo de 40 são devolvidas com um termo formal explicando o motivo e o que precisa mudar para serem reenviadas. Isso evita retrabalho e protege a qualidade das entregas.</div></details>
-      <details class="faq-item"><summary>Por que existe prazo mínimo para as peças?</summary><div class="faq-body">Cada peça passa por análise, produção, revisão e aprovação — etapas que garantem qualidade e coerência com a marca. Prazos comprimidos geram retrabalho, erros e sobrecarga da fila de outros solicitantes. Urgências reais são tratadas no modal de prazo crítico e sinalizadas como prioridade.</div></details>
-      <details class="faq-item"><summary>Posso pedir direto para o designer pelo WhatsApp?</summary><div class="faq-body">Não. Pedidos fora do sistema não têm SLA, não entram na fila e não possuem registro de aprovação — ou seja, ninguém consegue defendê-los depois. Toda demanda deve entrar por uma das portas oficiais: Novo Briefing, Briefing Agência ou Portal Comercial.</div></details>
-      <details class="faq-item"><summary>Quando um cliente cancela ou reclama, de quem é a responsabilidade?</summary><div class="faq-body">A responsabilidade é analisada com dados, não com acusação. O painel de Clientes mostra tudo que foi entregue, quando, quem aprovou formalmente e qual foi a avaliação. O relacionamento pós-venda (renovação, retenção, insatisfação contratual) é do Comercial; execuções de marketing com aprovação assinada e SLA cumprido são de responsabilidade compartilhada com o solicitante. O Relatório Escudo documenta tudo isso.</div></details>
+      <details class="faq-item"><summary>Qual a diferença entre Institucional e Agência?</summary><div class="faq-body"><b>Institucional</b> atende os setores internos da ACIF (Empreender, Certificado Digital, Desenvolvimento Empresarial, Presidência etc.) com comunicação institucional, eventos e materiais internos. <b>Agência</b> é a agência interna que atende os associados com serviços de marketing (redes sociais, campanhas, identidade visual, tráfego pago, assessoria). Cada divisão tem porta de entrada própria no aplicativo.</div></details>
+      <details class="faq-item"><summary>Por que meu encaminhamento de associado foi devolvido?</summary><div class="faq-body">A triagem da Agência avalia critérios objetivos: plano do associado, orçamento para o serviço, interesse real na assessoria, materiais/acessos fornecidos e expectativa de prazo. Encaminhamentos com score abaixo de 40 são devolvidos com termo formal explicando o motivo e o que precisa mudar para reenvio. Isso evita retrabalho e protege a qualidade das entregas.</div></details>
+      <details class="faq-item"><summary>Setor interno pode pedir demanda de associado pelo fluxo Institucional?</summary><div class="faq-body">Não. Demandas de associados pertencem ao fluxo da <b>Agência</b> e devem entrar pelo painel Briefing Agência — por captação da coordenadora ou encaminhamento do Comercial. O fluxo Institucional é exclusivo para comunicação e materiais internos da ACIF.</div></details>
+      <details class="faq-item"><summary>Posso pedir direto para o designer pelo WhatsApp?</summary><div class="faq-body">Não. Pedidos fora do sistema não têm SLA, não entram na fila e não possuem registro de aprovação. Toda demanda deve entrar por uma das portas oficiais: Briefing Institucional ou Briefing Agência (captação / encaminhamento).</div></details>
+      <details class="faq-item"><summary>Quando um associado cancela ou reclama, de quem é a responsabilidade?</summary><div class="faq-body">A responsabilidade é analisada com dados, não com acusação. O painel de Clientes mostra tudo que a Agência entregou ao associado, quando, quem aprovou formalmente e qual foi a avaliação. O relacionamento pós-venda (renovação, retenção, contrato) é do Comercial; execuções com aprovação assinada e SLA cumprido são documentadas no Relatório Escudo.</div></details>
       <details class="faq-item"><summary>Como o score de qualificação é calculado?</summary><div class="faq-body">Plano do associado (até 30 pts) + orçamento para o serviço (até 25 pts) + interesse demonstrado na assessoria (até 25 pts) + materiais/acessos já fornecidos (até 15 pts) + expectativa de prazo realista (até 5 pts). Total: 100 pontos. ≥60 qualificado, 40–59 condicional (entrevista recomendada), &lt;40 devolução sugerida.</div></details>
-      <details class="faq-item"><summary>O que acontece depois da aprovação formal?</summary><div class="faq-body">A assinatura do solicitante encerra o escopo da demanda. Qualquer alteração posterior é tratada como nova solicitação, com novo prazo e nova triagem — isso vale para pedidos do Comercial, de outros setores e de clientes. Esse registro é a garantia de ambas as partes.</div></details>
     </div>
   </div>
 </div><!-- /main -->
@@ -1004,7 +1081,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
       <div style="width:40px;height:40px;background:#fee2e2;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--red);"><i class="fa-solid fa-rotate-left"></i></div>
       <div>
-        <h3 style="font-size:16px;font-weight:700;">Devolver solicitação ao Comercial</h3>
+        <h3 style="font-size:16px;font-weight:700;">Devolver encaminhamento ao Comercial</h3>
         <p style="font-size:12px;color:var(--ink-soft);" id="dev-cliente-info"></p>
       </div>
     </div>
@@ -1014,7 +1091,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     </div>
     <div class="mb-4">
       <label class="field-label">Parecer / orientações para o vendedor</label>
-      <textarea id="dev-parecer" rows="3" placeholder="Ex: Cliente precisa de verba mínima de R$ 500/mês para mídia. Reenviar quando houver orçamento aprovado."></textarea>
+      <textarea id="dev-parecer" rows="3" placeholder="Ex: Associado precisa de verba mínima de R$ 500/mês para mídia. Reenviar quando houver orçamento aprovado."></textarea>
     </div>
     <p style="font-size:12px;color:var(--ink-soft);margin-bottom:16px;"><i class="fa-solid fa-file-word" style="color:var(--blue);"></i> Um termo formal de devolução (.doc) será gerado automaticamente como evidência.</p>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
@@ -1036,7 +1113,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     </div>
     <div class="mb-3">
       <label class="field-label">Nome de quem está aprovando *</label>
-      <input type="text" id="assinatura-nome" placeholder="Ex: João Silva (solicitante) / Cliente Maria">
+      <input type="text" id="assinatura-nome" placeholder="Ex: João Silva (solicitante) / Associado Maria">
     </div>
     <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink);margin-bottom:20px;cursor:pointer;">
       <input type="checkbox" id="assinatura-aceite" style="width:18px;height:18px;accent-color:var(--green);margin-top:2px;">
@@ -1059,7 +1136,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         <p style="font-size:12px;color:var(--ink-soft);" id="sat-info"></p>
       </div>
     </div>
-    <label class="field-label">Nota do solicitante / cliente *</label>
+    <label class="field-label">Nota do solicitante / associado *</label>
     <div id="sat-stars" style="margin-bottom:14px;"></div>
     <div class="mb-4">
       <label class="field-label">Comentário (opcional)</label>
@@ -1076,7 +1153,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 <div class="modal-overlay" id="modal-cliente">
   <div class="modal" style="max-width:660px;display:flex;flex-direction:column;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-      <h3 style="font-size:16px;font-weight:800;"><i class="fa-solid fa-building" style="color:var(--brand);"></i> <span id="cliente-modal-title"></span></h3>
+      <h3 style="font-size:16px;font-weight:800;"><i class="fa-solid fa-building" style="color:var(--agencia);"></i> <span id="cliente-modal-title"></span></h3>
       <button class="btn btn-ghost btn-sm" onclick="closeClienteModal()"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div id="cliente-modal-body" style="overflow-y:auto;"></div>
@@ -1087,7 +1164,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
 <div class="modal-overlay" id="modal-ocorrencia">
   <div class="modal">
     <h3 style="font-size:16px;font-weight:700;margin-bottom:4px;"><i class="fa-solid fa-flag" style="color:var(--brand);"></i> Registrar ocorrência</h3>
-    <p style="font-size:12px;color:var(--ink-soft);margin-bottom:16px;">Cliente: <b id="oc-cliente"></b></p>
+    <p style="font-size:12px;color:var(--ink-soft);margin-bottom:16px;">Associado: <b id="oc-cliente"></b></p>
     <div class="mb-3">
       <label class="field-label">Tipo</label>
       <select id="oc-tipo">
@@ -1139,6 +1216,7 @@ let pendingApproval = null;
 let pendingEntregaId = null;
 let pendingNota = 0;
 let currentCliente = null;
+let touchedFields = new Set();
 
 const STATUS_LABELS = {
   triagem:'Triagem', analise:'Análise', aguardando:'Aguardando',
@@ -1160,7 +1238,7 @@ const VENDEDORES = ['Ana Beatriz','Bruno Carvalho','Camila Rocha','Diego Martins
 const MOTIVOS_DEVOLUCAO = [
   'Cliente sem orçamento para o serviço solicitado',
   'Cliente sem interesse ou aderência à assessoria de marketing',
-  'Solicitação fora do escopo de serviços da associação',
+  'Solicitação fora do escopo de serviços da Agência',
   'Dados insuficientes — necessário complementar briefing',
   'Materiais/acessos não fornecidos pelo cliente',
   'Prazo solicitado incompatível com o SLA do setor'
@@ -1207,10 +1285,14 @@ function fmtDate(x){
   const d = new Date(x);
   return isNaN(d.getTime()) ? String(x) : d.toLocaleDateString('pt-BR');
 }
-function displayName(b){ return (b.origem==='Comercial' && b.cliente) ? b.cliente : (b.nome||'—'); }
+function displayName(b){ return (b.cliente) ? b.cliente : (b.nome || '—'); }
+function captacaoLabel(b){
+  if(b.origem !== 'Agência') return '';
+  return b.captacao === 'Comercial' ? 'Encaminhamento Comercial' : 'Captação da Coordenadora';
+}
 function origemChipHtml(b){
   const o = b.origem || 'Institucional';
-  const map = {Institucional:['#e0f2fe','#0369a1'], 'Agência':['#f3e8ff','#7e22ce'], 'Comercial':['#ffedd5','#c2410c']};
+  const map = {'Institucional':['#e0f2fe','#0369a1'], 'Agência':['#f3e8ff','#7e22ce']};
   const m = map[o] || ['#f1f5f9','#475569'];
   return `<span style="font-size:10px;padding:2px 6px;border-radius:4px;background:${m[0]};color:${m[1]};font-weight:600;">${o}</span>`;
 }
@@ -1226,8 +1308,8 @@ function navigate(view){
   const navBtn = document.getElementById('nav-'+view);
   if(navBtn) navBtn.classList.add('active');
   const titles = {
-    form:'Novo Briefing', agencia:'Briefing Agência', comercial:'Portal Comercial — Triagem',
-    triagem:'Triagem de Solicitações', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico',
+    form:'Briefing Institucional', agencia:'Briefing Agência',
+    triagem:'Triagem de Encaminhamentos', kanban:'Quadro Kanban', dashboard:'Dashboard Analítico',
     responsabilidade:'Responsabilidade & Evidências', clientes:'Clientes & Associados',
     lista:'Todos os Briefings', cronograma:'Cronograma de Entregas', guia:'Guia do Fluxo de Marketing'
   };
@@ -1252,6 +1334,13 @@ function refreshBadges(){
   const n = db.filter(b => b.status==='triagem').length;
   badge.style.display = n ? 'flex' : 'none';
   badge.textContent = n;
+}
+function switchAgenciaTab(tab){
+  const coord = tab === 'coord';
+  document.getElementById('agencia-pane-coord').style.display = coord ? '' : 'none';
+  document.getElementById('agencia-pane-encam').style.display = coord ? 'none' : '';
+  document.getElementById('tab-coord').classList.toggle('active', coord);
+  document.getElementById('tab-encam').classList.toggle('active', !coord);
 }
 
 // =============================================
@@ -1284,20 +1373,75 @@ function setupFormNav(){
   }, {threshold:0.3, root:document.getElementById('main')});
   document.querySelectorAll('.form-section').forEach(s => observer.observe(s));
 }
-function setupFormValidation(){
-  const form = document.getElementById('briefing-form');
-  form.addEventListener('input', checkFormValid);
-  form.addEventListener('change', checkFormValid);
-  checkFormValid();
+
+// =====================================================
+// VALIDAÇÃO DO BRIEFING INSTITUCIONAL (CORRIGIDA)
+// Motivo do botão travado antes: a validação usava
+// form.checkValidity() com o campo de e-mail type=email,
+// que reprova silenciosamente formatos comuns (sem ponto,
+// com espaço etc.), e o rádio "Tom de voz" esquecido —
+// sem nenhum aviso visual. Agora a validação é própria,
+// tolerante e com feedback explícito dos campos pendentes.
+// =====================================================
+function emailValido(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+function camposPendentes(){
+  const pend = [];
+  const chk = (id, label, test) => {
+    const el = document.getElementById(id);
+    if(!el) return;
+    const v = el.value.trim();
+    const ok = test ? test(v) : v !== '';
+    el.classList.toggle('field-invalid', !ok && touchedFields.has(id));
+    if(!ok) pend.push(label);
+  };
+  chk('f_nome','Nome completo');
+  chk('f_email','E-mail válido', emailValido);
+  chk('f_setor','Setor ACIF');
+  chk('f_data_solic','Data da solicitação');
+  chk('f_prazo','Prazo de entrega');
+  chk('f_tipo','Tipo de solicitação');
+  chk('f_objetivo','Objetivo da comunicação');
+  chk('f_publico','Segmento do público');
+  const tomOk = !!document.querySelector('input[name="tom"]:checked');
+  const sec4 = document.getElementById('sec4');
+  if(sec4) sec4.classList.toggle(!tomOk);
+  if(!tomOk) pend.push('Tom de voz');
+  return pend;
 }
 function checkFormValid(){
-  const form = document.getElementById('briefing-form');
+  const pend = camposPendentes();
   const btn = document.getElementById('btn-submit');
-  const valid = form.checkValidity() && document.querySelector('input[name="tom"]:checked');
-  btn.disabled = !valid;
+  if(btn) btn.disabled = pend.length > 0;
+  const hint = document.getElementById('form-pending');
+  if(hint){
+    if(pend.length){
+      hint.className = 'pending-hint err';
+      hint.innerHTML = '<i class="fa-solid fa-circle-exclamation" style="margin-top:2px;"></i><span>Campos pendentes: ' + pend.join(' · ') + '</span>';
+    } else {
+      hint.className = 'pending-hint ok';
+      hint.innerHTML = '<i class="fa-solid fa-circle-check" style="margin-top:2px;"></i><span>Tudo pronto — briefing completo!</span>';
+    }
+  }
+  return pend.length === 0;
+}
+function setupFormValidation(){
+  const form = document.getElementById('briefing-form');
+  if(!form) return;
+  form.addEventListener('input', checkFormValid);
+  form.addEventListener('change', checkFormValid);
+  form.addEventListener('click', checkFormValid);
+  form.addEventListener('focusout', e => {
+    if(e.target && e.target.id){
+      touchedFields.add(e.target.id);
+      checkFormValid();
+    }
+  });
+  checkFormValid();
 }
 function setupVideoConditional(){
-  document.getElementById('chk-reels').addEventListener('change', function(){
+  const chk = document.getElementById('chk-reels');
+  if(!chk) return;
+  chk.addEventListener('change', function(){
     const vf = document.getElementById('video-fields');
     if(this.checked) vf.classList.add('open'); else vf.classList.remove('open');
   });
@@ -1329,9 +1473,18 @@ function businessDaysDiff(d1, d2){
 }
 
 // =============================================
-// SUBMIT BRIEFING INSTITUCIONAL
+// BRIEFING INSTITUCIONAL (SUBMIT)
 // =============================================
 function submitBriefing(){
+  // trava final: se ainda houver pendência, mostra e rola até o campo
+  const pend = camposPendentes();
+  if(pend.length){
+    checkFormValid();
+    showToast('⚠️ Preencha antes: ' + pend.join(', '), 'error');
+    const primeiroInvalido = document.querySelector('.field-invalid, .sec-attn');
+    if(primeiroInvalido) primeiroInvalido.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
   const dataSolic = getVal('f_data_solic');
   const prazo = getVal('f_prazo');
   if(dataSolic !== 'Não informado' && prazo !== 'Não informado'){
@@ -1358,7 +1511,7 @@ function createBriefing(urgente){
   const now = new Date().toISOString();
   const briefing = {
     id: uuidv4(), status:'analise', archived:false, urgencia:urgente,
-    origem:'Institucional',
+    origem:'Institucional', captacao:'',
     assigned_to: getVal('f_designer')==='Não informado' ? '' : document.getElementById('f_designer').value,
     created_at: now, updated_at: now,
     nome:getVal('f_nome'), email:getVal('f_email'), setor:getVal('f_setor'),
@@ -1377,9 +1530,9 @@ function createBriefing(urgente){
   };
   db.push(briefing);
   saveDB();
-  logAudit('Briefing institucional criado', `${briefing.nome} — ${briefing.tipo_solicitacao}`, briefing.id);
+  logAudit('Briefing institucional criado', `${briefing.nome} (${briefing.setor}) — ${briefing.tipo_solicitacao}`, briefing.id);
   exportWord(briefing);
-  showToast('✓ Briefing gerado e salvo com sucesso!', 'success');
+  showToast('✓ Briefing institucional gerado e salvo!', 'success');
   const btn = document.getElementById('btn-submit');
   const btnIcon = document.getElementById('btn-icon');
   const btnText = document.getElementById('btn-text');
@@ -1389,30 +1542,37 @@ function createBriefing(urgente){
   setTimeout(() => {
     document.getElementById('briefing-form').reset();
     document.getElementById('video-fields').classList.remove('open');
+    touchedFields = new Set();
+    document.querySelectorAll('#briefing-form .field-invalid').forEach(el => el.classList.remove('field-invalid'));
     btnIcon.className = 'fa-solid fa-paper-plane';
     btnText.textContent = 'Gerar Briefing';
     btn.style.background = '';
-    btn.disabled = true;
+    document.getElementById('f_data_solic').value = new Date().toISOString().split('T')[0];
+    checkFormValid();
   }, 3000);
 }
 
+// =============================================
+// AGÊNCIA — CAPTAÇÃO DA COORDENADORA (SUBMIT)
+// =============================================
 function submitAgenciaBriefing(){
   const now = new Date().toISOString();
+  const clienteNome = document.getElementById('ag_nome').value.trim();
   const briefing = {
-    id: uuidv4(), status:'analise', archived:false, urgencia:false, origem:'Agência',
+    id: uuidv4(), status:'analise', archived:false, urgencia:false,
+    origem:'Agência', captacao:'Coordenadora', cliente:clienteNome,
     assigned_to:'', created_at:now, updated_at:now,
-    nome:document.getElementById('ag_nome').value.trim(),
-    email:document.getElementById('ag_contato').value.trim(),
-    setor:'Agência Externa', data_solicitacao:now.split('T')[0],
+    nome:clienteNome, email:document.getElementById('ag_contato').value.trim(),
+    setor:'Agência', data_solicitacao:now.split('T')[0],
     prazo:document.getElementById('ag_prazo').value,
     tipo_solicitacao:document.getElementById('ag_tipo').value,
-    objetivo:'Briefing enviado via upload pela coordenadora da agência.',
+    objetivo:'Briefing registrado pela coordenadora da Agência (captação própria).',
     resultado:'Conforme especificado no arquivo anexado',
-    publico:'Não informado', faixa_etaria:'Não informado', publico_obs:'',
+    publico:'Associado ACIF', faixa_etaria:'Não informado', publico_obs:'',
     tom:'Não informado', headline:'', textos_obg:'', cta:'', url:'',
     formatos:'Conforme briefing anexado', video_duracao:'', video_roteiro:'',
     estilo:'', cores:'', tipografia:'', restricoes:'', restricoes_obs:'',
-    materiais:'Arquivo anexado pela agência',
+    materiais:'Arquivo anexado pela coordenadora',
     mat_link:document.getElementById('ag_arquivo').value.trim(),
     referencias:'', ref_obs:'', prioridade:'Normal',
     obs:document.getElementById('ag_obs').value.trim(),
@@ -1420,18 +1580,19 @@ function submitAgenciaBriefing(){
   };
   db.push(briefing);
   saveDB();
-  logAudit('Briefing de agência registrado', briefing.nome, briefing.id);
-  showToast('✓ Briefing da Agência registrado com sucesso!', 'success');
+  syncClienteReg();
+  logAudit('Demanda da Agência registrada', `${clienteNome} — captação da coordenadora`, briefing.id);
+  showToast('✓ Demanda da Agência registrada — segue para Análise', 'success');
   document.getElementById('agencia-form').reset();
 }
 
 // =============================================
-// PORTAL COMERCIAL
+// AGÊNCIA — ENCAMINHAMENTO COMERCIAL (SUBMIT)
 // =============================================
 function calcularScoreComercial(vals){
   let score = 0; const breakdown = [];
   const add = (label, pts, max) => { score += pts; breakdown.push({label, pts, max}); };
-  add('Plano do cliente', ({Essencial:10, 'Padrão':20, Premium:30})[vals.plano] || 0, 30);
+  add('Plano do associado', ({Essencial:10, 'Padrão':20, Premium:30})[vals.plano] || 0, 30);
   add('Orçamento para o serviço', ({sim:25, parcial:10, nao:0})[vals.budget] || 0, 25);
   add('Interesse na assessoria', ({sim:25, talvez:10, nao:0})[vals.interesse] || 0, 25);
   add('Materiais e acessos', ({sim:15, parcial:8, nao:0})[vals.materiais] || 0, 15);
@@ -1466,13 +1627,14 @@ function submitComercialBriefing(){
   const now = new Date().toISOString();
   const b = {
     id: uuidv4(), status:'triagem', archived:false, urgencia:false,
-    origem:'Comercial', vendedor:vals.vendedor, cliente:vals.cliente,
-    plano:vals.plano, cliente_contato:vals.contato,
+    origem:'Agência', captacao:'Comercial',
+    vendedor:vals.vendedor, cliente:vals.cliente, plano:vals.plano,
+    cliente_contato:vals.contato,
     assigned_to:'', created_at:now, updated_at:now,
-    nome:vals.vendedor, email:'—', setor:'Via Comercial',
+    nome:vals.vendedor, email:'—', setor:'Agência',
     data_solicitacao: now.split('T')[0], prazo:vals.prazo,
     tipo_solicitacao:vals.servico, objetivo:vals.descricao,
-    resultado:'Não informado', publico:'Clientes do associado',
+    resultado:'Não informado', publico:'Associado ACIF',
     faixa_etaria:'Não informado', publico_obs:'', tom:'Não informado',
     headline:'', textos_obg:'', cta:'', url:'', formatos:'A definir na análise',
     video_duracao:'', video_roteiro:'', estilo:'', cores:'', tipografia:'',
@@ -1485,12 +1647,12 @@ function submitComercialBriefing(){
   db.push(b);
   saveDB();
   syncClienteReg();
-  logAudit('Solicitação do Comercial recebida', `${vals.cliente} — score ${q.score}/100 (vendedor: ${vals.vendedor})`, b.id);
+  logAudit('Encaminhamento comercial recebido (Agência)', `${vals.cliente} — score ${q.score}/100 (vendedor: ${vals.vendedor})`, b.id);
   form.reset();
   navigate('triagem');
-  if(q.nivel === 'baixo') showToast('⚠️ Solicitação registrada com score baixo — provável devolução na triagem.', 'error');
-  else if(q.nivel === 'condicional') showToast('Solicitação registrada (condicional — entrevista recomendada).');
-  else showToast('✓ Solicitação qualificada enviada para triagem!', 'success');
+  if(q.nivel === 'baixo') showToast('⚠️ Encaminhamento registrado com score baixo — provável devolução na triagem.', 'error');
+  else if(q.nivel === 'condicional') showToast('Encaminhamento registrado (condicional — entrevista recomendada).');
+  else showToast('✓ Encaminhamento qualificado enviado para triagem da Agência!', 'success');
 }
 
 // =============================================
@@ -1512,7 +1674,7 @@ function slaTriagemChip(b){
   return `<span class="sla-badge sla-ok">Folga: ${disp}d úteis (SLA ${need}d)</span>`;
 }
 function renderTriagem(){
-  const all = db.filter(b => b.origem === 'Comercial');
+  const all = db.filter(b => b.captacao === 'Comercial');
   const pend = db.filter(b => b.status === 'triagem');
   const aprov = all.filter(b => b.triagem && b.triagem.status === 'aprovado').length;
   const dev = all.filter(b => b.status === 'devolvido').length;
@@ -1528,11 +1690,11 @@ function renderTriagem(){
   items.sort((a,b) => (a.prazo || '9999').localeCompare(b.prazo || '9999'));
   document.getElementById('triagem-grid').innerHTML = items.length
     ? items.map(renderTriagemCard).join('')
-    : '<div class="empty-state" style="grid-column:1/-1;"><i class="fa-solid fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;color:var(--line);"></i>Nenhuma solicitação aguardando triagem 🎉</div>';
+    : '<div class="empty-state" style="grid-column:1/-1;"><i class="fa-solid fa-inbox" style="font-size:32px;display:block;margin-bottom:10px;color:var(--line);"></i>Nenhum encaminhamento aguardando triagem 🎉</div>';
   const hist = all.filter(b => b.triagem && (b.triagem.status==='aprovado' || b.triagem.status==='devolvido'))
     .sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at)).slice(0,15);
   document.getElementById('tri-hist').innerHTML = hist.length
-    ? '<thead><tr><th>Data</th><th>Cliente</th><th>Vendedor</th><th>Decisão</th><th>Detalhe</th></tr></thead><tbody>' +
+    ? '<thead><tr><th>Data</th><th>Associado</th><th>Vendedor</th><th>Decisão</th><th>Detalhe</th></tr></thead><tbody>' +
       hist.map(b => {
         const devd = b.triagem.status === 'devolvido';
         return `<tr style="cursor:pointer;" onclick="openDetail('${b.id}')">
@@ -1540,7 +1702,7 @@ function renderTriagem(){
           <td><b>${b.cliente}</b></td>
           <td>${b.vendedor || '—'}</td>
           <td><span class="chip ${devd?'chip-red':'chip-green'}">${devd?'Devolvido':'Aprovado'}</span></td>
-          <td style="font-size:12px;color:var(--ink-soft);">${devd ? (b.triagem.motivo || '—') : 'Seguiu para análise do Marketing'}</td>
+          <td style="font-size:12px;color:var(--ink-soft);">${devd ? (b.triagem.motivo || '—') : 'Seguiu para análise da Agência'}</td>
         </tr>`;
       }).join('') + '</tbody>'
     : '<tbody><tr><td style="text-align:center;color:var(--ink-soft);">Nenhuma decisão registrada ainda</td></tr></tbody>';
@@ -1559,7 +1721,7 @@ function renderTriagemCard(b){
       </div>
     </div>
     <details style="margin-top:10px;">
-      <summary style="font-size:11px;color:var(--brand);cursor:pointer;font-weight:700;list-style:none;">Ver critérios de qualificação</summary>
+      <summary style="font-size:11px;color:var(--agencia);cursor:pointer;font-weight:700;list-style:none;">Ver critérios de qualificação</summary>
       <div style="margin-top:6px;">${(q.breakdown||[]).map(x => `<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dashed var(--paper-3);"><span style="color:var(--ink-soft);">${x.label}</span><b style="color:${x.pts===x.max?'var(--green)':x.pts===0?'var(--red)':'var(--yellow)'};">${x.pts}/${x.max}</b></div>`).join('')}</div>
     </details>
     <div style="display:flex;gap:8px;margin-top:12px;">
@@ -1577,19 +1739,19 @@ function approveTriagem(bid){
   pushHist(b);
   b.updated_at = new Date().toISOString();
   saveDB();
-  logAudit('Triagem aprovada', `${b.cliente} — segue para análise (vendedor: ${b.vendedor||'—'})`, b.id);
+  logAudit('Triagem aprovada (Agência)', `${b.cliente} — segue para análise (vendedor: ${b.vendedor||'—'})`, b.id);
   refreshActiveViews();
   if(currentDetailId === bid){
     renderDetailBody(b);
     document.getElementById('dp-status-sel').value = 'analise';
   }
-  showToast('✓ Aprovado na triagem — segue para a fase de Análise', 'success');
+  showToast('✓ Aprovado na triagem — segue para a Análise da Agência', 'success');
 }
 function openDevolucaoModal(bid){
   devolucaoId = bid;
   const b = db.find(x => x.id === bid);
   if(!b) return;
-  document.getElementById('dev-cliente-info').textContent = `Cliente: ${b.cliente || displayName(b)} · Vendedor: ${b.vendedor || '—'}`;
+  document.getElementById('dev-cliente-info').textContent = `Associado: ${b.cliente || displayName(b)} · Vendedor: ${b.vendedor || '—'}`;
   document.getElementById('dev-parecer').value = '';
   document.getElementById('dev-motivo').value = '';
   document.getElementById('modal-devolucao').classList.add('open');
@@ -1607,7 +1769,7 @@ function confirmarDevolucao(){
   pushHist(b);
   b.updated_at = new Date().toISOString();
   saveDB();
-  logAudit('Devolução ao Comercial', `${b.cliente} — ${motivo} (vendedor: ${b.vendedor||'—'})`, b.id);
+  logAudit('Devolução ao Comercial (Agência)', `${b.cliente} — ${motivo} (vendedor: ${b.vendedor||'—'})`, b.id);
   closeDevolucaoModal();
   refreshActiveViews();
   if(currentDetailId === b.id){
@@ -1615,24 +1777,25 @@ function confirmarDevolucao(){
     document.getElementById('dp-status-sel').value = 'devolvido';
   }
   exportTermoDevolucao(b);
-  showToast('Solicitação devolvida. Termo formal gerado.', 'success');
+  showToast('Encaminhamento devolvido. Termo formal gerado.', 'success');
 }
 function exportTermoDevolucao(b){
   const q = b.qualificacao || {};
   const html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head><meta charset='utf-8'><style>
 body{font-family:Calibri,sans-serif;font-size:12pt;color:#1A1208;margin:40px;}
-h1{font-size:16pt;color:#C0392B;border-bottom:2px solid #C0392B;padding-bottom:8px;}
-h2{font-size:13pt;background:#F5F0E8;padding:6px 10px;border-left:3px solid #C0392B;}
+h1{font-size:16pt;color:#7e22ce;border-bottom:2px solid #7e22ce;padding-bottom:8px;}
+h2{font-size:13pt;background:#F5F0E8;padding:6px 10px;border-left:3px solid #7e22ce;}
 table{border-collapse:collapse;width:100%;margin-bottom:12px;}
 td{border:1px solid #DDD5C4;padding:7px 10px;font-size:11pt;}
 td:first-child{background:#FDFAF6;font-weight:600;width:32%;}
 </style></head><body>
-<h1>↩ Termo de Devolução de Solicitação — Marketing ACIF</h1>
-<h2>Dados da solicitação</h2>
+<h1>↩ Termo de Devolução de Encaminhamento — Agência ACIF</h1>
+<h2>Dados do encaminhamento</h2>
 <table>
 <tr><td>Data da devolução</td><td>${new Date().toLocaleString('pt-BR')}</td></tr>
-<tr><td>Cliente</td><td>${b.cliente || '—'}</td></tr>
+<tr><td>Divisão</td><td><b>Agência</b> (encaminhamento do Comercial)</td></tr>
+<tr><td>Associado</td><td>${b.cliente || '—'}</td></tr>
 <tr><td>Vendedor responsável</td><td>${b.vendedor || '—'}</td></tr>
 <tr><td>Plano do associado</td><td>${b.plano || '—'}</td></tr>
 <tr><td>Serviço solicitado</td><td>${b.tipo_solicitacao}</td></tr>
@@ -1642,9 +1805,9 @@ td:first-child{background:#FDFAF6;font-weight:600;width:32%;}
 <h2>Motivo da devolução</h2>
 <table><tr><td colspan="2"><b>${(b.triagem && b.triagem.motivo) || '—'}</b></td></tr></table>
 <h2>Parecer e orientações</h2>
-<table><tr><td colspan="2">${(b.triagem && b.triagem.parecer) || 'Sem parecer adicional. Reenviar a solicitação pelo Portal Comercial após atender aos critérios de qualificação.'}</td></tr></table>
+<table><tr><td colspan="2">${(b.triagem && b.triagem.parecer) || 'Sem parecer adicional. Reenviar o encaminhamento pela aba Encaminhamento Comercial (Briefing Agência) após atender aos critérios de qualificação.'}</td></tr></table>
 <h2>Próximos passos</h2>
-<p>1. O vendedor deve alinhar os pontos indicados com o cliente.<br>2. Reenviar a solicitação pelo Portal Comercial quando os critérios forem atendidos.<br>3. Em caso de dúvida sobre os critérios, consulte o Guia do Fluxo ou a coordenação de Marketing.</p>
+<p>1. O vendedor deve alinhar os pontos indicados com o associado.<br>2. Reenviar o encaminhamento pelo Briefing Agência quando os critérios forem atendidos.<br>3. Em caso de dúvida sobre os critérios, consulte o Guia do Fluxo ou a coordenação da Agência.</p>
 <p style="margin-top:24px;font-size:10pt;color:#888;">Documento gerado automaticamente pelo Portal de Briefing ACIF — ID ${b.id}</p>
 </body></html>`;
   const blob = new Blob(['\ufeff'+html], {type:'application/msword'});
@@ -1788,11 +1951,11 @@ td:first-child{background:#FDFAF6;font-weight:600;width:35%;}
 ${b.urgencia ? '<p class="urgente">⚡ SOLICITAÇÃO URGENTE</p>' : ''}
 <h2>1. Identificação</h2>
 <table>
-<tr><td>Origem</td><td><b>${b.origem || 'Institucional'}</b></td></tr>
+<tr><td>Divisão</td><td><b>${b.origem || 'Institucional'}</b>${b.origem==='Agência' && b.captacao ? ' — ' + captacaoLabel(b) + (b.vendedor ? ' (' + b.vendedor + ')' : '') : ''}</td></tr>
 ${b.cliente ? `<tr><td>Cliente (associado)</td><td>${b.cliente}</td></tr>` : ''}
-${b.vendedor ? `<tr><td>Vendedor responsável</td><td>${b.vendedor}</td></tr>` : ''}
+${b.plano ? `<tr><td>Plano</td><td>${b.plano}</td></tr>` : ''}
 <tr><td>Solicitante</td><td>${b.nome || '—'}</td></tr>
-<tr><td>E-mail</td><td>${b.email || '—'}</td></tr>
+<tr><td>E-mail / Contato</td><td>${b.email || '—'}</td></tr>
 <tr><td>Setor</td><td>${b.setor || '—'}</td></tr>
 <tr><td>Data da Solicitação</td><td>${fmtDate(b.data_solicitacao)}</td></tr>
 <tr><td>Prazo</td><td>${fmtDate(b.prazo)}</td></tr>
@@ -1844,7 +2007,7 @@ ${b.vendedor ? `<tr><td>Vendedor responsável</td><td>${b.vendedor}</td></tr>` :
 </table>
 <h2>11. Observações Finais</h2>
 <table><tr><td>Observações</td><td>${b.obs || '—'}</td></tr></table>
-<p style="margin-top:24px;font-size:10pt;color:#888;">ID: ${b.id} — Gerado em: ${new Date(b.created_at).toLocaleString('pt-BR')} — Portal Briefing ACIF v3.0</p>
+<p style="margin-top:24px;font-size:10pt;color:#888;">ID: ${b.id} — Gerado em: ${new Date(b.created_at).toLocaleString('pt-BR')} — Portal Briefing ACIF v3.2</p>
 </body></html>`;
   const blob = new Blob(['\ufeff'+html], {type:'application/msword'});
   const url = URL.createObjectURL(blob);
@@ -1873,7 +2036,8 @@ function getKanbanFilters(){
     setor:document.getElementById('kanban-filter-setor')?.value || '',
     urgencia:document.getElementById('kanban-filter-urgencia')?.value || '',
     designer:document.getElementById('kanban-filter-designer')?.value || '',
-    origem:document.getElementById('kanban-filter-origem')?.value || ''
+    origem:document.getElementById('kanban-filter-origem')?.value || '',
+    captacao:document.getElementById('kanban-filter-captacao')?.value || ''
   };
 }
 function applyKanbanFilters(){ renderKanban(); }
@@ -1891,6 +2055,7 @@ function renderKanban(){
       cards = cards.filter(b => f.designer === 'none' ? (!b.assigned_to || b.assigned_to.trim()==='') : b.assigned_to === f.designer);
     }
     if(f.origem) cards = cards.filter(b => (b.origem || 'Institucional') === f.origem);
+    if(f.captacao) cards = cards.filter(b => b.origem === 'Agência' && b.captacao === f.captacao);
     const col = document.createElement('div');
     col.className = 'kanban-col';
     col.innerHTML = `
@@ -1916,9 +2081,10 @@ function archiveBriefing(id){
 function renderKanbanCard(b){
   const sla = slaInfo(b.prazo);
   const isEntregue = b.status === 'entregue';
-  const sub = b.origem === 'Comercial'
-    ? `Vendedor: ${b.vendedor || '—'} · ${b.tipo_solicitacao}`
-    : `${b.setor} · ${b.tipo_solicitacao}`;
+  let sub;
+  if(b.origem === 'Agência' && b.captacao === 'Comercial') sub = `via Comercial · Vend.: ${b.vendedor || '—'} · ${b.tipo_solicitacao}`;
+  else if(b.origem === 'Agência') sub = `via Coordenadora · ${b.tipo_solicitacao}`;
+  else sub = `${b.setor} · ${b.tipo_solicitacao}`;
   return `<div class="briefing-card" draggable="true" ondragstart="onDragStart(event,'${b.id}')" ondragend="onDragEnd(event)" onclick="openDetail('${b.id}')">
     <div style="display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;">
       ${b.urgencia ? '<div class="urgencia-flag">⚡ URGENTE</div>' : ''}
@@ -1957,9 +2123,9 @@ function openDetail(id){
   currentDetailId = id;
   document.getElementById('dp-id-label').textContent = `ID ${b.id.substring(0,8).toUpperCase()} · Criado em ${new Date(b.created_at).toLocaleDateString('pt-BR')}`;
   document.getElementById('dp-nome').textContent = (b.urgencia ? '⚡ ' : '') + displayName(b);
-  document.getElementById('dp-setor').textContent = b.origem === 'Comercial'
-    ? `Via Comercial · Cliente: ${b.cliente || '—'} · Vendedor: ${b.vendedor || '—'}`
-    : `${b.origem || 'Institucional'} · ${b.setor} — ${b.tipo_solicitacao}`;
+  document.getElementById('dp-setor').textContent = b.origem === 'Agência'
+    ? `Agência · ${captacaoLabel(b)}${b.vendedor ? ' — ' + b.vendedor : ''} · Cliente: ${b.cliente || '—'}`
+    : `Institucional · ${b.setor} — ${b.tipo_solicitacao}`;
   const sel = document.getElementById('dp-status-sel');
   const opts = STATUS_COLS.slice();
   if(!opts.includes(b.status)) opts.push(b.status);
@@ -1979,16 +2145,16 @@ function updateStatusFromPanel(){
 }
 function renderDetailBody(b){
   const isAnalise = b.status === 'analise';
-  // chips de evidência
   const chips = [];
+  if(b.origem === 'Agência') chips.push(`<span class="chip chip-agencia"><i class="fa-solid fa-store"></i> Agência · ${b.captacao === 'Comercial' ? 'Encaminhamento Comercial' : 'Captação da Coordenadora'}</span>`);
+  else chips.push(`<span class="chip chip-blue"><i class="fa-solid fa-landmark"></i> Institucional</span>`);
   if(b.aprovacao_formal) chips.push(`<span class="chip chip-green"><i class="fa-solid fa-signature"></i> Aprovado por ${b.aprovacao_formal.assinatura} em ${fmtDate(b.aprovacao_formal.data)}</span>`);
   if(b.satisfacao && b.satisfacao.nota > 0) chips.push(`<span class="chip chip-amber"><i class="fa-solid fa-star"></i> Satisfação ${b.satisfacao.nota}/5</span>`);
   if(b.triagem && b.triagem.status === 'devolvido') chips.push(`<span class="chip chip-red"><i class="fa-solid fa-ban"></i> Devolvido: ${b.triagem.motivo || ''}</span>`);
   if(b.triagem && b.triagem.status === 'aprovado') chips.push(`<span class="chip chip-blue"><i class="fa-solid fa-filter-circle-check"></i> Qualificado na triagem</span>`);
   const chipsHtml = chips.length ? `<div style="margin-bottom:14px;display:flex;flex-wrap:wrap;gap:6px;">${chips.join('')}</div>` : '';
-  // qualificação comercial
   let comercialInfo = '';
-  if(b.origem === 'Comercial' && b.qualificacao){
+  if(b.origem === 'Agência' && b.captacao === 'Comercial' && b.qualificacao){
     const meta = nivelMeta(b.qualificacao);
     const borda = b.qualificacao.nivel === 'qualificado' ? 'var(--green)' : b.qualificacao.nivel === 'condicional' ? '#d97706' : 'var(--red)';
     comercialInfo = `
@@ -1996,23 +2162,21 @@ function renderDetailBody(b){
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
           <div class="score-circle ${meta.cls}">${b.qualificacao.score}<span style="font-size:8px;font-weight:700;opacity:.7;">PTS</span></div>
           <div>
-            <p style="font-size:13px;font-weight:700;">Qualificação Comercial — ${meta.label}</p>
+            <p style="font-size:13px;font-weight:700;">Qualificação do Encaminhamento — ${meta.label}</p>
             <p style="font-size:12px;color:var(--ink-soft);">Vendedor: ${b.vendedor || '—'} · Plano: ${b.plano || '—'} · Contato: ${b.cliente_contato || '—'}</p>
           </div>
         </div>
         ${(b.qualificacao.breakdown || []).map(x => `<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0;border-bottom:1px dashed var(--paper-3);"><span style="color:var(--ink-soft);">${x.label}</span><b>${x.pts}/${x.max}</b></div>`).join('')}
       </div>`;
   }
-  // decisão de triagem
   const triagemBox = b.status === 'triagem' ? `
     <div class="card" style="margin-bottom:16px;border-left:4px solid #EA580C;">
-      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-inbox" style="color:#EA580C;"></i> Decisão de Triagem</h3>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;"><i class="fa-solid fa-inbox" style="color:#EA580C;"></i> Decisão de Triagem (Encaminhamento Comercial)</h3>
       <div style="display:flex;gap:8px;">
         <button class="btn btn-success btn-sm" style="flex:1;justify-content:center;" onclick="approveTriagem('${b.id}')"><i class="fa-solid fa-check"></i> Aprovar p/ produção</button>
         <button class="btn btn-danger btn-sm" style="flex:1;justify-content:center;" onclick="openDevolucaoModal('${b.id}')"><i class="fa-solid fa-rotate-left"></i> Devolver ao Comercial</button>
       </div>
     </div>` : '';
-  // versões
   const verHtml = (b.versions && b.versions.length) ? b.versions.map((v,i) => `
     <div class="timeline-item">
       <div class="timeline-dot ${v.status}"><i class="fa-solid ${v.status==='approved'?'fa-check':v.status==='revision'?'fa-rotate-left':'fa-clock'}"></i></div>
@@ -2056,7 +2220,6 @@ function renderDetailBody(b){
         </div>
       </div>
     </div>`).join('') : `<p style="font-size:13px;color:var(--ink-soft);text-align:center;padding:20px 0;"><i class="fa-regular fa-folder-open" style="font-size:24px;display:block;margin-bottom:8px;"></i>Nenhuma versão ainda</p>`;
-  // checklist
   const checklistHtml = (b.checklist && b.checklist.length) ? b.checklist.map(i => `
     <div class="checklist-item ${i.done?'done':''}">
       <input type="checkbox" ${i.done?'checked':''} onchange="toggleChecklistItem('${b.id}','${i.id}')">
@@ -2080,7 +2243,6 @@ function renderDetailBody(b){
       <select id="analise-designer-select" style="width:100%;margin-bottom:12px;">${designerOpts}</select>
       <button class="btn btn-brand btn-sm" style="width:100%;background:#8B5CF6;justify-content:center;" onclick="approveAnalysis('${b.id}')"><i class="fa-solid fa-check-to-slot"></i> Aprovar Análise & Delegar</button>
     </div>` : '';
-  // trilha
   const histHtml = (b.historico_status && b.historico_status.length) ? `
     <div style="margin-top:14px;">
       <p style="font-size:11px;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Trilha do fluxo</p>
@@ -2238,12 +2400,14 @@ function renderDashboard(){
     data:{labels:days.map(d => d.slice(5)), datasets:[{label:'Briefings', data:dayCounts, borderColor:'#E8682A', backgroundColor:'rgba(232,90,42,0.1)', fill:true, tension:0.4, pointBackgroundColor:'#E8682A', pointRadius:4}]},
     options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{stepSize:1}}}}
   });
-  const origemCounts = {};
-  db.forEach(b => { const o = b.origem || 'Institucional'; origemCounts[o] = (origemCounts[o] || 0) + 1; });
-  const origemColorMap = {'Institucional':'#0369a1', 'Agência':'#7e22ce', 'Comercial':'#EA580C'};
+  const origemCounts = {'Institucional':0, 'Agência':0};
+  db.forEach(b => {
+    const o = b.origem === 'Agência' ? 'Agência' : 'Institucional';
+    origemCounts[o] = (origemCounts[o] || 0) + 1;
+  });
   chartInstances.origem = new Chart(document.getElementById('chart-origem').getContext('2d'), {
     type:'doughnut',
-    data:{labels:Object.keys(origemCounts), datasets:[{data:Object.values(origemCounts), backgroundColor:Object.keys(origemCounts).map(l => origemColorMap[l] || '#64748b'), borderWidth:2, borderColor:'#fff'}]},
+    data:{labels:Object.keys(origemCounts), datasets:[{data:Object.values(origemCounts), backgroundColor:['#0369a1', '#7e22ce'], borderWidth:2, borderColor:'#fff'}]},
     options:{plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}},cutout:'65%'}
   });
 }
@@ -2276,20 +2440,29 @@ function renderResponsabilidade(){
   const noPrazo = concluidos.filter(b => b.prazo && b.prazo !== 'Não informado' && new Date(b.prazo + 'T23:59:59') >= new Date(b.updated_at || b.created_at)).length;
   const slaPct = concluidos.length ? Math.round(noPrazo / concluidos.length * 100) : 0;
   const tempoMedio = concluidos.length ? (concluidos.reduce((a,b) => a + Math.max(0, (new Date(b.updated_at) - new Date(b.created_at)) / 864e5), 0) / concluidos.length).toFixed(1) : '0';
-  const comercial = db.filter(b => b.origem === 'Comercial');
+  const encaminhados = db.filter(b => b.captacao === 'Comercial');
   const devolvidos = db.filter(b => b.status === 'devolvido');
-  const taxaDev = comercial.length ? Math.round(devolvidos.length / comercial.length * 100) : 0;
+  const taxaDev = encaminhados.length ? Math.round(devolvidos.length / encaminhados.length * 100) : 0;
   const notas = db.filter(b => b.satisfacao && b.satisfacao.nota > 0).map(b => b.satisfacao.nota);
   const mediaNota = notas.length ? (notas.reduce((a,c) => a + c, 0) / notas.length).toFixed(1) : '—';
   document.getElementById('resp-kpis').innerHTML =
     respKpi('SLA cumprido', slaPct + '%', 'fa-clock', 'var(--green)', `${noPrazo}/${concluidos.length} concluídas no prazo`) +
     respKpi('Tempo médio', tempoMedio + ' d', 'fa-hourglass-half', 'var(--blue)', 'solicitação → conclusão') +
-    respKpi('Taxa de devolução', taxaDev + '%', 'fa-rotate-left', 'var(--red)', 'do funil do Comercial') +
+    respKpi('Taxa de devolução', taxaDev + '%', 'fa-rotate-left', 'var(--red)', 'dos encaminhamentos do Comercial') +
     respKpi('Satisfação média', mediaNota === '—' ? '—' : mediaNota + '/5', 'fa-star', 'var(--yellow)', 'avaliações na entrega') +
-    respKpi('Na triagem', db.filter(b => b.status === 'triagem').length, 'fa-inbox', 'var(--brand)', 'aguardando decisão');
-  // Chart 1: funil por vendedor
+    respKpi('Em triagem', db.filter(b => b.status === 'triagem').length, 'fa-inbox', 'var(--brand)', 'encaminhamentos aguardando');
+  const inst = db.filter(b => (b.origem || 'Institucional') === 'Institucional').length;
+  const agTotal = db.filter(b => b.origem === 'Agência').length;
+  const agCoord = db.filter(b => b.origem === 'Agência' && b.captacao === 'Coordenadora').length;
+  const agCom = db.filter(b => b.origem === 'Agência' && b.captacao === 'Comercial').length;
+  document.getElementById('resp-divisao').innerHTML = `
+    <span style="font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">Divisão do Marketing:</span>
+    <span class="chip chip-blue"><i class="fa-solid fa-landmark"></i> Institucional · ${inst}</span>
+    <span class="chip chip-agencia"><i class="fa-solid fa-store"></i> Agência · ${agTotal}</span>
+    <span class="chip chip-amber"><i class="fa-solid fa-bullhorn"></i> Captação da Coordenadora · ${agCoord}</span>
+    <span class="chip chip-green"><i class="fa-solid fa-handshake"></i> Encaminhamentos do Comercial · ${agCom}</span>`;
   const vend = {};
-  comercial.filter(b => b.vendedor).forEach(b => {
+  encaminhados.filter(b => b.vendedor).forEach(b => {
     vend[b.vendedor] = vend[b.vendedor] || {a:0, d:0};
     if(b.status === 'devolvido') vend[b.vendedor].d++; else vend[b.vendedor].a++;
   });
@@ -2304,7 +2477,6 @@ function renderResponsabilidade(){
       options:{plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:12}}},scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,ticks:{stepSize:1}}}}
     });
   }
-  // Chart 2: tempo por etapa
   const etapas = tempoPorEtapa().sort((x,y) => y.dias - x.dias).slice(0,7);
   if(etapas.length){
     chartInstances.tempoEtapas = new Chart(document.getElementById('chart-tempo-etapas').getContext('2d'), {
@@ -2313,7 +2485,6 @@ function renderResponsabilidade(){
       options:{indexAxis:'y', plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true}}}
     });
   }
-  // Chart 3: motivos de devolução
   const motivos = {};
   devolvidos.forEach(b => { const m = (b.triagem && b.triagem.motivo) || 'Sem motivo'; motivos[m] = (motivos[m] || 0) + 1; });
   if(Object.keys(motivos).length){
@@ -2343,7 +2514,9 @@ function exportShieldReport(){
   const noPrazo = concluidos.filter(b => b.prazo && b.prazo !== 'Não informado' && new Date(b.prazo + 'T23:59:59') >= new Date(b.updated_at || b.created_at)).length;
   const slaPct = concluidos.length ? Math.round(noPrazo / concluidos.length * 100) : 0;
   const tempoMedio = concluidos.length ? (concluidos.reduce((a,b) => a + Math.max(0, (new Date(b.updated_at) - new Date(b.created_at)) / 864e5), 0) / concluidos.length).toFixed(1) : '0';
-  const comercial = db.filter(b => b.origem === 'Comercial');
+  const inst = db.filter(b => (b.origem || 'Institucional') === 'Institucional').length;
+  const agCoord = db.filter(b => b.origem === 'Agência' && b.captacao === 'Coordenadora').length;
+  const agCom = db.filter(b => b.origem === 'Agência' && b.captacao === 'Comercial').length;
   const devolucoes = db.filter(b => b.status === 'devolvido');
   const notas = db.filter(b => b.satisfacao && b.satisfacao.nota > 0).map(b => b.satisfacao.nota);
   const mediaNota = notas.length ? (notas.reduce((a,c) => a + c, 0) / notas.length).toFixed(1) : 'sem avaliações';
@@ -2360,31 +2533,31 @@ td,th{border:1px solid #DDD5C4;padding:7px 10px;font-size:11pt;text-align:left;}
 th{background:#FDFAF6;}
 </style></head><body>
 <h1>🛡️ Relatório Escudo — Marketing ACIF</h1>
-<p style="color:#666;">Gerado em ${nowStr} · Documento oficial de evidências do setor de Marketing & Design — para uso em reuniões de alinhamento entre setores.</p>
+<p style="color:#666;">Gerado em ${nowStr} · Documento oficial de evidências das divisões <b>Institucional</b> e <b>Agência</b> — para uso em reuniões de alinhamento entre setores.</p>
 <h2>1. Resumo Executivo</h2>
 <table>
 <tr><th>Indicador</th><th>Resultado</th></tr>
+<tr><td>Divisão das demandas</td><td>Institucional: <b>${inst}</b> · Agência: <b>${agCoord + agCom}</b> (captação da coordenadora: ${agCoord} · encaminhamentos do Comercial: ${agCom})</td></tr>
 <tr><td>SLA cumprido</td><td><b>${slaPct}%</b> das demandas concluídas dentro do prazo (${noPrazo}/${concluidos.length})</td></tr>
 <tr><td>Tempo médio de conclusão</td><td>${tempoMedio} dias</td></tr>
 <tr><td>Satisfação média</td><td>${mediaNota}</td></tr>
-<tr><td>Funil do Comercial</td><td>${comercial.length} solicitações recebidas · ${devolucoes.length} devolvidas por não qualificação (com termo formal)</td></tr>
-<tr><td>Total de demandas registradas</td><td>${db.length}</td></tr>
+<tr><td>Encaminhamentos do Comercial (Agência)</td><td>${agCom} recebidos · ${devolucoes.length} devolvidos por não qualificação (com termo formal)</td></tr>
 </table>
 <h2>2. Entregas com Aprovação Formal</h2>
-<p style="font-size:10pt;color:#666;">Cada peça abaixo foi formalmente aprovada e assinada pelo solicitante/cliente. Alterações posteriores à assinatura são tratadas como nova demanda.</p>
+<p style="font-size:10pt;color:#666;">Cada peça abaixo foi formalmente aprovada e assinada pelo solicitante/associado. Alterações posteriores à assinatura são tratadas como nova demanda.</p>
 <table>
-<tr><th>Cliente / Solicitante</th><th>Peça</th><th>Prazo</th><th>Aprovado por</th><th>Satisfação</th></tr>
-${entregas.map(b => `<tr><td>${b.cliente || b.nome || '—'}</td><td>${b.tipo_solicitacao || '—'}</td><td>${fmtDate(b.prazo)}</td><td>${b.aprovacao_formal ? b.aprovacao_formal.assinatura + ' (' + fmtDate(b.aprovacao_formal.data) + ')' : '—'}</td><td>${b.satisfacao && b.satisfacao.nota > 0 ? b.satisfacao.nota + '/5' : '—'}</td></tr>`).join('') || '<tr><td colspan="5">Nenhuma entrega registrada</td></tr>'}
+<tr><th>Divisão</th><th>Cliente / Solicitante</th><th>Peça</th><th>Prazo</th><th>Aprovado por</th><th>Satisfação</th></tr>
+${entregas.map(b => `<tr><td>${b.origem || 'Institucional'}${b.captacao ? ' (' + captacaoLabel(b) + ')' : ''}</td><td>${b.cliente || b.nome || '—'}</td><td>${b.tipo_solicitacao || '—'}</td><td>${fmtDate(b.prazo)}</td><td>${b.aprovacao_formal ? b.aprovacao_formal.assinatura + ' (' + fmtDate(b.aprovacao_formal.data) + ')' : '—'}</td><td>${b.satisfacao && b.satisfacao.nota > 0 ? b.satisfacao.nota + '/5' : '—'}</td></tr>`).join('') || '<tr><td colspan="6">Nenhuma entrega registrada</td></tr>'}
 </table>
-<h2>3. Devoluções Formais ao Comercial</h2>
-<p style="font-size:10pt;color:#666;">Solicitações recusadas na triagem com motivo documentado — o Marketing não recebeu demandas sem condições de execução.</p>
+<h2>3. Devoluções de Encaminhamentos do Comercial (Agência)</h2>
+<p style="font-size:10pt;color:#666;">Encaminhamentos recusados na triagem com motivo documentado — a Agência não recebeu demandas sem condições de execução.</p>
 <table>
-<tr><th>Data</th><th>Cliente</th><th>Vendedor</th><th>Motivo</th></tr>
+<tr><th>Data</th><th>Associado</th><th>Vendedor</th><th>Motivo</th></tr>
 ${devolucoes.map(b => `<tr><td>${fmtDate(b.triagem && b.triagem.data)}</td><td>${b.cliente || '—'}</td><td>${b.vendedor || '—'}</td><td>${(b.triagem && b.triagem.motivo) || '—'}</td></tr>`).join('') || '<tr><td colspan="4">Nenhuma devolução registrada</td></tr>'}
 </table>
-<h2>4. Registros de Ocorrências por Cliente</h2>
+<h2>4. Registros de Ocorrências por Associado</h2>
 <table>
-<tr><th>Data</th><th>Cliente</th><th>Tipo</th><th>Registro</th></tr>
+<tr><th>Data</th><th>Associado</th><th>Tipo</th><th>Registro</th></tr>
 ${ocs.map(o => `<tr><td>${fmtDate(o.data)}</td><td>${o.cliente}</td><td>${o.tipo}</td><td>${o.texto}</td></tr>`).join('') || '<tr><td colspan="4">Nenhum registro de ocorrência</td></tr>'}
 </table>
 <p style="margin-top:24px;font-size:10pt;color:#888;">Portal de Briefing ACIF — documento gerado automaticamente a partir dos registros auditáveis do sistema. Contra achismos, dados.</p>
@@ -2421,10 +2594,10 @@ function renderClientes(){
   const names = Object.keys(clienteReg).filter(n => n.toLowerCase().includes(q)).sort();
   const tbl = document.getElementById('clientes-table');
   if(!names.length){
-    tbl.innerHTML = '<tbody><tr><td><div class="empty-state">Nenhum cliente registrado ainda. Clientes entram aqui quando a equipe Comercial envia solicitações pelo Portal.</div></td></tr></tbody>';
+    tbl.innerHTML = '<tbody><tr><td><div class="empty-state">Nenhum associado registrado ainda. Associados entram aqui quando a Agência recebe demandas (captação da coordenadora ou encaminhamento do Comercial).</div></td></tr></tbody>';
     return;
   }
-  tbl.innerHTML = `<thead><tr><th>Cliente</th><th>Plano</th><th>Vendedor</th><th>Solicitações</th><th>Entregas</th><th>Satisfação</th><th>Última atividade</th><th></th></tr></thead><tbody>` + names.map(n => {
+  tbl.innerHTML = `<thead><tr><th>Associado</th><th>Plano</th><th>Vendedor / Captação</th><th>Solicitações</th><th>Entregas</th><th>Satisfação</th><th>Última atividade</th><th></th></tr></thead><tbody>` + names.map(n => {
     const reg = clienteReg[n];
     const briefs = db.filter(b => b.cliente === n);
     const entregues = briefs.filter(b => b.status === 'entregue').length;
@@ -2432,11 +2605,13 @@ function renderClientes(){
     const media = notasArr.length ? notasArr.reduce((a,c) => a + c, 0) / notasArr.length : null;
     const ultima = briefs.length ? briefs.map(b => b.updated_at).sort().pop() : null;
     const mediaHtml = media ? starsHtml(Math.round(media)) + ' <b>' + media.toFixed(1) + '</b>' : '<span style="color:var(--ink-soft);">—</span>';
+    const viaComercial = briefs.some(b => b.captacao === 'Comercial');
+    const captTxt = viaComercial && reg.vendedor && reg.vendedor !== '—' ? reg.vendedor : (briefs.some(b => b.captacao === 'Coordenadora') ? 'Coordenadora' : '—');
     const safe = n.replace(/'/g, "\\'");
     return `<tr onclick="openClienteModal('${safe}')">
       <td><b>${n}</b></td>
       <td>${reg.plano || '—'}</td>
-      <td>${reg.vendedor || '—'}</td>
+      <td>${captTxt}</td>
       <td>${briefs.length}</td>
       <td>${entregues}</td>
       <td>${mediaHtml}</td>
@@ -2456,8 +2631,9 @@ function openClienteModal(nome){
   document.getElementById('cliente-modal-title').textContent = nome;
   document.getElementById('cliente-modal-body').innerHTML = `
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      <span class="chip chip-agencia"><i class="fa-solid fa-store"></i> Agência ACIF</span>
       <span class="chip chip-blue">Plano ${reg.plano || '—'}</span>
-      <span class="chip chip-amber"><i class="fa-solid fa-user-tie"></i> ${reg.vendedor || '—'}</span>
+      ${reg.vendedor && reg.vendedor !== '—' ? `<span class="chip chip-amber"><i class="fa-solid fa-user-tie"></i> ${reg.vendedor}</span>` : ''}
       <span class="chip chip-green">${briefs.length} solicitação(ões) · ${briefs.filter(b => b.status === 'entregue').length} entrega(s)</span>
       <span class="chip" style="background:#fef3c7;color:#b45309;"><i class="fa-solid fa-star"></i> ${media === '—' ? 'sem avaliações' : media + '/5'}</span>
     </div>
@@ -2467,7 +2643,7 @@ function openClienteModal(nome){
       return `<div style="border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <div style="flex:1;min-width:0;">
           <b style="font-size:13px;">${b.tipo_solicitacao}</b>
-          <div style="font-size:11px;color:var(--ink-soft);">Prazo ${fmtDate(b.prazo)}${b.aprovacao_formal ? ` · Aprovado por ${b.aprovacao_formal.assinatura}` : ''}</div>
+          <div style="font-size:11px;color:var(--ink-soft);">Prazo ${fmtDate(b.prazo)} · ${b.captacao === 'Comercial' ? 'Encaminhamento Comercial' : 'Captação da Coordenadora'}${b.aprovacao_formal ? ` · Aprovado por ${b.aprovacao_formal.assinatura}` : ''}</div>
         </div>
         <span class="chip" style="background:${sm.color}18;color:${sm.color};">${sm.label}</span>
         ${b.satisfacao && b.satisfacao.nota > 0 ? `<span style="font-size:12px;">${starsHtml(b.satisfacao.nota)}</span>` : ''}
@@ -2528,9 +2704,10 @@ function renderLista(){
   cont.innerHTML = filtered.map(b => {
     const sla = slaInfo(b.prazo);
     const statusMeta = COL_META[b.status] || {color:'#888', label:b.status};
-    const sub = b.origem === 'Comercial'
-      ? `Via Comercial · ${b.vendedor || '—'} · ${b.tipo_solicitacao}`
-      : `${b.setor} · ${b.tipo_solicitacao}`;
+    let sub;
+    if(b.origem === 'Agência' && b.captacao === 'Comercial') sub = `Agência · via Comercial · ${b.vendedor || '—'} · ${b.tipo_solicitacao}`;
+    else if(b.origem === 'Agência') sub = `Agência · via Coordenadora · ${b.tipo_solicitacao}`;
+    else sub = `Institucional · ${b.setor} · ${b.tipo_solicitacao}`;
     return `<div class="briefing-row" onclick="openDetail('${b.id}')">
       <div style="width:10px;height:10px;border-radius:50%;background:${statusMeta.color};flex-shrink:0;"></div>
       <div style="flex:1;min-width:0;">
@@ -2621,12 +2798,13 @@ function buildCalCell(day, m, y, isOther, counts, useHeat){
 // EXPORT CSV
 // =============================================
 function exportCSV(){
-  const headers = ['id','origem','cliente','vendedor','nome','email','setor','data_solicitacao','prazo','status','tipo_solicitacao','urgencia','assigned_to','qualificacao_score','satisfacao','formatos','versoes'];
+  const headers = ['id','origem','captacao','cliente','vendedor','nome','email','setor','data_solicitacao','prazo','status','tipo_solicitacao','urgencia','assigned_to','qualificacao_score','satisfacao','formatos','versoes'];
   const rows = db.map(b => headers.map(h => {
     let v;
     if(h === 'versoes') v = (b.versions || []).length;
     else if(h === 'qualificacao_score') v = b.qualificacao ? b.qualificacao.score : '';
     else if(h === 'satisfacao') v = b.satisfacao ? b.satisfacao.nota : '';
+    else if(h === 'captacao') v = b.captacao || '';
     else v = b[h];
     v = String(v === undefined || v === null ? '' : v).replace(/"/g,'""');
     return `"${v}"`;
@@ -2660,7 +2838,7 @@ function showToast(msg, type = ''){
   t.textContent = msg;
   t.className = 'toast show' + (type ? ' ' + type : '');
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+  t._timer = setTimeout(() => t.classList.remove('show'), 4000);
 }
 
 // =============================================
@@ -2669,8 +2847,9 @@ function showToast(msg, type = ''){
 function dPlus(n){ const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().split('T')[0]; }
 function seedDemoData(){
   if(db.length > 0) return;
+  const now = new Date().toISOString();
   const designers = ['Designer A','Designer B','Designer C',''];
-  const setores = ['Comercial','Marketing','RH','Financeiro','Operações'];
+  const setoresInt = ['Empreender','Certificado Digital','Desenvolvimento Empresarial','Presidência','Marketing'];
   const tipos = ['Campanha promocional','Lançamento de produto/serviço','Redes sociais','Material impresso','Evento / Convite'];
   const nomes = ['Ana Lima','Carlos Souza','Mariana Ferreira','Pedro Costa','Juliana Alves','Rafael Santos'];
   const statuses = STATUS_COLS;
@@ -2681,22 +2860,22 @@ function seedDemoData(){
     prazoDate.setDate(prazoDate.getDate() + Math.floor(Math.random()*14) - 3);
     const bStatus = statuses[Math.floor(Math.random()*statuses.length)];
     const b = {
-      id: uuidv4(), status: bStatus, origem:'Institucional',
+      id: uuidv4(), status: bStatus, origem:'Institucional', captacao:'',
       urgencia: Math.random() > 0.75,
       assigned_to: designers[Math.floor(Math.random()*designers.length)],
       created_at: createdDate.toISOString(), updated_at: new Date().toISOString(),
       nome: nomes[i % nomes.length],
-      email: `${nomes[i % nomes.length].split(' ')[0].toLowerCase()}@empresa.com`,
-      setor: setores[i % setores.length],
+      email: `${nomes[i % nomes.length].split(' ')[0].toLowerCase()}@acif.com.br`,
+      setor: setoresInt[i % setoresInt.length],
       data_solicitacao: createdDate.toISOString().split('T')[0],
       prazo: prazoDate.toISOString().split('T')[0],
       tipo_solicitacao: tipos[i % tipos.length],
-      objetivo:'Aumentar engajamento e visibilidade da marca nas redes sociais.',
+      objetivo:'Aumentar engajamento e visibilidade das ações da ACIF.',
       resultado:'Aumento de 15% no alcance orgânico.',
-      publico:'Clientes ativos', faixa_etaria:'26-35 anos',
-      publico_obs:'Público urbano com interesse em tecnologia',
-      tom:'Moderno e clean', headline:'Transforme seu negócio com nossa solução',
-      textos_obg:'Logo, slogan, CNPJ', cta:'Acesse o site', url:'www.empresa.com.br',
+      publico:'Equipe interna', faixa_etaria:'26-35 anos',
+      publico_obs:'Público urbano com interesse em empreendedorismo',
+      tom:'Moderno e clean', headline:'Transforme seu negócio com a ACIF',
+      textos_obg:'Logo, slogan, CNPJ', cta:'Acesse o site', url:'www.acif.com.br',
       formatos:'Feed Instagram, Stories', video_duracao:'30 segundos',
       video_roteiro:'Preciso de roteiro', estilo:'Moderno e clean, Minimalista',
       cores:'Azul corporativo, branco', tipografia:'Seguir manual da marca',
@@ -2711,48 +2890,47 @@ function seedDemoData(){
     };
     db.push(b);
   }
-  for(let i = 0; i < 2; i++){
-    db.push({
-      id: uuidv4(), status:'aguardando', archived:false, urgencia:i === 0,
-      origem:'Agência', assigned_to:'Designer B',
-      created_at: new Date().toISOString(), updated_at: new Date().toISOString(),
-      nome:`Agência Criativa ${i+1} - Cliente X`, email:'contato@agenciacriativa.com.br',
-      setor:'Agência Externa', data_solicitacao: new Date().toISOString().split('T')[0],
-      prazo: dPlus(10 + i), tipo_solicitacao:'Campanha Completa',
-      objetivo:'Briefing externo via upload', resultado:'Não informado',
-      publico:'Não informado', faixa_etaria:'Não informado', publico_obs:'',
-      tom:'Não informado', headline:'', textos_obg:'', cta:'', url:'',
-      formatos:'Feed, Story, Banner', video_duracao:'', video_roteiro:'',
-      estilo:'', cores:'', tipografia:'', restricoes:'', restricoes_obs:'',
-      materiais:'Arquivo anexado', mat_link:'https://wetransfer.com/exemplo',
-      referencias:'', ref_obs:'', prioridade:'Normal',
-      obs:'Urgente na aprovação do conceito.', checklist:[],
-      historico_status:[{status:'aguardando', data:new Date().toISOString()}],
-      versions:[]
-    });
-  }
-  seedComercial();
-  saveDB();
-}
-function seedComercial(){
-  const now = new Date().toISOString();
-  const mk = o => Object.assign({
-    id: uuidv4(), archived:false, urgencia:false, origem:'Comercial', assigned_to:'',
-    created_at:now, updated_at:now, email:'—', setor:'Via Comercial',
-    data_solicitacao: dPlus(0), resultado:'Não informado', publico:'Clientes do associado',
+  const mkAg = o => Object.assign({
+    id: uuidv4(), archived:false, urgencia:false, origem:'Agência', assigned_to:'',
+    created_at:now, updated_at:now, setor:'Agência',
+    data_solicitacao: dPlus(0), resultado:'Não informado', publico:'Associado ACIF',
+    faixa_etaria:'Não informado', publico_obs:'', tom:'Não informado', headline:'',
+    textos_obg:'', cta:'', url:'', formatos:'Conforme briefing anexado',
+    video_duracao:'', video_roteiro:'', estilo:'', cores:'', tipografia:'',
+    restricoes:'', restricoes_obs:'', materiais:'Arquivo anexado pela coordenadora', mat_link:'https://drive.google.com/exemplo',
+    referencias:'', ref_obs:'', prioridade:'Normal', obs:'', checklist:[], versions:[]
+  }, o);
+  db.push(mkAg({
+    status:'aguardando', captacao:'Coordenadora', cliente:'Ótica Central',
+    nome:'Ótica Central', email:'Paulo — (11) 91111-5555', assigned_to:'Designer B',
+    prazo:dPlus(8), tipo_solicitacao:'Campanha Completa',
+    objetivo:'Campanha de reinauguração da loja captada pela coordenadora.',
+    historico_status:[{status:'analise', data:dPlus(-2)}, {status:'aguardando', data:now}]
+  }));
+  db.push(mkAg({
+    status:'analise', captacao:'Coordenadora', cliente:'Clínica Bem Estar',
+    nome:'Clínica Bem Estar', email:'Fernanda — (11) 92222-6666',
+    prazo:dPlus(12), tipo_solicitacao:'Material Institucional',
+    objetivo:'Folder institucional de apresentação da clínica para convênios.',
+    historico_status:[{status:'analise', data:now}]
+  }));
+  const mkEnc = o => Object.assign({
+    id: uuidv4(), archived:false, urgencia:false, origem:'Agência', captacao:'Comercial',
+    assigned_to:'', created_at:now, updated_at:now, email:'—', setor:'Agência',
+    data_solicitacao: dPlus(0), resultado:'Não informado', publico:'Associado ACIF',
     faixa_etaria:'Não informado', publico_obs:'', tom:'Não informado', headline:'',
     textos_obg:'', cta:'', url:'', formatos:'A definir na análise',
     video_duracao:'', video_roteiro:'', estilo:'', cores:'', tipografia:'',
     restricoes:'', restricoes_obs:'', materiais:'Não informado', mat_link:'',
     referencias:'', ref_obs:'', prioridade:'Normal', obs:'', checklist:[], versions:[]
   }, o);
-  db.push(mk({
+  db.push(mkEnc({
     status:'triagem', cliente:'Mercado São José', vendedor:'Bruno Carvalho', plano:'Premium',
     cliente_contato:'Sr. José — (11) 98888-1111', prazo:dPlus(9),
     tipo_solicitacao:'Gestão de Redes Sociais',
-    objetivo:'Cliente quer pacote mensal de posts e campanha de aniversário da loja.',
+    objetivo:'Associado quer pacote mensal de posts e campanha de aniversário da loja.',
     qualificacao:{score:90, nivel:'qualificado', breakdown:[
-      {label:'Plano do cliente', pts:30, max:30},
+      {label:'Plano do associado', pts:30, max:30},
       {label:'Orçamento para o serviço', pts:25, max:25},
       {label:'Interesse na assessoria', pts:25, max:25},
       {label:'Materiais e acessos', pts:8, max:15},
@@ -2761,13 +2939,13 @@ function seedComercial(){
     triagem:{status:'pendente', criada_em:now},
     historico_status:[{status:'triagem', data:now}]
   }));
-  db.push(mk({
+  db.push(mkEnc({
     status:'triagem', cliente:'Loja da Maria', vendedor:'Ana Beatriz', plano:'Essencial',
     cliente_contato:'Maria — (11) 97777-2222', prazo:dPlus(15),
     tipo_solicitacao:'Identidade Visual',
-    objetivo:'Cliente pediu criação de logotipo e papelaria completa, mas sem orçamento definido.',
+    objetivo:'Associada pediu criação de logotipo e papelaria completa, mas sem orçamento definido.',
     qualificacao:{score:15, nivel:'baixo', breakdown:[
-      {label:'Plano do cliente', pts:10, max:30},
+      {label:'Plano do associado', pts:10, max:30},
       {label:'Orçamento para o serviço', pts:0, max:25},
       {label:'Interesse na assessoria', pts:0, max:25},
       {label:'Materiais e acessos', pts:0, max:15},
@@ -2776,13 +2954,13 @@ function seedComercial(){
     triagem:{status:'pendente', criada_em:now},
     historico_status:[{status:'triagem', data:now}]
   }));
-  db.push(mk({
+  db.push(mkEnc({
     status:'em_producao', assigned_to:'Designer A', cliente:'Ótica Visão',
     vendedor:'Camila Rocha', plano:'Padrão', cliente_contato:'Paulo — (11) 96666-3333',
     prazo:dPlus(6), tipo_solicitacao:'Campanha Promocional',
     objetivo:'Campanha de liquidação de inverno para feed e stories.',
     qualificacao:{score:70, nivel:'qualificado', breakdown:[
-      {label:'Plano do cliente', pts:20, max:30},
+      {label:'Plano do associado', pts:20, max:30},
       {label:'Orçamento para o serviço', pts:25, max:25},
       {label:'Interesse na assessoria', pts:10, max:25},
       {label:'Materiais e acessos', pts:8, max:15},
@@ -2795,30 +2973,30 @@ function seedComercial(){
       {status:'em_producao', data:now}
     ]
   }));
-  db.push(mk({
+  db.push(mkEnc({
     status:'devolvido', archived:true, cliente:'Academia Corpo+',
     vendedor:'Diego Martins', plano:'Essencial', cliente_contato:'Renata — (11) 95555-4444',
     prazo:dPlus(12), tipo_solicitacao:'Tráfego Pago',
-    objetivo:'Cliente quer gestão de anúncios, mas não possui verba de mídia.',
+    objetivo:'Associada quer gestão de anúncios, mas não possui verba de mídia.',
     qualificacao:{score:28, nivel:'baixo', breakdown:[
-      {label:'Plano do cliente', pts:10, max:30},
+      {label:'Plano do associado', pts:10, max:30},
       {label:'Orçamento para o serviço', pts:0, max:25},
       {label:'Interesse na assessoria', pts:10, max:25},
       {label:'Materiais e acessos', pts:8, max:15},
       {label:'Expectativa de prazo realista', pts:0, max:5}
     ]},
-    triagem:{status:'devolvido', motivo:'Cliente sem orçamento para o serviço solicitado', parecer:'Cliente não possui verba mínima de mídia (R$ 500/mês). Orientar sobre o requisito e reenviar quando houver orçamento aprovado.', data:dPlus(-1)},
+    triagem:{status:'devolvido', motivo:'Cliente sem orçamento para o serviço solicitado', parecer:'Associada não possui verba mínima de mídia (R$ 500/mês). Orientar sobre o requisito e reenviar quando houver orçamento aprovado.', data:dPlus(-1)},
     historico_status:[{status:'triagem', data:dPlus(-2)}, {status:'devolvido', data:dPlus(-1)}]
   }));
-  db.push(mk({
+  db.push(mkEnc({
     status:'entregue', assigned_to:'Designer B', cliente:'Mercado São José',
     vendedor:'Bruno Carvalho', plano:'Premium', cliente_contato:'Sr. José — (11) 98888-1111',
     prazo:dPlus(-3), data_solicitacao:dPlus(-12), tipo_solicitacao:'Material Institucional',
     objetivo:'Cartaz de ofertas semanal para loja física.',
-    aprovacao_formal:{assinatura:'José Almeida (cliente)', data:dPlus(-3), versao:'v1'},
-    satisfacao:{nota:5, comentario:'Cliente elogiou a agilidade da equipe.', data:dPlus(-3)},
+    aprovacao_formal:{assinatura:'José Almeida (associado)', data:dPlus(-3), versao:'v1'},
+    satisfacao:{nota:5, comentario:'Associado elogiou a agilidade da equipe da Agência.', data:dPlus(-3)},
     triagem:{status:'aprovado', data:dPlus(-11)},
-    versions:[{id:'v1', created_at:dPlus(-5), preview:null, status:'approved', approved_by:'José Almeida (cliente)', note:'Versão final do cartaz', comments:[]}],
+    versions:[{id:'v1', created_at:dPlus(-5), preview:null, status:'approved', approved_by:'José Almeida (associado)', note:'Versão final do cartaz', comments:[]}],
     historico_status:[
       {status:'triagem', data:dPlus(-12)},
       {status:'analise', data:dPlus(-11)},
@@ -2828,22 +3006,27 @@ function seedComercial(){
     ]
   }));
   clienteReg['Mercado São José'] = {nome:'Mercado São José', plano:'Premium', vendedor:'Bruno Carvalho', ocorrencias:[
-    {tipo:'Elogio', texto:'Cliente elogiou o atendimento da equipe de marketing na última entrega do cartaz de ofertas.', data:dPlus(-3)}
+    {tipo:'Elogio', texto:'Associado elogiou o atendimento da Agência na última entrega do cartaz de ofertas.', data:dPlus(-3)}
   ]};
   clienteReg['Loja da Maria'] = {nome:'Loja da Maria', plano:'Essencial', vendedor:'Ana Beatriz', ocorrencias:[]};
   clienteReg['Ótica Visão'] = {nome:'Ótica Visão', plano:'Padrão', vendedor:'Camila Rocha', ocorrencias:[]};
   clienteReg['Academia Corpo+'] = {nome:'Academia Corpo+', plano:'Essencial', vendedor:'Diego Martins', ocorrencias:[
-    {tipo:'Reclamação', texto:'Vendedor relatou insatisfação da cliente com o processo de contratação. Encaminhado via triagem e devolvido formalmente por ausência de verba de mídia.', data:dPlus(-1)}
+    {tipo:'Reclamação', texto:'Vendedor relatou insatisfação da associada com o processo de contratação. Encaminhado via triagem e devolvido formalmente por ausência de verba de mídia.', data:dPlus(-1)}
   ]};
+  clienteReg['Ótica Central'] = {nome:'Ótica Central', plano:'—', vendedor:'—', ocorrencias:[]};
+  clienteReg['Clínica Bem Estar'] = {nome:'Clínica Bem Estar', plano:'—', vendedor:'—', ocorrencias:[]};
   saveClientes();
   audit = [
-    {ts:new Date().toISOString(), acao:'Devolução ao Comercial', detalhe:'Academia Corpo+ — Cliente sem orçamento para o serviço solicitado (vendedor: Diego Martins)', refId:''},
-    {ts:new Date().toISOString(), acao:'Entrega avaliada', detalhe:'Mercado São José — nota 5/5', refId:''},
-    {ts:new Date().toISOString(), acao:'Triagem aprovada', detalhe:'Ótica Visão — segue para análise (vendedor: Camila Rocha)', refId:''},
-    {ts:new Date().toISOString(), acao:'Solicitação do Comercial recebida', detalhe:'Mercado São José — score 90/100 (vendedor: Bruno Carvalho)', refId:''},
-    {ts:new Date().toISOString(), acao:'Solicitação do Comercial recebida', detalhe:'Loja da Maria — score 15/100 (vendedor: Ana Beatriz)', refId:''}
+    {ts:now, acao:'Devolução ao Comercial (Agência)', detalhe:'Academia Corpo+ — Cliente sem orçamento para o serviço solicitado (vendedor: Diego Martins)', refId:''},
+    {ts:now, acao:'Entrega avaliada', detalhe:'Mercado São José — nota 5/5', refId:''},
+    {ts:now, acao:'Triagem aprovada (Agência)', detalhe:'Ótica Visão — segue para análise (vendedor: Camila Rocha)', refId:''},
+    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Mercado São José — score 90/100 (vendedor: Bruno Carvalho)', refId:''},
+    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Loja da Maria — score 15/100 (vendedor: Ana Beatriz)', refId:''},
+    {ts:now, acao:'Demanda da Agência registrada', detalhe:'Ótica Central — captação da coordenadora', refId:''},
+    {ts:now, acao:'Briefing institucional criado', detalhe:'Mariana Ferreira (Desenvolvimento Empresarial) — Evento / Convite', refId:''}
   ];
   saveAudit();
+  saveDB();
 }
 
 // =============================================
@@ -2977,15 +3160,15 @@ document.addEventListener('DOMContentLoaded', () => {
   db.forEach(b => { if(typeof b.archived === 'undefined') b.archived = false; });
   seedDemoData();
   setupFormNav();
-  setupFormValidation();
   setupVideoConditional();
-  // selects dinâmicos
   const vendOpts = VENDEDORES.map(v => `<option>${v}</option>`).join('');
   document.getElementById('c_vendedor').innerHTML = '<option value="">Selecione o vendedor…</option>' + vendOpts;
   document.getElementById('tri-filter-vendedor').innerHTML = '<option value="">Todos os vendedores</option>' + vendOpts;
   document.getElementById('dev-motivo').innerHTML = '<option value="">Selecione o motivo…</option>' + MOTIVOS_DEVOLUCAO.map(m => `<option>${m}</option>`).join('');
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('f_data_solic').value = today;
+  // preenche a data ANTES da primeira validação (evita falso "pendente")
+  const dataSolic = document.getElementById('f_data_solic');
+  if(dataSolic) dataSolic.value = new Date().toISOString().split('T')[0];
+  setupFormValidation();
   refreshBadges();
 });
 </script>
