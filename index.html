@@ -290,7 +290,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     <button class="nav-btn" onclick="navigate('triagem')" id="nav-triagem"><i class="fa-solid fa-inbox"></i><span>Triagem</span></button>
     <button class="nav-btn" onclick="navigate('kanban')" id="nav-kanban"><i class="fa-solid fa-table-columns"></i><span>Quadro Kanban</span></button>
     <button class="nav-btn" onclick="navigate('cronograma')" id="nav-cronograma"><i class="fa-solid fa-calendar-days"></i><span>Cronograma</span></button>
-    <button class="nav-btn" onclick="navigate('lista')" id="nav-lista"><i class="fa-solid fa-list"></i><span>Todos Briefings</span></button>
+    <button class="nav-btn" onclick="navigate('lista')" id="nav-lista"><i class="fa-solid fa-list"></i><span>Todos os Briefings</span></button>
   </div>
   <div class="nav-section">
     <div class="nav-section-label">Inteligência</div>
@@ -340,7 +340,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
           <div><div class="section-title">Identificação da Solicitação</div><div class="section-sub">Dados do solicitante e projeto</div></div>
         </div>
         <div class="grid-2 mb-4">
-          <div><label class="field-label">Nome completo *</label><input type="text" id="f_nome" placeholder="João Silva"></div>
+          <div><label class="field-label">Solicitante *</label><input type="text" id="f_nome" placeholder="João Silva"></div>
           <div><label class="field-label">E-mail *</label><input type="text" id="f_email" inputmode="email" placeholder="joao@acif.com.br"></div>
         </div>
         <div class="grid-3">
@@ -619,7 +619,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
     <div style="max-width:780px;margin:0 auto;">
       <div style="display:flex;gap:10px;margin-bottom:16px;">
         <button class="tab-btn active" id="tab-coord" onclick="switchAgenciaTab('coord')">
-          <i class="fa-solid fa-bullhorn"></i> Captação da Coordenadora
+          <i class="fa-solid fa-bullhorn"></i> Captação da Agência
         </button>
         <button class="tab-btn" id="tab-encam" onclick="switchAgenciaTab('encam')">
           <i class="fa-solid fa-handshake"></i> Encaminhamento Comercial
@@ -631,7 +631,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         <div class="card banner-agencia" style="margin-bottom:16px;">
           <p style="font-size:13px;color:var(--ink-soft);">
             <i class="fa-solid fa-store" style="color:var(--agencia);"></i>
-            <b>Fluxo Agência — Captação própria.</b> Registro de demandas de associados captadas diretamente pela coordenadora da Agência.
+            <b>Fluxo Agência — Captação própria.</b> Registro de demandas de associados captadas diretamente pela equipe da Agência.
             Entram <b>direto na fase de Análise</b>, sem triagem. Para associados encaminhados pelo time Comercial, use a aba
             <a href="#" onclick="switchAgenciaTab('encam');return false;" style="color:var(--agencia);font-weight:700;">Encaminhamento Comercial</a>.
           </p>
@@ -641,7 +641,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
             <div class="section-num" style="background:var(--agencia);"><i class="fa-solid fa-bullhorn" style="font-size:12px;"></i></div>
             <div>
               <div class="section-title">Registro de Demanda — Agência (Associado)</div>
-              <div class="section-sub">Preenchido pela coordenadora para demandas captadas por ela</div>
+              <div class="section-sub">Preenchido pela equipe da agência</div>
             </div>
           </div>
           <form id="agencia-form" onsubmit="event.preventDefault(); submitAgenciaBriefing();">
@@ -806,7 +806,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
       <div style="min-width:150px;">
         <label class="field-label">Captação (Agência)</label>
         <select id="kanban-filter-captacao" onchange="applyKanbanFilters()">
-          <option value="">Todas</option><option value="Coordenadora">Coordenadora</option><option value="Comercial">Encaminhamento Comercial</option>
+          <option value="">Todas</option><option value="Coordenadora">Agência</option><option value="Comercial">Encaminhamento Comercial</option>
         </select>
       </div>
       <div style="min-width:160px;">
@@ -877,7 +877,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
   <div id="view-clientes" class="view">
     <div class="card" style="margin-bottom:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
       <input id="cliente-search" placeholder="Buscar associado / cliente…" style="flex:1;min-width:220px;" oninput="renderClientes()">
-      <span style="font-size:12px;color:var(--ink-soft);"><i class="fa-solid fa-circle-info" style="color:var(--agencia);"></i> Associados atendidos pela <b>Agência</b> (captação da coordenadora ou encaminhamento do Comercial). Clique para ver o histórico e registrar ocorrências.</span>
+      <span style="font-size:12px;color:var(--ink-soft);"><i class="fa-solid fa-circle-info" style="color:var(--agencia);"></i> Associados atendidos pela <b>Agência</b> (captação ativa ou encaminhamento do Comercial). Clique para ver o histórico e registrar ocorrências.</span>
     </div>
     <div class="card" style="overflow-x:auto;">
       <table class="tbl" id="clientes-table"></table>
@@ -949,7 +949,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
         <h3 style="font-size:15px;font-weight:800;margin-bottom:8px;"><i class="fa-solid fa-store" style="color:var(--agencia);"></i> Divisão Agência</h3>
         <p style="font-size:13px;color:var(--ink-soft);margin-bottom:10px;">Agência interna que atende os <b>associados da ACIF</b>. Duas portas de entrada dentro do painel <b>Briefing Agência</b>:</p>
         <ul style="font-size:13px;color:var(--ink-soft);padding-left:18px;display:grid;gap:5px;">
-          <li><b>Captação da Coordenadora:</b> demanda captada por ela — entra direto na Análise;</li>
+          <li><b>Captação Agência:</b> demanda captada por ela — entra direto na Análise;</li>
           <li><b>Encaminhamento Comercial:</b> vendedor encaminha o associado — passa pela <b>triagem de qualificação</b> (score 0–100) antes de entrar na Análise;</li>
           <li>Devoluções sempre acompanhadas de termo formal com motivo e orientações.</li>
         </ul>
@@ -1019,7 +1019,7 @@ select.status-sel { padding: 6px 10px; font-size: 12px; border-radius: 8px; min-
       <div class="section-title" style="margin-bottom:12px;">❓ Perguntas Frequentes</div>
       <details class="faq-item"><summary>Qual a diferença entre Institucional e Agência?</summary><div class="faq-body"><b>Institucional</b> atende os setores internos da ACIF (Empreender, Certificado Digital, Desenvolvimento Empresarial, Presidência etc.) com comunicação institucional, eventos e materiais internos. <b>Agência</b> é a agência interna que atende os associados com serviços de marketing (redes sociais, campanhas, identidade visual, tráfego pago, assessoria). Cada divisão tem porta de entrada própria no aplicativo.</div></details>
       <details class="faq-item"><summary>Por que meu encaminhamento de associado foi devolvido?</summary><div class="faq-body">A triagem da Agência avalia critérios objetivos: plano do associado, orçamento para o serviço, interesse real na assessoria, materiais/acessos fornecidos e expectativa de prazo. Encaminhamentos com score abaixo de 40 são devolvidos com termo formal explicando o motivo e o que precisa mudar para reenvio. Isso evita retrabalho e protege a qualidade das entregas.</div></details>
-      <details class="faq-item"><summary>Setor interno pode pedir demanda de associado pelo fluxo Institucional?</summary><div class="faq-body">Não. Demandas de associados pertencem ao fluxo da <b>Agência</b> e devem entrar pelo painel Briefing Agência — por captação da coordenadora ou encaminhamento do Comercial. O fluxo Institucional é exclusivo para comunicação e materiais internos da ACIF.</div></details>
+      <details class="faq-item"><summary>Setor interno pode pedir demanda de associado pelo fluxo Institucional?</summary><div class="faq-body">Não. Demandas de associados pertencem ao fluxo da <b>Agência</b> e devem entrar pelo painel Briefing Agência — por captação própria ou encaminhamento do Comercial. O fluxo Institucional é exclusivo para comunicação e materiais internos da ACIF.</div></details>
       <details class="faq-item"><summary>Posso pedir direto para o designer pelo WhatsApp?</summary><div class="faq-body">Não. Pedidos fora do sistema não têm SLA, não entram na fila e não possuem registro de aprovação. Toda demanda deve entrar por uma das portas oficiais: Briefing Institucional ou Briefing Agência (captação / encaminhamento).</div></details>
       <details class="faq-item"><summary>Quando um associado cancela ou reclama, de quem é a responsabilidade?</summary><div class="faq-body">A responsabilidade é analisada com dados, não com acusação. O painel de Clientes mostra tudo que a Agência entregou ao associado, quando, quem aprovou formalmente e qual foi a avaliação. O relacionamento pós-venda (renovação, retenção, contrato) é do Comercial; execuções com aprovação assinada e SLA cumprido são documentadas no Relatório Escudo.</div></details>
       <details class="faq-item"><summary>Como o score de qualificação é calculado?</summary><div class="faq-body">Plano do associado (até 30 pts) + orçamento para o serviço (até 25 pts) + interesse demonstrado na assessoria (até 25 pts) + materiais/acessos já fornecidos (até 15 pts) + expectativa de prazo realista (até 5 pts). Total: 100 pontos. ≥60 qualificado, 40–59 condicional (entrevista recomendada), &lt;40 devolução sugerida.</div></details>
