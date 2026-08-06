@@ -1234,7 +1234,7 @@ const COL_META = {
   entregue:{icon:'fa-box', color:'#7c3aed', label:'Entregue'},
   devolvido:{icon:'fa-ban', color:'#C0392B', label:'Devolvido'}
 };
-const VENDEDORES = ['Ana Beatriz','Bruno Carvalho','Camila Rocha','Diego Martins','Elisa Prado','Fábio Nunes'];
+const VENDEDORES = ['Jessica','Tainá','Viviane','Patrícia','Ricardo','Rita'];
 const MOTIVOS_DEVOLUCAO = [
   'Cliente sem orçamento para o serviço solicitado',
   'Cliente sem interesse ou aderência à assessoria de marketing',
@@ -2940,7 +2940,7 @@ function seedDemoData(){
     historico_status:[{status:'triagem', data:now}]
   }));
   db.push(mkEnc({
-    status:'triagem', cliente:'Loja da Maria', vendedor:'Ana Beatriz', plano:'Essencial',
+    status:'triagem', cliente:'Loja da Maria', vendedor:'Jessica', plano:'Essencial',
     cliente_contato:'Maria — (11) 97777-2222', prazo:dPlus(15),
     tipo_solicitacao:'Identidade Visual',
     objetivo:'Associada pediu criação de logotipo e papelaria completa, mas sem orçamento definido.',
@@ -3008,7 +3008,7 @@ function seedDemoData(){
   clienteReg['Mercado São José'] = {nome:'Mercado São José', plano:'Premium', vendedor:'Bruno Carvalho', ocorrencias:[
     {tipo:'Elogio', texto:'Associado elogiou o atendimento da Agência na última entrega do cartaz de ofertas.', data:dPlus(-3)}
   ]};
-  clienteReg['Loja da Maria'] = {nome:'Loja da Maria', plano:'Essencial', vendedor:'Ana Beatriz', ocorrencias:[]};
+  clienteReg['Loja da Maria'] = {nome:'Loja da Maria', plano:'Essencial', vendedor:'Jessica', ocorrencias:[]};
   clienteReg['Ótica Visão'] = {nome:'Ótica Visão', plano:'Padrão', vendedor:'Camila Rocha', ocorrencias:[]};
   clienteReg['Academia Corpo+'] = {nome:'Academia Corpo+', plano:'Essencial', vendedor:'Diego Martins', ocorrencias:[
     {tipo:'Reclamação', texto:'Vendedor relatou insatisfação da associada com o processo de contratação. Encaminhado via triagem e devolvido formalmente por ausência de verba de mídia.', data:dPlus(-1)}
@@ -3019,10 +3019,10 @@ function seedDemoData(){
   audit = [
     {ts:now, acao:'Devolução ao Comercial (Agência)', detalhe:'Academia Corpo+ — Cliente sem orçamento para o serviço solicitado (vendedor: Diego Martins)', refId:''},
     {ts:now, acao:'Entrega avaliada', detalhe:'Mercado São José — nota 5/5', refId:''},
-    {ts:now, acao:'Triagem aprovada (Agência)', detalhe:'Ótica Visão — segue para análise (vendedor: Camila Rocha)', refId:''},
-    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Mercado São José — score 90/100 (vendedor: Bruno Carvalho)', refId:''},
-    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Loja da Maria — score 15/100 (vendedor: Ana Beatriz)', refId:''},
-    {ts:now, acao:'Demanda da Agência registrada', detalhe:'Ótica Central — captação da coordenadora', refId:''},
+    {ts:now, acao:'Triagem aprovada (Agência)', detalhe:'Ótica Visão — segue para análise (vendedor: Patrícia)', refId:''},
+    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Mercado São José — score 90/100 (vendedor: Tainá)', refId:''},
+    {ts:now, acao:'Encaminhamento comercial recebido (Agência)', detalhe:'Loja da Maria — score 15/100 (vendedor: Jessica)', refId:''},
+    {ts:now, acao:'Demanda da Agência registrada', detalhe:'Ótica Central — captação própria', refId:''},
     {ts:now, acao:'Briefing institucional criado', detalhe:'Mariana Ferreira (Desenvolvimento Empresarial) — Evento / Convite', refId:''}
   ];
   saveAudit();
